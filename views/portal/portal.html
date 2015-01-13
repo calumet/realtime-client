@@ -3,69 +3,48 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>eisi.jsp</title>
         <link rel="shortcut icon" href="/favicon.ico">
-        <link rel="stylesheet" href="http://cormoran.uis.edu.co/eisi/css/Estandar/Elise/Elise.css">
-        <title>Portal</title>
+        <link rel="stylesheet" href="/eisi/css/Estandar/Elise/Elise.css">
+        <style>
+        #centro {
+          width: 100%; min-height: 300px;
+          margin-bottom: 10px;
+          border: 1px solid #AAA; border-radius: 2px;
+        } 
+        </style>
+        <script>
+        window.onload = function () {
+          $('#centro').on('load', function (e) {
+            Elise.win.fitIframe('centro', 'self', 300, 50);
+          });
+        };
+        </script>
     </head>
     <body>
         <div class="row-fluid">
 
-            <div class="span8 offset2">
-                <h2>Portal (/eisi/eisi.jsp)</h2>
-                <p>Esta es la página mostrada cuando el usuario se loguea.</p>
+            <div class="span10 offset1">
+                <h2>eisi.jsp ({{id}})</h2>
+                <p>Esta es la página mostrada cuando el usuario se loguea (privada).</p>
                 <p>Desde aquí se entra a las otras aplicaciones y/o servicios.</p>
                 <ul>
-                    <li><a href="/aula">Aula</a></li>
-                    <li><a href="/logout">Log out</a></li>
+                    <li><a href="/">index.jsp (logout)</a></li>
+                    <li><a href="/escogerAula?id={{id}}&amp;subgroup={{subgroup}}" target="centro">Escoger aula</a></li>
+                    {% if admin %}
+                    <li><a href="/realtimeAdmin?id={{id}}" target="centro">Realtime admin</a></li>
+                    {% endif %}
                 </ul>
-            </div>
-            <div class="span8 offset2">
-                <h2>Conexión por sockets</h2>
-                <p>Actualmente nos encontramos: <strong id="conn">conectándonos...</strong></p>
-                <p id="mensaje">&nbsp;</p>
+                <iframe id="centro" name="centro" src="/blank.html"></iframe>
             </div>
 
         </div>
 
-        <!-- Admin
-        {% if admin %}
-        <div class="row-fluid">
-
-            <div class="span8 offset2">
-                <h2>Admin | Sockets</h2>
-                <p>Esta sección es sólo ofrecida para administradores.</p>
-                <p>La verificación de que el usuario el administrador se realiza desde JSP.</p>
-                <p>Cuando el administrador ejecuta funciones sólo de administrador, en el servidor se verifican.</p>
-                <div class="block">
-                    <h3>Estadísticas</h3>
-                    <p>Usuarios conectados <strong id="statsUsers"><small>(buscando...)</small></strong></p>
-                </div>
-            </div>
-
-        </div>
-        {% endif %}-->
-
-        <!-- // Scripts // -->
-        <script src="http://cormoran.uis.edu.co/eisi/Scripts/jQuery/jquery.min.js"></script>
-        <script src="http://cormoran.uis.edu.co/eisi/Scripts/Estandar/Elise.js"></script>
+        <!-- // SCRIPTS // -->
+        <script src="/eisi/Scripts/jQuery/jquery.min.js"></script>
+        <script src="/eisi/Scripts/Estandar/Elise.js"></script>
 
         <!-- // Portal Realtime // -->
-        <script>
-            window.portal = window.portal || {};
-            portal.server = {
-                host: '{{=sockets.host}}',
-                port: '{{=sockets.port}}',
-                url: 'http://{{=sockets.host}}:{{=sockets.port}}'
-            };
-            portal.user = {
-                id: '{{id}}'
-            };
-        </script>
         <script src="/eisi/Scripts/Portal/socket.js"></script>
-
-        <!-- // Realtime :: Portal Plugin :: Admin //
-        {% if admin %}
-            <script src="/js/portal/admin.js"></script>
-        {% endif %}-->
     </body>
 </html>

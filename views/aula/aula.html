@@ -3,58 +3,150 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Aula - {{name}}</title>
-        <link rel="icon" href="/favicon.ico">
-        <link rel="stylesheet" href="http://cormoran.uis.edu.co/eisi/css/Estandar/Elise/Elise.css">
-        <style>
-            img { height: 200px; margin: 2px; }
-        </style>
+        <title>aula.jsp</title>
+        <link rel="shortcut icon" href="/favicon.ico">
+        <link rel="stylesheet" href="/eisi/css/Estandar/Elise/Elise.css">
+        <link rel="stylesheet" href="/eisi/css/Estandar/animate.min.css">
+        <link rel="stylesheet" href="/eisi/css/Aula/Chat/chat.css">
     </head>
     <body>
-        <!-- // CHAT ENTRANCE // -->
+        <!-- // MAIN // -->
         <div class="row-fluid">
-            <div class="span8 offset2">
-                <h2>Aula</h2>
+            <div class="span10 offset1">
+                <h2>aula.jsp ({{id}})</h2>
+                <p>Aplicación del aula estudiantil. El estado del chat que implica al usuario se muestra, con el cual se puede abrir el aplicativo del chat.</p>
+                <p>Materia: <strong>{{subject}}</strong>, grupo: <strong>{{group}}</strong> y subgroupo: <strong>{{subgroup}}</strong>.</p>
                 <p>
-                    El usuario entrará a la sala de chat ya estándo en el aula logueado.
-                    Aquí se cargarán los datos del usuario y se guardará copia de ellos.
-                    Luego, se instancia la sala de chat, la cual depende de esta ventana.
-                </p>
-                <p>{{clase}} - {{name}} - {{id}}</p>
-                <p>
-                    <button id="chat" class="boton azul">
+                    <button id="chat-opt-trigger" class="boton boton-grande azul">
                         <span class="icon icon_i8"></span>
-                        <span class="label">Entrar al Chat</span>
+                        <span class="label">0</span>
+                    </button>
+                    <button id="aula-exit" class="boton boton-grande rojo">
+                        <span class="icon icon_l1"></span>
                     </button>
                 </p>
             </div>
         </div>
 
 
-        <!-- // PRE-CHAT MESSAGE // -->
-        <div id="chatMsg" class="hidden">
-            Esta puede ser alguna información al respecto del chat y de su utilizanción. También
-            incluiría normas o reglas a tener en consideración. Por final, también indicar algunas
-            cuestiones en cuanto a cómo funciona o tips de uso.
+        <!-- // CHAT APP // -->
+        <div id="chat" class="hidden">
+
+            <!-- // CHAT SIDEBAR // -->
+            <div class="chat-sidebar">
+
+                <!-- // CHAT SIDEBAR HEAD // -->
+                <div class="chat-sidebar-head">
+                    <div class="chat-user-photo" style="background-image: url(/eisi/images/Aula/Chat/avatar.jpg)"></div>
+                    <div class="chat-user-data">
+                        <div class="chat-user-name">Nombre de usuario</div>
+                        <div class="chat-user-profile">Perfil de usuario</div>
+                    </div>
+                </div>
+
+                <!-- // CHAT SIDEBAR SUBHEAD // -->
+                <div class="chat-sidebar-subhead">
+                    <span>Usuarios de la sala</span>
+                </div>
+
+                <!-- // CHAT SIDEBAR LIST // -->
+                <div class="chat-sidebar-content"></div>
+            </div>
+
+            <!-- // CHAT ROOMS // -->
+            <div class="chat-rooms">
+
+                <!-- // CHAT ROOMS HEADER // -->
+                <div class="chat-rooms-header">
+                    <span class="chat-rooms-name">Sala de clase</span>
+                    <div class="chat-rooms-options">
+                        <a id="chat-opt-changeRoom" class="btn" title="Cambiar sala">
+                            <span class="icon icon_l6"></span>
+                        </a>
+                        <a id="chat-opt-minimize" class="btn" title="Minimizar">
+                            <span class="icon icon_n1"></span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- // CHAT ROOMS LIST // -->
+                <div class="chat-rooms-list"></div>
+
+                <!-- // CHAT ROOMS FOOTER // -->
+                <div class="chat-rooms-footer">
+                    <form action="#" method="post">
+                        <textarea id="chat-message" class="chat-message" placeholder="Enviar un mensaje..."></textarea>
+                        <button type="button" hidden></button>
+                    </form>
+                </div>
+            </div>
         </div>
 
 
-        <!-- // SCRIPTS // -->
-        <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-        <script src="http://cormoran.uis.edu.co/eisi/Scripts/Estandar/Elise.js"></script>
-        <script>
-            // Application
-            var app = {};
-            // User Data
-            app.data = {
-                // Esto es escrito con el lenguaje del servidor utilizado
-                // Puede ser con JSP u otro lenguaje
-                id: '{{id}}',
-                clase: '{{clase}}',
-                subject: 'Programación en la Web',
-                teacher: 'Pedro José Gonzales Martínez'
-            };
+        <!-- // TEMPLATES // -->
+        <script id="chat-tml-room" type="text/template">
+            <div id="<#=id#>" class="chat-room <#=classes#>">
+                <div class="chat-room-table">
+                    <div class="chat-room-cell"></div>
+                </div>
+            </div>
         </script>
-        <script src="/js/aula.js"></script>
+        <script id="chat-tml-roomUser" type="text/template">
+            <div id="<#=id#>" class="chat-user-box <#=state#>">
+                <div class="chat-user-photo" style="background-image: url(<#=photo#>)"></div>
+                <div class="chat-user-name"><#=name#></div>
+                <div class="chat-user-profile"><#=profile#></div>
+            </div>
+        </script>
+        <script id="chat-tml-roomMsg" type="text/template">
+            <div id="<#=id#>" class="block">
+                <!-- TODO: cambiar la forma que que se insertan las clases. -->
+                <div class="chat-msg <#=(position +' '+ theme +' '+ user.id)#> <#=time.replace(':','_')#>">
+                    <div class="chat-msg-avatar">
+                        <img class="img-polaroid img-rounded" src="<#=user.photo#>">
+                    </div>
+                    <div class="chat-msg-info">
+                        <span class="name">
+                            <strong class="indent"><#=user.name#></strong>
+                        </span>
+                        <span class="time" title="<#=ago#>"><#=time#></span>
+                    </div>
+                    <div class="chat-msg-content">
+                        <p><#=content#></p>
+                    </div>
+                </div>
+            </div>
+        </script>
+
+
+        <!-- // SCRIPTS // -->
+        <script src="/eisi/Scripts/jQuery/jquery.min.js"></script>
+        <script src="/eisi/Scripts/Estandar/Elise.js"></script>
+        <script src="/eisi/Scripts/Libs/backbone.min.js"></script>
+
+        <!-- // Scripts extras // -->
+        <script>$('#aula-exit').on('click',function(){window.close()});</script>
+
+        <!-- // Aula realtime // -->
+        <script>
+        // Aplicación chat.
+        window.chat = {};
+        
+        // Datos escritos por JSP.
+        chat.data = {
+            user: {id: '{{id}}'},
+            teacher: {id: '{{teacher}}'},
+            subject: '{{subject}}',
+            group: '{{group}}',
+            subgroup: '{{subgroup}}'
+        };
+        </script>
+        <script src="/eisi/Scripts/Aula/Chat/chat.tools.js"></script>
+        <script src="/eisi/Scripts/Aula/Chat/chat.connection.js"></script>
+        <script src="/eisi/Scripts/Aula/Chat/chat.ui.js"></script>
+        <script src="/eisi/Scripts/Aula/Chat/chat.init.js"></script>
+
+        <!-- // Portal realtime // -->
+        <script src="/eisi/Scripts/Portal/socket.js"></script>
     </body>
 </html>

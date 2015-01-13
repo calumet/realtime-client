@@ -1,12 +1,9 @@
 {
-    "host": "127.0.0.1",
-    "port": 7200,
-    "sockets": {
-        "host": "127.0.0.1",
-        "port": 7000
-    },
-    "security": {
-        "cookie": "PORTAL_USER",
-        "key": "ABCD1234"
-    }
+  "host": "127.0.0.1",
+  "port": 80,
+  "security": {
+    "user": "PORTAL_USER",
+    "door": "PORTAL_DOOR",
+    "key": "ABCD1234"
+  }
 }

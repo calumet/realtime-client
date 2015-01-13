@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>realtimeAdmin.jsp</title>
+        <link rel="shortcut icon" href="/favicon.ico">
+        <link rel="stylesheet" href="/eisi/css/Estandar/Elise/Elise.css">
+    </head>
+    <body>
+        <!--
+            TODO: Completar el servicio de administración de servicios del sistema realtime.
+        -->
+
+        <div class="row-fluid">
+
+            <div class="span10 offset1">
+                <h2>realtimeAdmin.jsp ({{id}})</h2>
+                <p>Páina mostrada sólo a administradores.</p>
+                <p>Ésta página se encarga de prestar herramientas para conseguir datos y realizar acciones en el sistema de realtime.</p>
+                <h3>Estadísticas</h3>
+                <p>Usuarios conectados (al menos una aplicación): <strong id="statsUsers">(buscando...)</strong></p>
+                <h3>Mensajes de administración</h3>
+                <p>Publicar un mensaje a todo usuario en el portal en el rango especificado.</p>
+                <form action="#" method="POST">
+                    <p class="block">
+                        <select id="msgPostType">
+                            <option value="persistent">Persistente</option>
+                            <option value="instant">Instante</option>
+                        </select>
+                    </p>
+                    <p class="block">
+                        <input id="msgPostStartDate" type="text" value="2014-12-24 18:00:00">
+                    </p>
+                    <p class="block">
+                        <input id="msgPostEndDate" type="text" value="2014-12-24 20:00:00">
+                    </p>
+                    <p class="block">
+                        <textarea id="msgPostContent" value="Mensaje..." cols="40" rows="4">El servidor se reiniciará a las 8 pm GMT-0500 (COT) del 24 de Dic por razones de mantenimiento, sentimos los inconvenientes.</textarea>
+                    </p>
+                    <button id="msgPostSend" class="boton verde" type="button">Publicar</button>
+                </form>
+            </div>
+
+        </div>
+
+        <!-- // Scripts // -->
+        <script src="/eisi/Scripts/Libs/xdate.min.js"></script>
+        <script src="/eisi/Scripts/jQuery/jquery.min.js"></script>
+        <script src="/eisi/Scripts/Estandar/Elise.js"></script>
+
+        <!-- // Portal Realtime // -->
+        <script src="/eisi/Scripts/Portal/realtimeAdmin.js"></script>
+    </body>
+</html>

@@ -1,12 +1,13 @@
 /*!
+ * Universidad Industrial de Santander
  * Grupo de Desarrollo de Software Calumet
- * Aula Chat | Tools
+ * EISI | Aula | Chat | Tools
  * Romel Pérez, prhone.blogspot.com
  * Duvan Vargas, @DuvanJamid
- * Marzo del 2014
+ * 2015
  **/
 
-// ------------------------------------------------------------------------- //
+// -------------------------------------------------------------------------- //
 // TIMEAGO //
 
 /**
@@ -224,12 +225,3 @@
     document.createElement("abbr");
     document.createElement("time");
 }));
-
-
-
-// ------------------------------------------------------------------------- //
-// UNDERSCORE TEMPLATES //
-
-_.templateSettings = {
-    interpolate: /\<\{(.+?)\}\>/g  // Mustache system: /\{\{(.+?)\}\}/g
-};

@@ -3,40 +3,53 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Login</title>
+        <title>login.jsp</title>
         <link rel="shortcut icon" href="/favicon.ico">
-        <link rel="stylesheet" href="http://cormoran.uis.edu.co/eisi/css/Estandar/Elise/Elise.css">
+        <link rel="stylesheet" href="/eisi/css/Estandar/Elise/Elise.css">
     </head>
     <body>
-        <!-- // Main // -->
+        <!-- // MAIN // -->
         <div class="row-fluid">
-            <div class="span8 offset2">
-                <h1>Login</h1>
-                <p>Usuarios disponibles para hacer pruebas.</p>
-                <p>
+            <div class="span10 offset1">
+                <h1>login.jsp</h1>
+                <p>Login a <b>eisi.jsp</b>, con los siguientes usuarios disponibles para hacer pruebas:</p>
+                <p class="block">
                     <select id="users" name="users">
-                        <option value="U10">Luis González</option>
-                        <option value="U3856">Romel Pérez</option>
+
+                        <!-- PRIVATE: -->
+                        <option value="U0000_GC000">U0000 Pepe Pérez (ADMIN)</option>
+                        
                     </select>
                 </p>
-                <p>Entrar con el usuario elegido.</p>
+                <p>Con el usuario elegido, entrar como:</p>
                 <p class="block">
                     <button id="portal" class="boton azul">
                         <span class="icon icon_l12"></span>
-                        <span class="label">Entrar como Usuario</span>
+                        <span class="label">Usuario</span>
                     </button>
-                    <!--button id="admin" class="boton azul">
+                    <button id="admin" class="boton azul">
                         <span class="icon icon_l12"></span>
-                        <span class="label">Entrar como Admin</span>
-                    </button-->
+                        <span class="label">Administrador</span>
+                    </button>
+                </p>
+                <p>
+                    Volver al <a href="/">index.jsp</a>.
                 </p>
             </div>
         </div>
 
-
-        <!-- // Scripts // -->
-        <script src="http://cormoran.uis.edu.co/eisi/Scripts/jQuery/jquery.min.js"></script>
-        <script src="http://cormoran.uis.edu.co/eisi/Scripts/Estandar/Elise.js"></script>
-        <script src="/eisi/Scripts/Portal/login.js"></script>
+        <!-- // SCRIPTS // -->
+        <script src="/eisi/Scripts/jQuery/jquery.min.js"></script>
+        <script src="/eisi/Scripts/Estandar/Elise.js"></script>
+        <script>
+        // Se envía el id de usuario, subgrupo y si es admin.
+        $('#portal, #admin').on('click', function (e) {
+          var user = $('#users').val().split('_');
+          var id = user[0];
+          var subgroup = user[1];
+          window.location.href = '/portal?id='+ id +'&subgroup='+ subgroup
+           + (e.delegateTarget.id === 'admin' ? '&admin=true' : '')
+        });
+        </script>
     </body>
 </html>
