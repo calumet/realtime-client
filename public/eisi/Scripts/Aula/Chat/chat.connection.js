@@ -55,7 +55,7 @@ chat.conn.on('manage', function () {
   });
 
   // Asignar eventos al socket.
-  for (ev in chat.conn.events) {
+  for (var ev in chat.conn.events) {
     chat.conn.socket.on(ev, chat.conn.events[ev].bind(chat.conn.socket));
   }
 });
@@ -99,10 +99,12 @@ chat.conn.events = {
 
   // Usuario online.
   // data:{
-  //   users:[{id,photo,name}],
+  //   users:[{id:String,photo:String,name:String}],
   //   rooms:[{
   //     id:String, available:Boolean,
-  //     teacher:{id,state}, students:[{id,state}], messages:[{id,user,content}]
+  //     teacher:{id:String,state:String},
+  //     students:[{id:String,state:String}],
+  //     messages:[{id:String,user:String,content:String}]
   //   }]
   // }
   online: function (data) {
@@ -113,27 +115,33 @@ chat.conn.events = {
   },
 
   // Otro usuario está online.
-  // data:{id:String} El id del usuario conectado.
+  // data:{id:String, room:String} El id del usuario conectado.
   userOnline: function (data) {
     chat._debug('aula:socket userOnline:', data);
     
-    // TODO: this.
+    // Cambiar estado de usuario en la sala.
+    chat.ui.trigger('room:user:state', data.room, data.id, 'available');
   },
 
   // Otro usuario está offline.
-  // data:{id:String} El id del usuario desconectado.
+  // data:{id:String, room:String} El id del usuario desconectado.
   userOffline: function (data) {
     chat._debug('aula:socket userOffline:', data);
     
-    // TODO: this.
+    // Cambiar estado de usuario en la sala.
+    chat.ui.trigger('room:user:state', data.room, data.id, 'offline');
   },
 
   // Un usuario envía un mensaje en una sala.
-  // data:{id:Date, user:String, content:String}
+  // data:{id:Date, room:String, user:String, content:String}
   userMsg: function (data) {
     chat._debug('aula:socket userMsg:', data);
 
-    // TODO: this.
+    // TODO: cuando la ventana esté oculta, cambiar trigger de ventana.
+    // Devolverlo a su estado original cuando se corrija.
+
+    // Agregar el mensaje a la interfaz de la sala.
+    chat.ui.trigger('room:msg:add', data.room, data);
   }
 };
 
@@ -141,4 +149,12 @@ chat.conn.events = {
 // -------------------------------------------------------------------------- //
 // Emisiones del socket //
 
-// TODO: this.
+// Enviar un mensaje en la sala activa.
+// TODO: validar que el contenido sólo tenga contenido textual.
+chat.conn.on('msg', function (content) {
+  var data = {
+    room: chat.ui._room,
+    content: content
+  };
+  chat.conn.socket.emit('msg', data);
+});

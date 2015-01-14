@@ -156,7 +156,7 @@
           box-shadow:  0 0px 6px #222,inset 0 1px 0px #FFF;
   content: "";
 }
-.chat-user-box.online:before {
+.chat-user-box.available:before {
   display: block;
   background-color: #3DC980;
   -webkit-animation: useronline 1s ease-in 0.3s 4;
@@ -164,7 +164,7 @@
        -o-animation: useronline 1s ease-in 0.3s 4;
           animation: useronline 1s ease-in 0.3s 4;
 }
-.chat-user-box.available:before {
+.chat-user-box.away:before {
   display: block;
   background-color:#ED9C28;
   -webkit-animation: useronline 1s ease-in 0.3s 4;
