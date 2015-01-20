@@ -11,8 +11,8 @@
 /* $ESTRUCTURA */
 
 #chat {
-  z-index: 10;
-  position: absolute;
+  z-index: 100;
+  position: fixed;
   overflow: hidden;
   left: 20px;
   top: 20px;
@@ -304,6 +304,11 @@
   padding: 5px;
   width: auto;
   height: 38px;
+  resize: none;
+  border: 1px solid #D3D3D3;
+  -webkit-border-radius: 0;
+     -moz-border-radius: 0;
+          border-radius: 0;
 }
 
 
@@ -425,18 +430,18 @@
 .chat-msg.pull-right > .chat-msg-avatar {
   right: -65px;
 }
-.chat-msg > .chat-msg-avatar > img{
+.chat-msg > .chat-msg-avatar > img {
   width: 40px;
   height: 40px;
 }
 
 .chat-msg > .chat-msg-info {
   padding: 1px 10px;
-  font-size: 0.7em;
+  font-size: 0.75em;
 }
 .chat-msg > .chat-msg-content {
   padding: 3px 10px;
-  font-size: 0.8em;
+  font-size: 0.87em;
 }
 .chat-msg > .chat-msg-info {
   -webkit-border-radius: 2px;

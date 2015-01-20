@@ -1,7 +1,7 @@
 /*!
  * Universidad Industrial de Santander
  * Grupo de Desarrollo de Software Calumet
- * EISI | Aula | Chat | Init
+ * EISI | Aula | Chat | Main
  * Romel Pérez, prhone.blogspot.com
  * Duvan Vargas, @DuvanJamid
  * 2015
@@ -18,7 +18,7 @@ chat.win = _.extend({}, Backbone.Events);
 // Utilidades //
 
 // Private methods.
-chat._debugMode = true,
+chat._debugMode = true;
 chat._debug = function () {
   if (chat._debugMode) console.debug.apply(console, arguments);
 };
@@ -32,6 +32,13 @@ chat._debug = function () {
 chat.win.state = 'hidden';
 chat.win.on('state', function (state) {
   chat.win.state = state;
+  chat.ui.rooms[chat.ui._room].render();
+  if (state === 'shown') {
+    chat.win.trigger('markTrigger', false);
+    $('body').css('overflow', 'hidden');
+  } else {
+    $('body').css('overflow', 'auto');
+  }
 });
 
 // Mostrar/ocultar ventana del chat.
@@ -57,6 +64,15 @@ chat.win.on('toggle', function () {
       chat.win.trigger('state', 'hidden');
       $chat.addClass('hidden');
     });
+  }
+});
+
+// Cambiar estado del trigger del chat cuando ocurran eventos nuevos.
+chat.win.on('markTrigger', function (somethingNew) {
+  if (somethingNew === undefined || somethingNew === true) {
+    $('#chat-opt-trigger').removeClass('verde').addClass('naranja');
+  } else {
+    $('#chat-opt-trigger').removeClass('naranja').addClass('verde');
   }
 });
 
@@ -99,11 +115,6 @@ $(document).ready(function ($) {
   // Posicionar la ventana.
   chat.win.trigger('position');
 
-  // Toggle ventana.
-  $('#chat-opt-trigger, #chat-opt-minimize').on('click', function (e) {
-    chat.win.trigger('toggle');
-  });
-
   // Decoración.
   $('#chat .chat-rooms-options a').toolTip();
 });
@@ -112,40 +123,3 @@ $(document).ready(function ($) {
 $(window).on('resize', function (e) {
   chat.win.trigger('position');
 });
-
-
-/*
-> USUARIO
-<div class="chat-user-box available">
-    <div class="user-photo" style="background-image: url(/eisi/images/Aula/avatar.jpg)"></div>
-    <div class="user-name">Natalia Contreras</div>
-    <div class="user-profile">Ingeniera</div>
-</div>
-
-> SALA
-<div class="chat-room active">
-    <div class="chat-room-table">
-        <div class="chat-room-cell">
-
-            > MENSAJE
-            <div class="block">
-                <div class="chat-msg pull-left orange">
-                    <div class="chat-msg-avatar">
-                        <img class="img-polaroid img-rounded" src="/eisi/images/Aula/avatar.jpg">
-                    </div>
-                    <div class="chat-msg-info">
-                        <span class="name">
-                            <strong class="indent">Natalia Contreras</strong>
-                        </span>
-                        <span class="time">24 de Dic, 4:40 am</span>
-                    </div>
-                    <div class="chat-msg-content">
-                        <p>This is my comment.</p>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</div>
-*/

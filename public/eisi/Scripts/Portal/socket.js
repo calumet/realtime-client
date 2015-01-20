@@ -10,12 +10,18 @@
  * Las peticiones AJAX deben ser enviadas desde este servidor al de sockets con
  * un flag especial, que permitirá enviar las cookies, ya que se trata de un
  * servidor distinto al origen mismo (puerto 7000) al que envía (puerto 80).
- * http://stackoverflow.com/questions/2870371/why-is-jquerys-ajax-method-not-sending-my-session-cookie
+ * http://stackoverflow.com/questions/2870371/
  * $.ajax({..., xhrFields: {withCredentials: true}});
  */
 
 // require(['jquery', 'elise']).
 window.portal = window.portal || {};
+
+// Debug.
+portal._debugMode = true;
+portal._debug = function () {
+  if (portal._debugMode) console.debug.apply(console, arguments);
+};
 
 // Objetos por inicializar:
 // > portal.server
@@ -25,8 +31,7 @@ window.portal = window.portal || {};
 portal.messages = [];
 
 // Inicializar manejador de eventos/emisores de tiempo real.
-portal.manager = function (e) {
-
+portal.manager = function () {
   var ev, emit;
 
   // Conectar el socket portal.
@@ -34,7 +39,7 @@ portal.manager = function (e) {
 
   // Asignar eventos.
   for (ev in portal.events) {
-    portal.socket.on(ev, portal.events[ev]);
+    portal.socket.on(ev, portal.events[ev].bind(portal.socket));
   }
 
   // Asignar emisores.
@@ -48,21 +53,18 @@ portal.events = {
 
   // Conectado.
   connect: function (data) {
-    console.debug('portal:socket connect:', data);
+    portal._debug('portal.socket connect:', data);
   },
 
   // Error.
   error: function (data) {
-    console.debug('portal:socket error:', data);
+    portal._debug('portal.socket error:', data);
 
-    // Pueden llegar varias respuestas de error. Por estar el proyecto en 
-    // fase inestable, no se tratan todas. Sin embargo, si funcionó bien,
-    // y encontró ésta conexión como duplicada, entonces, hacer logout al
-    // usuario.
+    // Multiples conexiones del usuario en diferentes computadoras.
     if (data === 'DUPLICATE') {
       Elise.alert({
         content: 'Lo sentimos, un usuario sólo puede tener sesiones '
-          +'en una sola computadora.',
+         +'en una sola computadora.',
         type: 'info',
         afterClose: function () {
           window.location.href = '/eisi';
@@ -72,13 +74,17 @@ portal.events = {
         window.location.href = '/eisi';
       }, 5000);
     }
+
+    // TODO: tratar otros errores.
   },
 
   // Mensaje de administración.
-  'portal:msg': function (data) {
-    console.debug('portal:socket portal:msg:', data);
+  msg: function (data) {
+    portal._debug('portal.socket portal:msg:', data);
 
     var msg;
+
+    // Sólo mostrar los mensajes nuevos y guardarlos.
     if (data.messages && data.messages.length) {
       for (var m in data.messages) {
         msg = data.messages[m];
@@ -107,21 +113,13 @@ portal.emits = {};
 $(document).ready(function ($) {
 
   // Cargar módulos.
-  $.getJSON('/eisi/Scripts/Portal/realtime.config.json')
-  .done(function (config) {
+  $.getJSON('/eisi/Scripts/Portal/realtime.config.json', function (config) {
     
     // Parsear configuración.
     portal.server = config.sockets;
     portal.server.url = 'http://'+ portal.server.host +':'+ portal.server.port;
 
     // Conseguir conexión con sockets.
-    $.getScript(portal.server.url +'/socket.io/socket.io.js')
-    .done(portal.manager)
-    .fail(function (err) {
-      console.debug(err.name +': '+ err.message);
-    });
-  })
-  .fail(function (err) {
-    console.debug(err.name +': '+ err.message);
+    $.getScript(portal.server.url +'/socket.io/socket.io.js', portal.manager);
   });
 });
