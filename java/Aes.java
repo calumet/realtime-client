@@ -1,7 +1,7 @@
 /*!
  * Universidad Industrial de Santander
  * Grupo de Desarrollo de Software Calumet
- * Realtime-client | AES Encrypt and Decrypt (java)
+ * Realtime-client | AES Encrypt and Decrypt (Java)
  * Romel Pérez, prhone.blogspot.com
  * 2015
  **/
@@ -16,44 +16,43 @@ import javax.xml.bind.DatatypeConverter;
 
 public class Aes {
 
-    private static byte[] iv = "0000000000000000".getBytes();
+  private static byte[] iv = "0000000000000000".getBytes();
 
-    private static String decrypt(String encrypted, String seed)
-            throws Exception {
-        byte[] keyb = seed.getBytes("utf-8");
-        MessageDigest md = MessageDigest.getInstance("SHA-256");
-        byte[] thedigest = md.digest(keyb);
-        SecretKeySpec skey = new SecretKeySpec(thedigest, "AES");
-        Cipher dcipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-        dcipher.init(Cipher.DECRYPT_MODE, skey, new IvParameterSpec(iv));
+  private static String decrypt(String encrypted, String seed) throws Exception {
+    byte[] keyb = seed.getBytes("utf-8");
+    MessageDigest md = MessageDigest.getInstance("SHA-256");
+    byte[] thedigest = md.digest(keyb);
+    SecretKeySpec skey = new SecretKeySpec(thedigest, "AES");
+    Cipher dcipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+    dcipher.init(Cipher.DECRYPT_MODE, skey, new IvParameterSpec(iv));
 
-        byte[] clearbyte = dcipher.doFinal(DatatypeConverter
-                .parseHexBinary(encrypted));
-        return new String(clearbyte);
-    }
+    byte[] clearbyte = dcipher.doFinal(DatatypeConverter.parseHexBinary(encrypted));
+    return new String(clearbyte);
+  }
 
-    public static String encrypt(String content, String key) throws Exception {
-        byte[] input = content.getBytes("utf-8");
+  public static String encrypt(String content, String key) throws Exception {
+    byte[] input = content.getBytes("utf-8");
 
-        MessageDigest md = MessageDigest.getInstance("SHA-256");
-        byte[] thedigest = md.digest(key.getBytes("utf-8"));
-        SecretKeySpec skc = new SecretKeySpec(thedigest, "AES");
-        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-        cipher.init(Cipher.ENCRYPT_MODE, skc, new IvParameterSpec(iv));
+    MessageDigest md = MessageDigest.getInstance("SHA-256");
+    byte[] thedigest = md.digest(key.getBytes("utf-8"));
+    SecretKeySpec skc = new SecretKeySpec(thedigest, "AES");
+    Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+    cipher.init(Cipher.ENCRYPT_MODE, skc, new IvParameterSpec(iv));
 
-        byte[] cipherText = new byte[cipher.getOutputSize(input.length)];
-        int ctLength = cipher.update(input, 0, input.length, cipherText, 0);
-        ctLength += cipher.doFinal(cipherText, ctLength);
-        return DatatypeConverter.printHexBinary(cipherText);
-    }
+    byte[] cipherText = new byte[cipher.getOutputSize(input.length)];
+    int ctLength = cipher.update(input, 0, input.length, cipherText, 0);
+    ctLength += cipher.doFinal(cipherText, ctLength);
+    return DatatypeConverter.printHexBinary(cipherText);
+  }
 
-    public static void main(String[] args) throws Exception {
-        String data = "hello";
-        String key = "ABCD1234";
-        String cipher = Aes.encrypt(data, key);
-        String decipher = Aes.decrypt(cipher, key);
-        System.out.println(cipher);
-        System.out.println(decipher);
-    }
-    
+  public static void main(String[] args) throws Exception {
+    String message = "ENCRIPTAR";
+    String key = "PRIVATE_KEY";
+    String cipher = Aes.encrypt(message, key);
+    String decipher = Aes.decrypt(cipher, key);
+    System.out.println("Mensaje a encriptar: " + message);
+    System.out.println("Mensaje encriptado: " + cipher);
+    System.out.println("Mensaje desencriptado: " + decipher);
+  }
+  
 }
