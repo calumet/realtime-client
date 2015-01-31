@@ -4,10 +4,10 @@
  * EISI | Aula | Chat | UI
  * Romel Pérez, prhone.blogspot.com
  * Duvan Vargas, @DuvanJamid
- * 2015
+ * Enero, 2015
  **/
 
-window.chat = window.chat || {};
+window.chat = _.extend(window.chat || {}, Backbone.Events);
 chat.models = {};
 chat.views = {};
 chat.ui = _.extend({}, Backbone.Events);
@@ -70,6 +70,7 @@ chat.models.Room = Backbone.Model.extend({
     idAttr: 'RXXX',
     classAttr: '',
     available: true,
+    userState: 'away',
     name: 'Sala de chat',
     usersViews: [],  // Colección de vistas (y sus modelos) de usuarios.
     messages: []  // Los registros de cada mensaje.
@@ -79,10 +80,12 @@ chat.models.Room = Backbone.Model.extend({
 
 // Vista de sala de chat.
 chat.views.Room = Backbone.View.extend({
+
   template: _.template($(chat.ui._tmlIds.room).html()),
   templateMsg: _.template($(chat.ui._tmlIds.roomMsg).html()),
   $usersList: null,  // Objeto lista de usuarios.
   events: {},
+
   initialize: function () {
     var _this = this;
 
@@ -109,17 +112,27 @@ chat.views.Room = Backbone.View.extend({
 
     return this;
   },
+
   render: function (render) {
+
+    // Mostrar los contenidos de la sala.
     if (render === undefined || render === true) {
-      this.$el.add(this.$usersList).addClass('active');
-      this.$el.scrollTop(this.$('.chat-room-cell').height() + 300);
-      $('#chat .chat-rooms-name').html(this.model.get('name'));
+      this.$el.add(this.$usersList).addClass('active animated fadeIn');
+      $('#chat .chat-rooms-name .boton .label').html(this.model.get('name'));
       $('#chat-message').val('').trigger('focus');
-    } else {
-      this.$el.add(this.$usersList).removeClass('active');
+    }
+
+    // Ocultar los contenidos de la sala.
+    else {
+      this.$el.add(this.$usersList).removeClass('active animated fadeIn');
     }
     return this;
   },
+
+  scrollToEnd: function () {
+    this.$el.scrollTop(this.$('.chat-room-cell').height() + 300);
+  },
+
   addMsg: function (msg) {
     var date = new XDate(msg.id);
     var user = _.findWhere(chat.data.users, {id: msg.user});
@@ -127,13 +140,13 @@ chat.views.Room = Backbone.View.extend({
     var $lastMsg = this.$('.chat-room-cell .block:last');
     var lastDate = new XDate($lastMsg.data('id'));
 
-    // Agregar contenido enriquecido.
-    content = '<p>'+ content +'</p>';
-
     // Concatenar mensajes consecutivos del mismo origen del mismo minuto.
     if ($lastMsg.length && $lastMsg.data('user') === msg.user
     && date.toString('yyyy-MM-dd HH:mm') === lastDate.toString('yyyy-MM-dd HH:mm')) {
 
+      // Parsear contenido.
+      content = '<p class="animated flipInX">'+ content +'</p>';
+      
       // Agregar mensaje.
       $lastMsg.find('.chat-msg-content').append(content);
     }
@@ -145,18 +158,23 @@ chat.views.Room = Backbone.View.extend({
       var classes = chat.data.user.id === msg.user
        ? 'pull-right cian'
        : 'pull-left orange';
+      classes += ' animated flipInY';
+
+      // Parsear contenido.
+      content = '<p>'+ content +'</p>';
 
       // Crear elemento del mensaje.
       var $msg = $(this.templateMsg({
         idAttr: this.model.get('id') +'-M'+ msg.id,
         classAttr: classes,
         user: user,
-        time: date.toString('yyyy-MM-dd HH:mm:ss'),
+        time: date.toString('yyyy-MM-dd HH:mm'),
         content: content
       })).data({
         'id': msg.id,
         'user': msg.user
       });
+
 
       // Aplicar $.fn.timeago.
       $msg.find('.time').timeago();
@@ -179,7 +197,7 @@ chat.models.RoomUser = Backbone.Model.extend({
   defaults: {
     id: 'UXXX',
     idAttr: 'RXXX-UXXX',
-    state: 'available',  // Concuerda con la clase en CSS.
+    state: 'away',  // Concuerda con la clase en CSS.
     photo: chat.ui._defaults.avatar,
     name: 'Nombre de usuario',
     profile: 'Estudiante'
@@ -191,12 +209,25 @@ chat.models.RoomUser = Backbone.Model.extend({
 chat.views.RoomUser = Backbone.View.extend({
   template: _.template($(chat.ui._tmlIds.roomUser).html()),
   events: {},
+  states: ['available', 'away', 'offline'],
+
   initialize: function () {
     this.setElement(this.template(this.model.attributes));
     return this;
   },
+
   render: function () {
-    this.$el.attr('class', 'chat-user-box').addClass(this.model.get('state'));
+    var state = this.model.get('state');
+
+    // Animación del cambio.
+    this.$el.removeClass(this.states.join(' ') +' animated rubberBand flipInY')
+     .addClass(state);
+    if (state === 'offline') {
+      this.$el.addClass('animated rubberBand');
+    } else {
+      this.$el.addClass('animated flipInY');
+    }
+
     this.$('.chat-user-photo').css({
       'background-image': 'url('+ this.model.get('photo') +')'
     });
@@ -211,16 +242,40 @@ chat.views.RoomUser = Backbone.View.extend({
 // GENERAL //
 
 // Re/iniciar interfaz con datos de entrada.
+// Esto si la conexión fue establecida correctamente.
 chat.ui.on('init', function () {
 
-  // Habilitar la opción de cambiar la sala.
-  var roomsAvailable = _.pluck(chat.data.rooms, 'id');
-  $('#chat-opt-changeRoom').on('click', function (e) {
-    var ra = chat.ui._room;
-    var i = roomsAvailable.indexOf(ra);
-    var r = i === roomsAvailable.length - 1 ? 0 : i + 1;
-    chat.ui.trigger('room:change', roomsAvailable[r]);
-  });
+  var ra = _.where(chat.data.rooms, {available: true});
+  
+  // Sólo hay una sala activa.
+  if (ra.length === 1) {
+    $('#chat .chat-rooms-name .dropdown-menu').append(
+     '<li><a href="#">No hay más salas disponibles.</a></li>');
+    $('#chat .chat-rooms-name .caret').addClass('hidden');
+  }
+
+  // Hay más de una sala activa.
+  else {
+    
+    // Cambiar de sala.
+    _.each(ra, function (r) {
+      $('#chat .chat-rooms-name .dropdown-menu').append($('<li>').html($('<a>', {
+        href: '#',
+        html: chat.ui.rooms[r.id].model.get('name'),
+        data: {
+          room: function (ri) {
+            return ri;
+          }(r.id)
+        },
+        click: function (ri) {
+          return function (e) {
+            chat.ui.trigger('room:change', ri);
+          };
+        }(r.id)
+      })));
+    });
+  }
+  $('#chat .chat-rooms-name .boton').addClass('dropdown-toggle').dropdown();
 
   // Habilitar la opción de enviar mensajes.
   $('#chat-message').on('keydown', function (e) {
@@ -254,12 +309,14 @@ chat.ui.on('init', function () {
     }
   });
 
-  // Trigger button.
-  $('#chat-opt-trigger').removeAttr('disabled');
-
   // Toggle ventana.
   $('#chat-opt-trigger, #chat-opt-minimize').on('click', function (e) {
     chat.win.trigger('toggle');
+  });
+
+  // Habilitar la opción de des/habilitar audio.
+  $('#chat-opt-audio').on('click', function (e) {
+    chat.config.trigger('change', 'audio', 'enabled', !chat.config.audio.enabled);
   });
 });
 
@@ -317,6 +374,9 @@ chat.ui.on('user:disconnect', function () {
 chat.ui.rooms = {};
 
 
+// -------------------------------------------------------------------------- //
+// ROOMS/ADD //
+
 // Agregar una nueva sala.
 chat.ui.on('room:add', function (room) {
 
@@ -371,6 +431,9 @@ chat.ui.on('room:add', function (room) {
 });
 
 
+// -------------------------------------------------------------------------- //
+// ROOMS/STATE //
+
 // Cambio de estado de una sala.
 chat.ui.on('room:state', function (data) {
   var roomId = data.room;
@@ -389,16 +452,27 @@ chat.ui.on('room:state', function (data) {
 });
 
 
+// -------------------------------------------------------------------------- //
+// ROOMS/CHANGE //
+
 // Cambia la sala activa.
 chat.ui.on('room:change', function (room) {
-  
+
+  // Usuario lejano en la sala actual y disponible en la nueva.
+  // Esto es si la ventana de chat está siendo observada.
+  if (chat._focus && chat.win._state === 'shown') {
+    chat.conn.trigger('state', chat.ui._room, 'away');
+    chat.conn.trigger('state', room, 'available');
+  }
+
   // Desactivar todas las demás ventanas.
   _.each(chat.ui.rooms, function (roomView) {
     roomView.render(false);
   });
 
-  // Activar la ventana enviada.
+  // Activar la ventana enviada y arreglar scroll.
   chat.ui.rooms[room].render();
+  chat.ui.rooms[room].scrollToEnd();
 
   // Guardar estado.
   chat.ui._room = room;
@@ -426,6 +500,9 @@ chat.ui.on('room:user:state', function (room, userId, state) {
   var uv = _.find(chat.ui.rooms[room].model.get('usersViews'), function (uv) {
     if (uv.model.get('id') === userId) return true;
   });
+  if (!uv) {
+    return console.debug('chat.ui.on("room:user:state")', room, userId, 'no encontrado.');
+  }
 
   // Mover usuario al final de los conectados.
   var $ul = chat.ui.rooms[room].$usersList;

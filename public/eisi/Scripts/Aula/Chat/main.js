@@ -4,52 +4,169 @@
  * EISI | Aula | Chat | Main
  * Romel Pérez, prhone.blogspot.com
  * Duvan Vargas, @DuvanJamid
- * 2015
+ * Enero, 2015
  **/
 
-window.chat = window.chat || {};
+window.chat = _.extend(window.chat || {}, Backbone.Events);
+chat.config = _.extend({}, Backbone.Events);
 chat.win = _.extend({}, Backbone.Events);
+chat.audio = _.extend({}, Backbone.Events);
 
 // Objetos ya definidos:
 // > chat.data = {user: {id}, teacher: {id}, subject, group, subgroup}
 
 
 // -------------------------------------------------------------------------- //
-// Utilidades //
+// CONTROL (debug, events, config) //
 
-// Private methods.
-chat._debugMode = true;
-chat._debug = function () {
-  if (chat._debugMode) console.debug.apply(console, arguments);
+// MOGO DEBUG.
+chat._debug = true;
+if (!chat._debug) {
+  console._debug = console.debug;
+  console.debug = function () {};
+}
+
+
+// Estado de la aplicación.
+chat._focus = true;
+chat.on('focus', function (state) {
+  if (state === undefined || state === true) {
+    chat._focus = true;
+
+    // Cambiar estado a disponible si está viendo la sala al momento de ver
+    // la ventana.
+    if (chat.win._state === 'shown') {
+      chat.conn.trigger('state', chat.ui._room, 'available');
+    }
+  } else {
+    chat._focus = false;
+    chat.conn.trigger('state', chat.ui._room, 'away');
+  }
+});
+
+
+// Configuración predeterminada de usuario.
+chat.config.audio = {
+  volume: 0.5,
+  enabled: true
 };
+
+// General.
+// Cargar configuración guardada por el usuario.
+chat.config.on('load', function () {
+  _.each(['audio'], function (c) {
+    var v;
+    _.each(chat.config[c], function (e, i) {
+      v = localStorage.getItem('chat['+ chat.data.user.id +'].config.'+ c +'.'+ i);
+      chat.config[c][i] = v !== null ? v : chat.config[c][i];
+    });
+  });
+  chat.config.trigger('change', 'audio', 'volume', Number(chat.config.audio.volume));
+  chat.config.trigger('change', 'audio', 'enabled',
+   chat.config.audio.enabled === 'false' ? false : true);
+});
+// Cambiar una variable de configuración.
+chat.config.on('change', function (c, p, v) {
+  chat.config[c][p] = v;
+  localStorage.setItem('chat['+ chat.data.user.id +'].config.'+ c +'.'+ p, v);
+});
+
+// Audio.
+// Cambiar una variable de audio.
+chat.config.on('change', function (c, p, v) {
+  if (c === 'audio' && p === 'enabled') {
+    $('#chat-opt-audio')[!!v ? 'addClass' : 'removeClass']('azuloscuro')
+                        [!!v ? 'removeClass' : 'addClass']('transparente');
+  }
+});
 
 
 // -------------------------------------------------------------------------- //
-// Ventana del chat //
+// VENTANA DEL CHAT //
 
-// Estado de la ventana del chat.
-// hidden | shown
-chat.win.state = 'hidden';
-chat.win.on('state', function (state) {
-  chat.win.state = state;
-  chat.ui.rooms[chat.ui._room].render();
-  if (state === 'shown') {
-    chat.win.trigger('markTrigger', false);
-    $('body').css('overflow', 'hidden');
+// Iniciar eventos de control de ventana.
+// Inicializar diseño de elementos de control de ventana y configuración del chat.
+chat.win.on('init', function () {
+
+  // Si es móbil o no en dispositivo.
+  if (Elise.isMobile) {
+    $('#chat').css('border', 'none');
+
+    // Ocultar sidebar.
+    $('#chat .chat-sidebar').addClass('outPhase');
+
+    // Mostrar/ocultar el sidebar.
+    $('#chat-opt-users, #chat-opt-usersHide').removeClass('outPhase').on('click',
+    function (e) {
+      var $s = $('#chat .chat-sidebar').removeClass('animated fadeIn fadeOut');
+      $s.hasClass('outPhase') ? $s.removeClass('outPhase') : $s.addClass('outPhase');
+    });
   } else {
-    $('body').css('overflow', 'auto');
+
+    // Decoración.
+    $('#chat .chat-rooms-options button').toolTip();
+  }
+
+  // Cargar configuración de usuario guardada (si la hay).
+  chat.config.trigger('load');
+
+  // Aplicar DOM de cambio de configuraciones definidas.
+  $('#chat-opt-audio')[chat.config.audio.enabled ? 'addClass' : 'removeClass']('azuloscuro')
+                      [chat.config.audio.enabled ? 'removeClass' : 'addClass']('transparente');
+
+  // Posicionar la ventana.
+  chat.win.trigger('position');
+
+  // Redimensionar ventana al redimensionado de ventana.
+  $(window).on('resize', function (e) {
+    chat.win.trigger('position');
+  });
+
+  // Ventana con/sin foco.
+  $(window).on('focus', function (e) {
+    chat.trigger('focus');
+  });
+  $(window).on('blur', function (e) {
+    chat.trigger('focus', false);
+  });
+});
+
+// Estado de la ventana del chat: hidden | shown
+chat.win._state = 'hidden';
+chat.win.on('state', function (state) {
+
+  chat.win._state = state;
+  chat.ui.rooms[chat.ui._room].scrollToEnd();
+
+  // Se muestra.
+  if (state === 'shown') {
+    if (chat.conn.socket.connected) {
+      chat.win.trigger('markTrigger', false);
+    }
+    if (chat._focus) {
+      chat.conn.trigger('state', chat.ui._room, 'available');
+    }
+    if (Elise.isMobile) {
+      $('#header, #aula').addClass('outPhase');
+    }
+  }
+
+  // Se oculta.
+  else {
+    chat.conn.trigger('state', chat.ui._room, 'away');
+    if (Elise.isMobile) {
+      $('#header, #aula').removeClass('outPhase');
+    }
   }
 });
 
 // Mostrar/ocultar ventana del chat.
 chat.win.on('toggle', function () {
-  var $chat = $('#chat');
-
-  $chat.addClass('animated');
+  var $chat = $('#chat').removeClass('animated');
 
   // Mostrar si estaba ocultada.
-  if ($chat.hasClass('hidden')) {
-    $chat.removeClass('hidden fadeOut').addClass('fadeIn');
+  if ($chat.hasClass('outPhase')) {
+    $chat.removeClass('outPhase fadeOutUp').addClass('animated fadeInDown');
     $chat.one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend',
     function (e) {
       chat.win.trigger('state', 'shown');
@@ -58,11 +175,11 @@ chat.win.on('toggle', function () {
 
   // Ocultar si estaba mostrada.
   else {
-    $chat.removeClass('fadeIn').addClass('fadeOut');
+    $chat.removeClass('fadeInDown').addClass('animated fadeOutUp');
     $chat.one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend',
     function (e) {
       chat.win.trigger('state', 'hidden');
-      $chat.addClass('hidden');
+      $chat.addClass('outPhase');
     });
   }
 });
@@ -78,48 +195,88 @@ chat.win.on('markTrigger', function (somethingNew) {
 
 // Re/posicionar ventana del chat.
 chat.win.on('position', function () {
-  var dims = Elise.win.dims();
-  var w = dims.width - 60;
-  var h = dims.height - 60;
+  var dims = Elise.win.dims(300, 300);
+  var w = dims.width;
+  var h = dims.height;
 
-  $('#chat').css({
-    left: 30,
-    top: 30,
-    width: w,
-    height: h
-  });
-  $('#chat .chat-sidebar-content').css({
-    height: h - 8*2 - (50+8*2) - (20+8*2)
-  });
-  $('#chat .chat-rooms').css({
-    width: w - 250
-  });
-  $('#chat .chat-rooms-list').css({
-    height: h - (40+5*2) - 50
-  });
-  $('#chat .chat-message').css({
-    width: w - 5*2 - 250
-  })
+  // Si nos encontramos en dispositivo móbil.
+  if (Elise.isMobile) {
+    $('#chat').css({
+      width: w,
+      height: h
+    });
+
+    // Arreglar estructura interna del chat.
+    $('#chat .chat-sidebar').css({
+      width: w,
+      height: h
+    });
+    $('#chat .chat-sidebar > div').css('width', 'auto');
+    $('#chat .chat-sidebar-content').css({
+      height: h - 8*2 - (50+8*2) - (20+8*2)
+    });
+    $('#chat .chat-rooms').css({
+      width: w
+    });
+    $('#chat .chat-rooms-list').css({
+      height: h - (40+5*2) - 50
+    });
+  } else {
+    w -= 100;
+    h -= 100;
+
+    $('#chat').css({
+      width: w,
+      height: h,
+      left: 50,
+      top: 50
+    });
+
+    // Arreglar estructura interna del chat.
+    $('#chat .chat-sidebar-content').css({
+      height: h - 8*2 - (50+8*2) - (20+8*2)
+    });
+    $('#chat .chat-rooms').css({
+      width: w - 250
+    });
+    $('#chat .chat-rooms-list').css({
+      height: h - (40+5*2) - 80
+    });
+  }
 });
 
 
 // -------------------------------------------------------------------------- //
-// DOM Events //
+// AUDIO //
+
+// Reproducir un sonido de los precargados.
+chat.audio.on('play', function (sound) {
+  var s;
+  if (chat.config.audio.enabled) {
+    s = createjs.Sound.play(sound);
+    s.volume = chat.config.audio.volume;
+  }
+});
+
+
+// -------------------------------------------------------------------------- //
+// INICIALIZACIÓN //
 
 // DOM listo.
 $(document).ready(function ($) {
 
+  // Cargar recursos de audio.
+  // NOTE: no se espera a que estén cargados ya que la reproducción de audio
+  // se hace "probablemente" después de haberse cargado la página entera.
+  createjs.Sound.alternateExtensions = ['ogg'];
+  createjs.Sound.registerSounds([
+    {src: 'CyanPing.mp3', id: 'newMsg'},
+    {src: 'Lalande.mp3', id: 'sendMsg'}
+  ], '/eisi/sounds/Aula/Chat/');
+  
   // Iniciar conexión.
   chat.conn.trigger('init');
 
-  // Posicionar la ventana.
-  chat.win.trigger('position');
-
-  // Decoración.
-  $('#chat .chat-rooms-options a').toolTip();
-});
-
-// Ventana redimensionada.
-$(window).on('resize', function (e) {
-  chat.win.trigger('position');
+  // Iniciar control de ventana.
+  chat.win.trigger('init');
 });

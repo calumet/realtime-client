@@ -4,10 +4,10 @@
  * EISI | Aula | Chat | Connection
  * Romel Pérez, prhone.blogspot.com
  * Duvan Vargas, @DuvanJamid
- * 2015
+ * Enero, 2015
  **/
 
-window.chat = window.chat || {};
+window.chat = _.extend(window.chat || {}, Backbone.Events);
 chat.conn = _.extend({}, Backbone.Events);
 chat.conn.socket = null;  // El socket de conexión.
 chat.conn.server = {};  // Configuración del servidor del chat.
@@ -27,9 +27,6 @@ chat.conn._hasAConnectionError = false;
 
 // Si se ha tratado de reconectar en esta conexión.
 chat.conn._hasAttemptedToReconnect = false;
-
-// Si se ha avisado que hay nuevos mensajes mientras tenga la ventana cerrada.
-chat.conn._hasShownNewEvents = false;
 
 
 // -------------------------------------------------------------------------- //
@@ -62,6 +59,12 @@ chat.conn.on('init', function () {
       error: function () {
         Elise.notify.error('Lo sentimos, el chat del aula no está disponible en '
         +'este momento. Intenta en unos minutos por favor.', 'Chat del aula');
+
+        // Intentando abrir el chat.
+        $('#chat-opt-trigger').on('click', function (e) {
+          Elise.notify.warning('El chat no se encuentra disponible en este momento.',
+           'Chat del aula');
+        });
       }
     });
   });
@@ -96,33 +99,45 @@ chat.conn.events = {
   // Error de conexión.
   // data:String El tipo de error devuelto.
   error: function (data) {
-    chat._debug('aula.socket error:', data);
+    console.debug('chat.socket error:', data);
 
-    // Si se está duplicado, cerrar la ventana.
+    // Función de error, usuario duplicado.
+    var duplicate = function () {
+      $('body').html('<p style="margin:20px;font-size:1.5em;">'
+       +'Lo sentimos, un usuario sólo puede tener una instancia de un aula virtual'
+       +' por sesi&oacute;n <a href="/eisi/">Volver al inicio</a>.'
+      +'</p>');
+      window.close();
+    };
+
+    // Error, usuario duplicado.
     if (data === 'DUPLICATE') {
       Elise.alert({
-        content: 'Lo sentimos, s&oacute;lo se puede tener una instancia del aula.',
+        content: 'Lo sentimos, s&oacute;lo se puede tener una instancia de un '
+         +'aula virtual por sesi&oacute;n.',
         type: 'error',
-        afterClose: function () {
-          window.close();
-        }
+        afterClose: duplicate
       });
-      setTimeout(function () {
-        window.close();
-      }, 5000);
+      setTimeout(duplicate, 5000);
     }
 
     // Algún tipo de error ocurrió en la conexión.
     else {
       Elise.notify.error('Lo sentimos, ocurrió un error conectándonos con el'
        +' chat. Intenta en unos minutos por favor.', 'Chat del aula');
+
+      // Intentando abrir el chat.
+      $('#chat-opt-trigger').on('click', function (e) {
+        Elise.notify.warning('El chat no se encuentra disponible en este momento.',
+         'Chat del aula');
+      });
     }
   },
 
 
   // Conexión fallida.
   connect_error: function () {
-    chat._debug('aula.socket connect_error|connect_timeout:', arguments);
+    console.debug('chat.socket connect_error|connect_timeout:', arguments);
 
     if (!chat.conn._hasConnected && !chat.conn._hasAConnectionError) {
       Elise.notify.error('Ha ocurrido un error de conexión con el servidor.'
@@ -137,7 +152,7 @@ chat.conn.events = {
 
   // Desconectado.
   disconnect: function () {
-    chat._debug('aula.socket disconnect:', arguments);
+    console.debug('chat.socket disconnect:', arguments);
 
     chat.ui.trigger('user:disconnect');
     Elise.notify.error('Te has desconectado del servidor.', 'Chat del aula');
@@ -146,7 +161,7 @@ chat.conn.events = {
 
   // Reconectando.
   reconnecting: function (n) {
-    chat._debug('aula.socket reconnecting:', arguments);
+    console.debug('chat.socket reconnecting:', arguments);
 
     if (!chat.conn._hasAttemptedToReconnect) {
       Elise.notify.info('Estamos intentando reconectarnos...', 'Chat del aula', {
@@ -160,7 +175,7 @@ chat.conn.events = {
 
   // Error en un evento enviado.
   serverError: function (data) {
-    chat._debug('aula.socket serverError:', data);
+    console.debug('chat.socket serverError:', data);
     
     // Error al recibir datos.
     if (data.ev === 'online') {
@@ -181,6 +196,35 @@ chat.conn.events = {
     }
   },
 
+
+  // Error de usuario con el servidor.
+  userError: function (err) {
+    console.debug('chat.socket userError:', err);
+
+    // Función de error, usuario duplicado.
+    var duplicate = function () {
+      $('body').html('<p style="margin:20px;font-size:1.5em;">'
+       +'Lo sentimos, un usuario sólo puede tener una instancia de un aula virtual'
+       +' por sesi&oacute;n <a href="/eisi/">Volver al inicio</a>.'
+      +'</p>');
+      window.close();
+    };
+
+    // Otro usuario intenta entrar con esta cuenta.
+    if (err === 'DUPLICATE') {
+      Elise.alert({
+        content: 'Lo sentimos, s&oacute;lo se puede tener una instancia de un '
+         +'aula virtual por sesi&oacute;n.',
+        type: 'error',
+        afterClose: duplicate
+      });
+      setTimeout(duplicate, 5000);
+    }
+
+    // NOTE: otro errores no se tratan.
+  },
+
+
   // Usuario online.
   // data:{
   //   users:[{id:String,photo:String,name:String}],
@@ -192,7 +236,7 @@ chat.conn.events = {
   //   }]
   // }
   online: function (data) {
-    chat._debug('aula.socket online:', data);
+    console.debug('chat.socket online:', data);
 
     var roomsAvailable = _.where(data.rooms, {available: true}).length;
     var roomsUnavailable = _.where(data.rooms, {available: false}).length;
@@ -200,9 +244,8 @@ chat.conn.events = {
     // Sino se encontró ninguna sala.
     if (roomsUnavailable === data.rooms.length) {
       
-      // Cambiar trigger.
-      $('#chat-opt-trigger').removeAttr('disabled').removeClass('verde')
-      .on('click', function (e) {
+      // Evento de trigger.
+      $('#chat-opt-trigger').on('click', function (e) {
         Elise.notify.warning('No hay ninguna sala de chat disponible en este '
          +'momento.', 'Chat del aula');
       });
@@ -213,11 +256,10 @@ chat.conn.events = {
       // Comentarlo.
       return Elise.notify.warning('No hay ninguna sala de chat del aula disponible'
        +' en este momento. Intenta en unos minutos por favor.', 'Chat del aula');
-    }
+    } else {
 
-    // Si se encontró sólo una sala.
-    else if (roomsAvailable === 1) {
-      $('#chat-opt-changeRoom').addClass('hidden');
+      // Actualizar trigger.
+      $('#chat-opt-trigger').addClass('verde');
     }
 
     // Si alguna sala no se puede agregar.
@@ -273,8 +315,8 @@ chat.conn.events = {
       chat.ui.trigger('room:change', chat.data.subject +'_'+ chat.data.group);
     }, 1);
 
-    // IMPORTANT: recordar que de momento sólo se soportan las dos salas,
-    // la sala de clase y la del subgrupo, por lo tanto, sólo se manejan ellas.
+    // IMPORTANT: recordar que de momento sólo se soportan las tres salas de chat
+    // precreadas, clase, subgrupo, guión.
 
     // Inicialización de vistas generales.
     chat.ui.trigger('init');
@@ -284,44 +326,74 @@ chat.conn.events = {
   // Otro usuario está online.
   // data:{id:String, room:String} El id del usuario conectado.
   userOnline: function (data) {
-    chat._debug('aula.socket userOnline:', data);
+    console.debug('chat.socket userOnline:', data);
     
     // Cambiar estado de usuario en la sala.
-    chat.ui.trigger('room:user:state', data.room, data.id, 'available');
+    chat.ui.trigger('room:user:state', data.room, data.id, 'away');
   },
 
 
   // Otro usuario está offline.
   // data:{id:String, room:String} El id del usuario desconectado.
   userOffline: function (data) {
-    chat._debug('aula.socket userOffline:', data);
+    console.debug('chat.socket userOffline:', data);
     
     // Cambiar estado de usuario en la sala.
     chat.ui.trigger('room:user:state', data.room, data.id, 'offline');
   },
 
 
+  // Otro usuario cambia de estado en una sala (available | away).
+  // data:{room:String, id:String, state:String}
+  userState: function (data) {
+    console.debug('chat.socket userState:', data);
+
+    // Cambiar el estado en la sala.
+    chat.ui.trigger('room:user:state', data.room, data.id, data.state);
+  },
+
+
   // Un usuario envía un mensaje en una sala.
   // data:{id:Date, room:String, user:String, content:String}
   userMsg: function (data) {
-    chat._debug('aula.socket userMsg:', data);
-
-    // Mostrar que hay un evento nuevo sino está abierta la ventana.
-    if (chat.win.state === 'hidden') {
-      chat.win.trigger('markTrigger', true);
-      if (!chat.conn._hasShownNewEvents) {
-        Elise.notify.info('Hay nuevos mensajes por leer.', 'Chat del aula');
-        chat.conn._hasShownNewEvents = true;
-      }
-    } else {
-      chat.win.trigger('markTrigger', false);
-      chat.conn._hasShownNewEvents = false;
-    }
+    console.debug('chat.socket userMsg:', data);
 
     // Procesar encoding de los datos de llegada si fueron distintos.
     if (chat.conn.server.encoding !== chat.conn.client.encoding) {
       data.content = utf8_decode(data.content);
     }
+    
+    // Dependiendo del usuario que envió el mensaje.
+    if (data.user === chat.data.user.id) {
+      chat.audio.trigger('play', 'sendMsg');
+    } else {
+
+      // Navegador sin foco || ventana chat oculta.
+      if (!chat._focus || chat.win._state === 'hidden') {
+        chat.audio.trigger('play', 'newMsg');
+        chat.win.trigger('markTrigger', true);
+        Elise.notify.normal('Hay nuevos mensajes por leer en <b>'+
+         chat.ui.rooms[data.room].model.get('name') +'</b>.', 'Chat del aula', {
+          timeOut: 3000
+         });
+      }
+
+      // Navegador con foco && ventana chat mostrada.
+      else {
+        chat.win.trigger('markTrigger', false);
+
+        // La sala es distinta.
+        if (data.room !== chat.ui._room) {
+          chat.audio.trigger('play', 'newMsg');
+          Elise.notify.normal('Hay nuevos mensajes por leer en <b>'+
+           chat.ui.rooms[data.room].model.get('name') +'</b>.', 'Chat del aula', {
+            timeOut: 3000
+           });
+        }
+      }
+    }
+
+    // NOTE: no se guarda referencia del nuevo mensaje para no saturar el cliente.
 
     // Agregar el mensaje a la interfaz de la sala.
     chat.ui.trigger('room:msg:add', data.room, data);
@@ -331,8 +403,11 @@ chat.conn.events = {
   // Una sala de chat ha cambiado su estado.
   // data:{room:String, available:Boolean}
   roomState: function (data) {
-    chat._debug('aula.socket roomState:', data);
+    console.debug('chat.socket roomState:', data);
     
+    // NOTE: de momento, sólo se controla que una sala estaba activa y se reciba
+    // un mensaje para desactivarla.
+
     // Interfaz del chat debido al cambio de estado de la sala.
     chat.ui.trigger('room:state', data);
   }
@@ -341,6 +416,23 @@ chat.conn.events = {
 
 // -------------------------------------------------------------------------- //
 // Emisiones del socket //
+
+// Cambiar estado en una sala.
+chat.conn.on('state', function (room, state) {
+  if (!room || !state || chat.ui.rooms[room].model.get('userState') === state) {
+    return;
+  }
+  var data = {
+    room: room,
+    state: state
+  };
+  chat.ui.rooms[room].model.set('userState', state);
+
+  // Enviar cambio de estado.
+  chat.conn.socket.emit('state', data);
+  console.debug('chat.socket.emit state:', data);
+});
+
 
 // Enviar un mensaje en la sala activa.
 chat.conn.on('msg', function (content) {
@@ -356,10 +448,10 @@ chat.conn.on('msg', function (content) {
 
   // Determinar si el usuario está conectado.
   if (chat.conn.socket.disconnected) {
-    Elise.notify.warning('No estás conectado con el chat.', 'Chat del aula');
-    return;
+    return Elise.notify.warning('No estás conectado con el chat.', 'Chat del aula');
   }
 
   // Enviar mensaje.
   chat.conn.socket.emit('msg', data);
+  console.debug('chat.socket.emit msg:', data);
 });
