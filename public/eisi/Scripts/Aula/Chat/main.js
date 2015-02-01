@@ -7,20 +7,20 @@
  * Enero, 2015
  **/
 
-window.chat = _.extend(window.chat || {}, Backbone.Events);
+// Objetos ya definidos:
+// > window.chat
+// > window.chat.data = {user: {id}, teacher: {id}, subject, group, subgroup}
+
 chat.config = _.extend({}, Backbone.Events);
 chat.win = _.extend({}, Backbone.Events);
 chat.audio = _.extend({}, Backbone.Events);
-
-// Objetos ya definidos:
-// > chat.data = {user: {id}, teacher: {id}, subject, group, subgroup}
 
 
 // -------------------------------------------------------------------------- //
 // CONTROL (debug, events, config) //
 
 // MOGO DEBUG.
-chat._debug = true;
+chat._debug = false;
 if (!chat._debug) {
   console._debug = console.debug;
   console.debug = function () {};
@@ -134,25 +134,35 @@ chat.win.on('init', function () {
 // Estado de la ventana del chat: hidden | shown
 chat.win._state = 'hidden';
 chat.win.on('state', function (state) {
-
   chat.win._state = state;
-  chat.ui.rooms[chat.ui._room].scrollToEnd();
 
   // Se muestra.
   if (state === 'shown') {
     if (chat.conn.socket.connected) {
       chat.win.trigger('markTrigger', false);
+      if (chat.ui._room) chat.ui.rooms[chat.ui._room].scrollToEnd();
     }
     if (chat._focus) {
       chat.conn.trigger('state', chat.ui._room, 'available');
     }
     if (Elise.isMobile) {
       $('#header, #aula').addClass('outPhase');
+    } else {
+      $('body').css('overflow', 'hidden');
+    }
+
+    // Colocar la sala de clase como la sala inicialmente abierta (sino lo estaba).
+    if (!chat.ui._room) {
+      chat.ui.trigger('room:change', chat.data.subject +'_'+ chat.data.group);
+      chat.ui.rooms[chat.data.subject +'_'+ chat.data.group].scrollToEnd();
     }
   }
 
   // Se oculta.
   else {
+    if (!Elise.isMobile) {
+      $('body').css('overflow', 'auto');
+    }
     chat.conn.trigger('state', chat.ui._room, 'away');
     if (Elise.isMobile) {
       $('#header, #aula').removeClass('outPhase');

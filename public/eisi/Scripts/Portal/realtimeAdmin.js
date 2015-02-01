@@ -70,7 +70,7 @@ realtime.message = {
           Elise.alert({
             type: 'error',
             content: 'Ha ocurrido un error publicando el mensaje. '
-              +'Intente de nuevo por favor.'
+             +'Intente de nuevo por favor.'
           });
         }
       }
@@ -82,8 +82,7 @@ realtime.message = {
 $(function ($) {
 
   // Cargar módulos.
-  $.getJSON('/eisi/Scripts/Portal/realtime.config.json')
-  .done(function (config) {
+  $.getJSON('/eisi/Scripts/Portal/realtime.config.json', function (config) {
     
     // Parsear configuración.
     realtime.server = config.sockets;
@@ -91,8 +90,5 @@ $(function ($) {
 
     // Iniciar procesos.
     realtime.init();
-  })
-  .fail(function (err) {
-    console.debug(err.name +': '+ err.message);
   });
 });

@@ -7,7 +7,6 @@
  * Enero, 2015
  **/
 
-window.chat = _.extend(window.chat || {}, Backbone.Events);
 chat.conn = _.extend({}, Backbone.Events);
 chat.conn.socket = null;  // El socket de conexión.
 chat.conn.server = {};  // Configuración del servidor del chat.
@@ -227,11 +226,11 @@ chat.conn.events = {
 
   // Usuario online.
   // data:{
-  //   users:[{id:String,photo:String,name:String}],
+  //   users:[{id:String, photo:String, name:String}],
   //   rooms:[{
-  //     id:String, available:Boolean,
-  //     teacher:{id:String,state:String},
-  //     students:[{id:String,state:String}],
+  //     id:String, available:Boolean, timeLastOut:Date,
+  //     teacher:String,
+  //     users:[{id:String,state:String}],
   //     messages:[{id:String,user:String,content:String}]
   //   }]
   // }
@@ -265,7 +264,7 @@ chat.conn.events = {
     // Si alguna sala no se puede agregar.
     if (roomsUnavailable) {
       Elise.notify.warning('No todas las salas de chat est&aacute;n disponibles'
-       +' en este momento.');
+       +' en este momento.', 'Chat del aula');
     }
 
     // Si ya se ha conectado anteriormente con el servidor.
@@ -309,14 +308,6 @@ chat.conn.events = {
         chat.ui.trigger('room:add', room);
       }
     });
-
-    // Colocar la sala de clase como activa inicialmente.
-    setTimeout(function () {
-      chat.ui.trigger('room:change', chat.data.subject +'_'+ chat.data.group);
-    }, 1);
-
-    // IMPORTANT: recordar que de momento sólo se soportan las tres salas de chat
-    // precreadas, clase, subgrupo, guión.
 
     // Inicialización de vistas generales.
     chat.ui.trigger('init');
@@ -419,13 +410,15 @@ chat.conn.events = {
 
 // Cambiar estado en una sala.
 chat.conn.on('state', function (room, state) {
-  if (!room || !state || chat.ui.rooms[room].model.get('userState') === state) {
-    return;
-  }
+  if (!room || !state
+   || (room && (chat.ui.rooms[room].model.get('userState') === state
+    || !chat.ui.rooms[room].model.get('available')))) return;
   var data = {
     room: room,
     state: state
   };
+
+  // Cambiar estado de usuario en la sala en local.
   chat.ui.rooms[room].model.set('userState', state);
 
   // Enviar cambio de estado.
@@ -436,6 +429,14 @@ chat.conn.on('state', function (room, state) {
 
 // Enviar un mensaje en la sala activa.
 chat.conn.on('msg', function (content) {
+  if (typeof content !== 'string') return;
+
+  // Si la sala donde se encuentra se encuentra inactiva.
+  if (!chat.ui.rooms[chat.ui._room].model.get('available')) {
+    return Elise.notify.warning('Esta sala se encuentra no disponible en '
+     +'este momento.', 'Chat del aula');
+  }
+
   var data = {
     room: chat.ui._room,
     content: content

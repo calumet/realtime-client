@@ -6,14 +6,6 @@
  * 2015
  **/
 
-/**
- * Las peticiones AJAX deben ser enviadas desde este servidor al de sockets con
- * un flag especial, que permitirá enviar las cookies, ya que se trata de un
- * servidor distinto al origen mismo (puerto 7000) al que envía (puerto 80).
- * http://stackoverflow.com/questions/2870371/
- * $.ajax({..., xhrFields: {withCredentials: true}});
- */
-
 // require(['jquery', 'elise']).
 window.portal = window.portal || {};
 
@@ -60,12 +52,12 @@ portal.events = {
   error: function (data) {
     portal._debug('portal.socket error:', data);
 
-    // Multiples conexiones del usuario en diferentes computadoras.
+    // Usuario ya en uso.
     if (data === 'DUPLICATE') {
       Elise.alert({
         content: 'Lo sentimos, un usuario sólo puede tener sesiones '
-         +'en una sola computadora.',
-        type: 'info',
+         +'en una sola computadora. Por su seguridad se debe cerrar la sessión.',
+        type: 'alert',
         afterClose: function () {
           window.location.href = '/eisi';
         }
@@ -75,7 +67,28 @@ portal.events = {
       }, 5000);
     }
 
-    // TODO: tratar otros errores.
+    // TODO:
+    // Tratar otros errores.
+  },
+
+  // Error post-connection.
+  userError: function (data) {
+    portal._debug('portal.socket userError:', data);
+
+    // Usuario duplicado en otra computadora.
+    if (data === 'DUPLICATE') {
+      Elise.alert({
+        content: 'Lo sentimos, se ha intentado ingresar con su usuario en otra'
+         +' computadora. Por su seguridad se debe cerrar la sessión.',
+        type: 'alert',
+        afterClose: function () {
+          window.location.href = '/eisi';
+        }
+      });
+      setTimeout(function () {
+        window.location.href = '/eisi';
+      }, 5000);
+    }
   },
 
   // Mensaje de administración.

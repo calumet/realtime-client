@@ -7,7 +7,6 @@
  * Enero, 2015
  **/
 
-window.chat = _.extend(window.chat || {}, Backbone.Events);
 chat.models = {};
 chat.views = {};
 chat.ui = _.extend({}, Backbone.Events);
@@ -51,7 +50,7 @@ chat.views.User = Backbone.View.extend({
   events: {},
   render: function () {
     this.$('.chat-user-photo').css({
-      'background-image': 'url('+ this.model.get('photo') +')'
+      'background-image': 'url('+ this.model.get('photo').replace(' ', '%20') +')'
     });
     this.$('.chat-user-name').html(this.model.get('name'));
     this.$('.chat-user-profile').html(this.model.get('profile'));
@@ -229,7 +228,7 @@ chat.views.RoomUser = Backbone.View.extend({
     }
 
     this.$('.chat-user-photo').css({
-      'background-image': 'url('+ this.model.get('photo') +')'
+      'background-image': 'url('+ this.model.get('photo').replace(' ', '%20') +')'
     });
     this.$('.chat-user-name').html(this.model.get('name'));
     this.$('.chat-user-profile').html(this.model.get('profile'));
@@ -287,14 +286,7 @@ chat.ui.on('init', function () {
     if (code === 13) {
       e.preventDefault();
       e.stopPropagation();
-      
-      // Si la sala donde se encuentra se encuentra inactiva.
-      if (!chat.ui.rooms[roomActive].model.get('available')) {
-        Elise.notify.warning('Esta sala se encuentra no disponible en '
-         +'este momento.', 'Chat del aula');
-        return false;
-      }
-      
+
       // Parsear contenido.
       content = _.escape(content);
       content = content.replace(/\n/g, '<br>');
@@ -379,29 +371,25 @@ chat.ui.rooms = {};
 
 // Agregar una nueva sala.
 chat.ui.on('room:add', function (room) {
-
-  var ud;
+  var ud, udTeacher;
+  var IAmATeacher = chat.data.user.id === chat.data.teacher.id;
 
   // Lista de usuarios de la sala (exceptuar el local).
-  var users = room.students;
-  users = _.filter(users, function (user) {
-    if (user.id === chat.data.user.id) return false;
-    return true;
+  var users = _.filter(room.users, function (user) {
+    if (user.id !== chat.data.user.id) return true;
   });
-  if (room.teacher.id !== '' && room.teacher.id !== chat.data.user.id) {
-    users.unshift(room.teacher);
-  }
 
   // Crear las vistas con sus modelos de cada usuario.
   users = _.map(users, function (user) {
     ud = _.findWhere(chat.data.users, {id: user.id});
+    udTeacher = chat.data.teacher.id === user.id;
     var model = new chat.models.RoomUser({
       id: user.id,
       idAttr: room.id +'-'+ user.id,
       state: user.state,
       photo: ud.photo,
       name: ud.name,
-      profile: chat.data.teacher.id === user.id ? 'Profesor' : 'Estudiante'
+      profile: udTeacher ? 'Profesor' : 'Estudiante'
     });
     return new chat.views.RoomUser({
       model: model
@@ -409,11 +397,22 @@ chat.ui.on('room:add', function (room) {
   });
 
   // Crear modelo de la sala.
-  var roomName = room.id === chat.data.subject +'_'+ chat.data.group
-   ? 'Sala de clase'
-   : (room.id === chat.data.subject +'_'+ chat.data.group +'_'+ chat.data.subgroup
-      ? 'Sala del subgrupo'
-      : room.name);
+  var roomName = 'Sala personalizada';
+  var group = room.id.substring(room.id.indexOf('_') + 1);
+  switch (room.type) {
+    case 'class': {
+      roomName = 'Sala de clase'+ (IAmATeacher ? ' ('+ group +')' : '');
+      break;
+    }
+    case 'subgroup': {
+      roomName = 'Sala de subgrupo';
+      break;
+    }
+    case 'guion': {
+      roomName = 'Sala de materia';
+      break;
+    }
+  }
   var roomModel = new chat.models.Room({
     id: room.id,
     idAttr: room.id,
@@ -428,6 +427,14 @@ chat.ui.on('room:add', function (room) {
   chat.ui.rooms[room.id] = new chat.views.Room({
     model: roomModel
   });
+
+  // Avisar si hay nuevos mensajes en esta sala (ya que no la vé inmediatamente).
+  if (room.messages.length && room.timeLastOut
+  && room.timeLastOut < room.messages[room.messages.length - 1].id) {
+    chat.win.trigger('markTrigger', true);
+    Elise.notify.normal('Hay nuevos mensajes por leer en <b>'+ roomName +'</b>.',
+     'Chat del aula');
+  }
 });
 
 
