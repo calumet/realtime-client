@@ -1,5 +1,9 @@
-# RealTime client
+# RealTime-Client v0.3.6-beta
 
-Para el proyecto **[RealTime](https://github.com/calumet/realtime)** versión 0.4 alpha.
+Este proyecto simula ser el proyecto privado **EISI** del Grupo Calumet, con el objetivo de testear algunas aplicaciones de tiempo real del sistema de aplicaciones para comunicaciÃ³n en tiempo real **[RealTime](https://github.com/calumet/realtime)** en su correspondiente versiÃ³n.
 
-Este es un servidor simulando ser el servidor principal desarrollado en Java Server Pages (JSP), corriendo en el puerto 80. Se hace la simulación de tal servidor en node.js en el puerto 80.
+## Licencia
+
+[The MIT License](http://opensource.org/licenses/MIT) (MIT)
+
+Copyright (c) 2013-2015 [Grupo Calumet](http://cormoran.uis.edu.co/calumet)
