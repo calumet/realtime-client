@@ -227,6 +227,9 @@ chat.views.RoomUser = Backbone.View.extend({
       this.$el.addClass('animated flipInY');
     }
 
+    // FIXIT: hay un problema tratando de escribir la foto de un usuario.
+    // Al parecer, no está llegando el dato, pero esto ocurre con el profesor.
+
     this.$('.chat-user-photo').css({
       'background-image': 'url('+ this.model.get('photo').replace(' ', '%20') +')'
     });
