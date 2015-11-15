@@ -1,6 +1,10 @@
-# RealTime-Client v0.3.6-beta
+# Calumet RealTime Client
 
-Este proyecto simula ser el proyecto privado **EISI** del Grupo Calumet, con el objetivo de testear algunas aplicaciones de tiempo real del sistema de aplicaciones para comunicación en tiempo real **[RealTime](https://github.com/calumet/realtime)** en su correspondiente versión.
+> **Este proyecto no se encuentra actualmente mantenido.**.
+
+Este proyecto simula ser el proyecto privado **EISI** del Grupo Calumet, con el
+objetivo de testear algunas aplicaciones de tiempo real del sistema de aplicaciones
+para comunicación en tiempo real **[RealTime](https://github.com/calumet/realtime)**.
 
 ## Licencia
 
