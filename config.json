@@ -1,9 +1,0 @@
-{
-  "host": "127.0.0.1",
-  "port": 80,
-  "security": {
-    "user": "PORTAL_USER",
-    "door": "PORTAL_DOOR",
-    "key": "ABCD1234"
-  }
-}
