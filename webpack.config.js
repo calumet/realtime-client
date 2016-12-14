@@ -20,7 +20,7 @@ if (!dev) {
 
 module.exports = Object.assign({}, webpackBase, {
   entry: {
-    'realtime': './src/js/index.js',
+    'realtime': './src/index.js',
   },
   output: {
     path: './dist/js/',

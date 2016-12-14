@@ -8,10 +8,11 @@
     "demos": "node demos.js",
     "build": "npm run build-css && npm run build-js",
     "build:production": "NODE_ENV=production npm run build-css && NODE_ENV=production npm run build-js",
+    "build:test": "NODE_ENV=test npm run build-css && NODE_ENV=test npm run build-js",
     "build-css": "gulp sass",
     "build-js": "webpack",
     "test": "npm run test-lint && npm run test-js",
-    "test-lint": "eslint --cache --quiet ./src/js",
+    "test-lint": "eslint --cache --quiet ./src",
     "test-js": "NODE_ENV=test karma start karma.conf.js"
   },
   "repository": {
