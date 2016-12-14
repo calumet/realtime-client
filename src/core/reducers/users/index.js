@@ -13,18 +13,7 @@ const reducer = function (state, action) {
 
   switch (action.type) {
 
-    case ACTIONS.CON.ADD: {
-      const item = action.payload;
-      return state.push(item);
-    }
-
-    case ACTIONS.CON.REMOVE: {
-      const id = action.payload;
-      const key = state.findKey(item => item.id === id);
-      return state.remove(key);
-    }
-
-    case ACTIONS.CON.RESET: {
+    case ACTIONS.USERS.RESET: {
       const items = action.payload;
       return List(items);
     }
