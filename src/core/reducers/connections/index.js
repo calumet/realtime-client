@@ -24,9 +24,11 @@ const reducer = function (state, action) {
       return state.remove(key);
     }
 
-    case ACTIONS.CON.RESET: {
+    case ACTIONS.CON.MERGE: {
+      const current = state.toArray();
       const items = action.payload;
-      return List(items);
+      // TODO: Merge items.
+      return List();
     }
 
     default:

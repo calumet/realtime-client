@@ -40,22 +40,23 @@ describe('Reducers', function () {
       expect(actual.toArray()).to.eql(expected);
     });
 
-    it('Reset all items', function () {
+    it('Merge items', function () {
       const state = List([
         { id: '1', socket: 'x0' },
         { id: '2', socket: 'x1' }
       ]);
       const action = {
-        type: ACTIONS.CON.RESET,
+        type: ACTIONS.CON.MERGE,
         payload: [
-          { id: 'w1', socket: 'y9' },
-          { id: 'w2', socket: 'y10' }
+          { id: '2', socket: 'y9' },
+          { id: '3', socket: 'y10' }
         ]
       };
       const actual = reducer(state, action);
       const expected = [
-        { id: 'w1', socket: 'y9' },
-        { id: 'w2', socket: 'y10' }
+        { id: '1', socket: 'x0' },
+        { id: '2', socket: 'y9' },
+        { id: '3', socket: 'y10' }
       ];
 
       expect(List.isList(actual)).to.be.true;
