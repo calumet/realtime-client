@@ -1,3 +1,4 @@
+import mergeCollections from 'prhone-tools/merge-collections';
 import { List } from 'immutable';
 import { ACTIONS } from 'consts';
 
@@ -27,8 +28,8 @@ const reducer = function (state, action) {
     case ACTIONS.CON.MERGE: {
       const current = state.toArray();
       const items = action.payload;
-      // TODO: Merge items.
-      return List();
+      const merged = mergeCollections(current, items);
+      return List(merged);
     }
 
     default:

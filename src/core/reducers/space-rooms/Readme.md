@@ -1,4 +1,4 @@
-# Reducer: rooms
+# Reducer: spaceRooms
 
 Lista de todas las salas del espacio en el que el usuario está actualmente conectado.
 
@@ -16,7 +16,7 @@ Resetea la lista de salas actuales por una nueva proveida.
 
 **Payload:** `[ { SpaceRoom } ]`
 
-## Disable
+## Availability
 
 Deshabilita/habilita una sala usando su identificador.
 
