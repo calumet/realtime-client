@@ -1,29 +1,34 @@
 export default {};
 
 export const ACTIONS = {
+  APP: {
+    START: 'APP-START',
+    STARTED: 'APP-STARTED',
+    FATAL: 'APP-FATAL',
+  },
   USERS: {
-    RESET: 0,
+    RESET: 'USERS-RESET',
   },
   USERSCATEGORIES: {
-    RESET: 0,
+    RESET: 'USERSCATEGORIES-RESET',
   },
   SPACE: {
-    UPDATE: 0,
+    UPDATE: 'SPACE-UPDATE',
   },
   SPACEROOMS: {
-    RESET: 0,
-    AVAILABILITY: 1,
+    RESET: 'SPACEROOMS-RESET',
+    AVAILABILITY: 'SPACEROOMS-AVAILABILITY',
   },
   ROOMSUSERS: {
-    RESET: 0,
+    RESET: 'ROOMSUSERS-RESET',
   },
   ROOMSMSGS: {
-    ADD: 0,
-    MERGE: 1,
+    ADD: 'ROOMSMSGS-ADD',
+    MERGE: 'ROOMSMSGS-MERGE',
   },
   CON: {
-    ADD: 0,
-    REMOVE: 1,
-    MERGE: 2,
+    ADD: 'CON-ADD',
+    REMOVE: 'CON-REMOVE',
+    MERGE: 'CON-MERGE',
   },
 };
