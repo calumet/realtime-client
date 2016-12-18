@@ -1,4 +1,7 @@
 import { combineReducers } from 'redux';
+import { routerReducer } from 'react-router-redux';
+
+import app              from './app';
 import users            from './users';
 import usersCategories  from './users-categories';
 import space            from './space';
@@ -8,6 +11,7 @@ import roomsMessages    from './rooms-messages';
 import connections      from './connections';
 
 export default combineReducers({
+  app,
   users,
   usersCategories,
   space,
@@ -15,4 +19,5 @@ export default combineReducers({
   roomsUsers,
   roomsMessages,
   connections,
+  routing: routerReducer,
 });
