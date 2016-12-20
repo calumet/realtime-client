@@ -13,12 +13,12 @@ const reducer = function (state, action) {
 
   switch (action.type) {
 
-    case ACTIONS.SPACEROOMS.RESET: {
+    case ACTIONS.SPACEROOMS_RESET: {
       const items = action.payload;
       return List(items);
     }
 
-    case ACTIONS.SPACEROOMS.AVAILABILITY: {
+    case ACTIONS.SPACEROOMS_AVAILABILITY: {
       const { id, disabled } = action.payload;
       const key = state.findKey(item => item.id === id);
       return state.update(key, item => {

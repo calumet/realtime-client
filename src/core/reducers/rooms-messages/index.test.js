@@ -14,7 +14,7 @@ describe('Reducers', function () {
     it('Add an item', function () {
       const state = List();
       const action = {
-        type: ACTIONS.ROOMSMSGS.ADD,
+        type: ACTIONS.ROOMSMSGS_ADD,
         payload: { id: 'q1', content: 'x0' }
       };
       const actual = reducer(state, action);
@@ -30,7 +30,7 @@ describe('Reducers', function () {
         { id: '2', content: 'x1' }
       ]);
       const action = {
-        type: ACTIONS.ROOMSMSGS.MERGE,
+        type: ACTIONS.ROOMSMSGS_MERGE,
         payload: [
           { id: '2', content: 'y9' },
           { id: '3', content: 'y10' }

@@ -13,7 +13,7 @@ const reducer = function (state, action) {
 
   switch (action.type) {
 
-    case ACTIONS.USERS.RESET: {
+    case ACTIONS.USERS_RESET: {
       const items = action.payload;
       return List(items);
     }

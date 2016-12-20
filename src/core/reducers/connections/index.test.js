@@ -14,11 +14,11 @@ describe('Reducers', function () {
     it('Add an item', function () {
       const state = List();
       const action = {
-        type: ACTIONS.CON.ADD,
-        payload: { id: 'q1', socket: 'x0' }
+        type: ACTIONS.CON_ADD,
+        payload: { id: 'x0', socket: 's0' }
       };
       const actual = reducer(state, action);
-      const expected = { id: 'q1', socket: 'x0' };
+      const expected = { id: 'x0', socket: 's0' };
 
       expect(List.isList(actual)).to.be.true;
       expect(actual.get(0)).to.eql(expected);
@@ -30,7 +30,7 @@ describe('Reducers', function () {
         { id: '2', socket: 'x1' }
       ]);
       const action = {
-        type: ACTIONS.CON.REMOVE,
+        type: ACTIONS.CON_REMOVE,
         payload: '1'
       };
       const actual = reducer(state, action);
@@ -46,7 +46,7 @@ describe('Reducers', function () {
         { id: '2', socket: 'x1' }
       ]);
       const action = {
-        type: ACTIONS.CON.MERGE,
+        type: ACTIONS.CON_MERGE,
         payload: [
           { id: '2', socket: 'y9' },
           { id: '3', socket: 'y10' }

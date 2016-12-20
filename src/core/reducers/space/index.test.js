@@ -14,7 +14,7 @@ describe('Reducers', function () {
     it('Update map', function () {
       const state = Map({ id: 'q7', code: 'x9' });
       const action = {
-        type: ACTIONS.CON.UPDATE,
+        type: ACTIONS.SPACE_UPDATE,
         payload: { id: 'x1', name: 'Space01' }
       };
       const actual = reducer(state, action);

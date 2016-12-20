@@ -13,7 +13,7 @@ const reducer = function (state, action) {
 
   switch (action.type) {
 
-    case ACTIONS.CON.UPDATE: {
+    case ACTIONS.SPACE_UPDATE: {
       return state.merge(action.payload);
     }
 

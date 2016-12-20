@@ -1,25 +1,33 @@
 import settings from 'settings';
+import userEvents from 'core/events/user';
 import usersEvents from 'core/events/users';
 import roomsEvents from 'core/events/rooms';
 
 const ws = {
 
-  socket: null,
-
   connect () {
     const query = {
       userId: settings.userId,
       spaceCode: settings.spaceCode,
-      roomTag: settings.roomTag,
     };
-    ws.socket = io(settings.server, { query });
-    ws.setEvents();
+    if (settings.roomTag) {
+      query.roomTag = settings.roomTag;
+    }
+    settings.socket = io(settings.server, { query });
+    this.setEvents();
   },
 
   setEvents () {
-    ws.socket.on('room:user:connect', usersEvents.connect.bind(ws.socket));
-    ws.socket.on('room:user:disconnect', usersEvents.disconnect.bind(ws.socket));
-    ws.socket.on('room:message', roomsEvents.message.bind(ws.socket));
+
+    // User
+    settings.socket.on('error', userEvents.onError.bind(settings.socket));
+
+    // Users
+    settings.socket.on('room:user:connect', usersEvents.onConnect.bind(settings.socket));
+    settings.socket.on('room:user:disconnect', usersEvents.onDisconnect.bind(settings.socket));
+
+    // Rooms
+    settings.socket.on('room:message', roomsEvents.onMessage.bind(settings.socket));
   },
 };
 

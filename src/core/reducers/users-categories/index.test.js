@@ -17,7 +17,7 @@ describe('Reducers', function () {
         { id: '2', name: 'x1' }
       ]);
       const action = {
-        type: ACTIONS.USERSCATEGORIES.RESET,
+        type: ACTIONS.USERSCATEGORIES_RESET,
         payload: [
           { id: 'w1', name: 'y9' },
           { id: 'w2', name: 'y10' }

@@ -11,14 +11,16 @@ describe('Reducers', function () {
       expect(actual.toObject()).to.eql({
         starting: false,
         started: false,
+        error: null,
         fatal: null,
+        room: null
       });
     });
 
     it('Start app', function () {
       const state = Map();
       const action = {
-        type: ACTIONS.APP.START,
+        type: ACTIONS.APP_START,
       };
       const actual = reducer(state, action);
       const expected = { starting: true, started: false, fatal: null };
@@ -30,7 +32,7 @@ describe('Reducers', function () {
     it('Started app', function () {
       const state = Map();
       const action = {
-        type: ACTIONS.APP.STARTED,
+        type: ACTIONS.APP_STARTED,
       };
       const actual = reducer(state, action);
       const expected = { starting: false, started: true, fatal: null };
@@ -39,10 +41,25 @@ describe('Reducers', function () {
       expect(actual.toObject()).to.eql(expected);
     });
 
+    it('Normal error', function () {
+      const state = Map();
+      const action = {
+        type: ACTIONS.APP_ERROR,
+        payload: { message: 'An error ocurred' },
+      };
+      const actual = reducer(state, action);
+      const expected = {
+        error: { message: 'An error ocurred' }
+      };
+
+      expect(Map.isMap(actual)).to.be.true;
+      expect(actual.toObject()).to.eql(expected);
+    });
+
     it('Fatal error', function () {
       const state = Map();
       const action = {
-        type: ACTIONS.APP.FATAL,
+        type: ACTIONS.APP_FATAL,
         payload: { message: 'An error ocurred' },
       };
       const actual = reducer(state, action);
@@ -54,6 +71,18 @@ describe('Reducers', function () {
 
       expect(Map.isMap(actual)).to.be.true;
       expect(actual.toObject()).to.eql(expected);
+    });
+
+    it('Change current room', function () {
+      const state = Map();
+      const action = {
+        type: ACTIONS.APP_CHANGEROOM,
+        payload: 10,
+      };
+      const actual = reducer(state, action);
+
+      expect(Map.isMap(actual)).to.be.true;
+      expect(actual.toObject()).to.have.property('room', 10);
     });
 
     it('Unknown type', function () {

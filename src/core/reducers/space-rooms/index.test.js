@@ -17,7 +17,7 @@ describe('Reducers', function () {
         { id: '2', socket: 'x1' }
       ]);
       const action = {
-        type: ACTIONS.SPACEROOMS.RESET,
+        type: ACTIONS.SPACEROOMS_RESET,
         payload: [
           { id: 'w1', socket: 'y9' },
           { id: 'w2', socket: 'y10' }
@@ -39,7 +39,7 @@ describe('Reducers', function () {
         { id: 'q2', socket: 'x1', disabled: false }
       ]);
       const action = {
-        type: ACTIONS.SPACEROOMS.AVAILABILITY,
+        type: ACTIONS.SPACEROOMS_AVAILABILITY,
         payload: { id: 'q2', disabled: true }
       };
       const actual = reducer(state, action);

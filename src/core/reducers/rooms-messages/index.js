@@ -14,12 +14,12 @@ const reducer = function (state, action) {
 
   switch (action.type) {
 
-    case ACTIONS.ROOMSMSGS.ADD: {
+    case ACTIONS.ROOMSMSGS_ADD: {
       const item = action.payload;
       return state.push(item);
     }
 
-    case ACTIONS.ROOMSMSGS.MERGE: {
+    case ACTIONS.ROOMSMSGS_MERGE: {
       const current = state.toArray();
       const items = action.payload;
       const merged = mergeCollections(current, items);

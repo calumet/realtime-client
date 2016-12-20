@@ -14,18 +14,18 @@ const reducer = function (state, action) {
 
   switch (action.type) {
 
-    case ACTIONS.CON.ADD: {
+    case ACTIONS.CON_ADD: {
       const item = action.payload;
       return state.push(item);
     }
 
-    case ACTIONS.CON.REMOVE: {
+    case ACTIONS.CON_REMOVE: {
       const id = action.payload;
       const key = state.findKey(item => item.id === id);
       return state.remove(key);
     }
 
-    case ACTIONS.CON.MERGE: {
+    case ACTIONS.CON_MERGE: {
       const current = state.toArray();
       const items = action.payload;
       const merged = mergeCollections(current, items);
