@@ -8,10 +8,11 @@ try {
 const settings = {
   sass: {
     files: [
-      './src/scss/**/*.scss'
+      './src/**/*.scss'
     ],
     includePaths: [
-      './src/scss'
+      './src',
+      './node_modules/foundation-sites/scss'
     ],
     output: './dist/css',
   }
