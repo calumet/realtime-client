@@ -4,12 +4,12 @@
   display: block;
 
   .users-userslist__list {
-    padding: 0 1rem;
+    padding: 0 $global-padding;
   }
 
   // Component: users-user
   .users-user {
-    padding: 1rem 0;
+    padding: $global-padding 0;
   }
   .users-user + .users-user {
     border-top: 1px solid $medium-gray;

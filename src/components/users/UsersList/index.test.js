@@ -12,15 +12,15 @@ describe('Components', function () {
     describe('UsersList', function () {
 
       it('Default className', function () {
-        const el = setup(null, <div />);
+        const el = setup();
         const actual = el.hasClass('users-userslist');
         expect(actual).to.be.true;
       });
 
       it('List is rendered', function () {
         const el = setup(null, [
-          <b>User1</b>,
-          <b>User2</b>
+          <b key={0}>User1</b>,
+          <b key={1}>User2</b>
         ]);
         const actual = el.find('.users-userslist__list').equals(
           <div className='users-userslist__list'>

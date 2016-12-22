@@ -1,0 +1,54 @@
+@import 'settings';
+
+.rooms-roomslistitem {
+  display: block;
+  overflow: hidden;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 250ms ease-out;
+
+  .mdi {
+    display: inline-block;
+    margin-top: -0.15rem;
+    line-height: 1rem;
+    font-size: 130%;
+    vertical-align: middle;
+  }
+  .rooms-roomslistitem__name {
+    display: block;
+    float: left;
+    width: calc(100% - 1.5rem);
+  }
+  .rooms-roomslistitem__activity {
+    visibility: hidden;
+    display: block;
+    float: right;
+    width: 1.5rem;
+  }
+
+  //
+  // Modifiers
+  //
+
+  &:hover,
+  &.rooms-roomslistitem--active {
+    background-color: $light-gray;
+  }
+
+  &.rooms-roomslistitem--activity {
+    animation: rooms-roomslistitem-activity 1s ease-out 0s infinite alternate;
+
+    .rooms-roomslistitem__activity {
+      visibility: visible;
+    }
+  }
+}
+
+@keyframes rooms-roomslistitem-activity {
+  0% {
+    background-color: $warning-color;
+  }
+  100% {
+    background-color: $white;
+  }
+}
