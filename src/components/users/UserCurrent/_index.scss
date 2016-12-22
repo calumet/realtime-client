@@ -5,11 +5,11 @@
   padding: 1rem;
   background-color: $primary-color;
 
-  // Componente: users-user
+  // Component: users-user
   .users-user {
     .users-user__name,
     .users-user__cat {
-      color: #fff;
+      color: $white;
     }
   }
 }
