@@ -13,7 +13,8 @@
     "build-js": "webpack",
     "test": "npm run test-lint && npm run test-js",
     "test-lint": "eslint --cache --quiet ./src",
-    "test-js": "NODE_ENV=test karma start karma.conf.js"
+    "test-js": "NODE_ENV=test karma start karma.conf.js",
+    "docs": "styleguidist build"
   },
   "repository": {
     "type": "git",
@@ -32,12 +33,14 @@
   "dependencies": {
     "axios": "^0.15.3",
     "babel-polyfill": "^6.20.0",
+    "classnames": "^2.2.5",
     "foundation-sites": "^6.3.0",
     "i18next": "^4.1.1",
     "immutable": "^3.8.1",
     "prhone-tools": "^1.0.2",
     "react": "^15.4.1",
     "react-dom": "^15.4.1",
+    "react-dotdotdot": "^1.0.17",
     "react-redux": "^4.4.6",
     "react-router": "^3.0.0",
     "react-router-redux": "^4.0.7",
@@ -74,6 +77,8 @@
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "^1.8.0",
     "mocha": "^3.2.0",
+    "react-addons-test-utils": "^15.4.1",
+    "react-styleguidist": "^4.4.1",
     "sinon": "^1.17.6",
     "sinon-chai": "^2.8.0",
     "vulcanize": "^1.15.1",
