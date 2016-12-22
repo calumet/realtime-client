@@ -3,14 +3,14 @@ import Dotdotdot from 'react-dotdotdot';
 import classNames from 'classnames';
 
 /**
- * Usuario de la comunicación.
+ * Componente de usuario de la comunicación.
  */
 export default function User (props) {
 
   const { name, category, photo, online, className, ...rest } = props;
-  const cls = classNames('users-user', className, {
+  const cls = classNames('users-user', {
     'users-user--online': online
-  });
+  }, className);
 
   const photoStyle = {};
   if (photo) {

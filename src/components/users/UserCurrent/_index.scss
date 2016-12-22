@@ -1,0 +1,15 @@
+@import 'settings';
+
+.users-usercurrent {
+  display: block;
+  padding: 1rem;
+  background-color: $primary-color;
+
+  // Componente: users-user
+  .users-user {
+    .users-user__name,
+    .users-user__cat {
+      color: #fff;
+    }
+  }
+}
