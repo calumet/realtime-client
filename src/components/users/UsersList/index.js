@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import classNames from 'classnames';
 
 /**
- * Componente lista de usuarios.
+ * Layout lista de usuarios.
  */
 export default function UsersList (props) {
 

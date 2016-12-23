@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import classNames from 'classnames';
 
 /**
- * Lista de salas.
+ * Layout lista de salas.
  */
 export default function RoomsList (props) {
 

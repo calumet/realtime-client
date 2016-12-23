@@ -36,7 +36,7 @@
   }
 
   &.rooms-roomslistitem--activity {
-    animation: rooms-roomslistitem-activity 1s ease-out 0s infinite alternate;
+    animation: rooms-roomslistitem-activity 1s ease-in 0s infinite alternate;
 
     .rooms-roomslistitem__activity {
       visibility: visible;
