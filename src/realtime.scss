@@ -65,8 +65,12 @@
 // Base
 @import './components/base/Main/index';
 
+// Rooms
+@import './components/rooms/RoomsList/index';
+@import './components/rooms/RoomsListItem/index';
+@import './components/rooms/Message/index';
+
 // Users
 @import './components/users/User/index';
-@import './components/users/UserCurrent/index';
 @import './components/users/UserCurrent/index';
 @import './components/users/UsersList/index';
