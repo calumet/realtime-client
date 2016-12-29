@@ -1,0 +1,26 @@
+@import 'settings';
+
+.rooms-roomgroup {
+  display: block;
+  margin: $global-margin 0 0;
+
+  .rooms-roomgroup__header {
+    display: block;
+    margin: 0;
+    line-height: 1.2;
+    font-size: 1.125rem;
+    font-weight: bold;
+    font-family: $header-font-family;
+    text-align: center;
+    color: $secondary-color;
+  }
+  .rooms-roomgroup__separation {
+    display: block;
+    margin: $global-separation auto;
+    border-top: 1px solid $light-gray;
+    width: 50%;
+  }
+  .rooms-roomgroup__content {
+    //
+  }
+}
