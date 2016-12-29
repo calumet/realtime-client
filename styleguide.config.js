@@ -7,13 +7,13 @@ module.exports = {
   title: pkg.name,
 
   // HTML template.
-  template: './docs/styleguide/template.html',
+  template: './docs/template.html',
 
   // Components declarations
   components: './src/components/**/index.js',
 
   // Folder to publish the docs.
-  styleguideDir: './docs/styleguide',
+  styleguideDir: './docs',
 
   // Show the code snippets by default.
   showCode: true,
