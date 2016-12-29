@@ -35,10 +35,3 @@ nbproject
 Thumbs.db
 dump.rdb
 npm-debug.log
-
-##
-## PROJECT
-##
-
-docs/styleguide/*
-!docs/styleguide/template.html
