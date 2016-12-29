@@ -13,7 +13,7 @@ const dev = process.env.NODE_ENV !== 'production';
 
 const postcssList = [
   autoprefixer({browsers: [
-    'last 5 version',
+    'last 10 version',
     '> 5%'
   ]})
 ];
