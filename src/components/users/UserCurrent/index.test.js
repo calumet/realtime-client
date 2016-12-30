@@ -1,6 +1,5 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { expect } from 'chai';
 import UserCurrent from './index';
 
 const setup = function (props, children) {
