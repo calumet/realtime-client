@@ -62,15 +62,13 @@
 // Components
 //
 
-// Base
-@import './components/base/Main/index';
-
 // Rooms
 @import './components/rooms/RoomsList/index';
 @import './components/rooms/RoomsListItem/index';
 @import './components/rooms/Message/index';
 @import './components/rooms/RoomMessages/index';
 @import './components/rooms/RoomGroup/index';
+@import './components/rooms/RoomType/index';
 
 // Users
 @import './components/users/User/index';
