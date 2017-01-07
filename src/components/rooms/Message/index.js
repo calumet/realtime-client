@@ -44,7 +44,12 @@ Message.propTypes = {
     PropTypes.element
   ]).isRequired,
   name: PropTypes.string.isRequired,
-  timestamp: PropTypes.any.isRequired,
+  timestamp: PropTypes.any,
   photo: PropTypes.string,
   moderator: PropTypes.bool
+};
+
+Message.defaultProps = {
+  timestamp: Date.now(),
+  moderator: false
 };

@@ -6,6 +6,7 @@ $rooms-message-photo-size: 2.5rem;
 .rooms-message {
   display: block;
   overflow: hidden;
+  text-align: left;
 
   .rooms-message__col {
     display: block;
