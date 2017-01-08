@@ -1,3 +1,36 @@
 a {
-  transition: color 250ms;
+  transition: color 250ms ease-out;
+}
+
+::-webkit-scrollbar {
+  width: 7px;
+  background-color: transparent;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: $global-radius;
+  background-color: $dark-gray;
+}
+
+::selection {
+  background-color: $primary-color;
+  color: $white;
+}
+::-moz-selection {
+  background-color: $primary-color;
+  color: $white;
+}
+
+::-webkit-input-placeholder {
+  color: $dark-gray;
+}
+:-moz-placeholder {
+  opacity: 1;
+  color: $dark-gray;
+}
+::-moz-placeholder {
+  opacity: 1;
+  color: $dark-gray;
+}
+:-ms-input-placeholder {
+  color: $dark-gray;
 }
