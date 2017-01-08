@@ -4,12 +4,4 @@
   display: block;
   padding: $global-padding;
   background-color: $primary-color;
-
-  // Component: users-user
-  .users-user {
-    .users-user__name,
-    .users-user__cat {
-      color: $white;
-    }
-  }
 }

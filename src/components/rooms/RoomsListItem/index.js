@@ -13,12 +13,19 @@ export default function RoomsListItem (props) {
     'rooms-roomslistitem--active': active
   }, className);
 
+  let text;
+  if (children) {
+    const temp = document.createElement('div');
+    temp.innerHTML = children;
+    text = temp.textContent;
+  }
+
   return (
     <div className={cls} {...rest}>
-      <div className='rooms-roomslistitem__name'>
-        <Dotdotdot clamp={1}>
+      <div className='rooms-roomslistitem__name' title={text}>
+        {/*<Dotdotdot clamp={1}>*/}
           <i className='mdi mdi-collage' /> {children}
-        </Dotdotdot>
+        {/*</Dotdotdot>*/}
       </div>
       <div className='rooms-roomslistitem__activity'>
         <i className='mdi mdi-alert-box' />

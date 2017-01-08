@@ -2,7 +2,7 @@
 
 .rooms-roomgroup {
   display: block;
-  margin: $global-margin 0 0;
+  margin: calc(#{$global-margin} * 2) 0 0;
 
   .rooms-roomgroup__header {
     display: block;
@@ -17,7 +17,7 @@
   .rooms-roomgroup__separation {
     display: block;
     margin: $global-separation auto;
-    border-top: 1px solid $light-gray;
+    border-top: 1px solid $medium-gray;
     width: 50%;
   }
   .rooms-roomgroup__content {

@@ -5,5 +5,6 @@ Wrapping un usuario normal.
         name='María Pérez'
         category='Estudiante'
         online={true}
+        theme='inverse'
       />
     </UserCurrent>

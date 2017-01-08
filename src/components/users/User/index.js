@@ -7,10 +7,16 @@ import classNames from 'classnames';
  */
 export default function User (props) {
 
-  const { name, category, photo, online, className, ...rest } = props;
+  const { moderator, theme, name, category, photo, online, className, ...rest } = props;
   const cls = classNames('users-user', {
     'users-user--online': online
   }, className);
+
+  // TODO: Use `moderator`
+
+  if (theme) {
+    rest['data-theme'] = theme;
+  }
 
   const photoStyle = {};
   if (photo) {
@@ -29,7 +35,7 @@ export default function User (props) {
           </Dotdotdot>
           <Dotdotdot clamp={1}>
             <div className='users-user__cat'>{category}</div>
-        </Dotdotdot>
+          </Dotdotdot>
         </div>
         <div className='users-user__col users-user__col3'>
           <div className='users-user__status'></div>
@@ -44,6 +50,7 @@ User.propTypes = {
   category: PropTypes.string,
   photo: PropTypes.string,
   online: PropTypes.bool,
+  theme: PropTypes.oneOf(['inverse']),
 };
 
 User.defaultProps = {
@@ -51,4 +58,5 @@ User.defaultProps = {
   category: '',
   photo: '',
   online: false,
+  theme: null
 };

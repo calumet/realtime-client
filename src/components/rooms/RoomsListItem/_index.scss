@@ -30,25 +30,25 @@
   // Modifiers
   //
 
-  &:hover,
-  &.rooms-roomslistitem--active {
+  &:hover {
     background-color: $light-gray;
   }
-
+  &.rooms-roomslistitem--active {
+    background-color: $medium-gray;
+  }
   &.rooms-roomslistitem--activity {
-    animation: rooms-roomslistitem-activity 1s ease-in 0s infinite alternate;
-
     .rooms-roomslistitem__activity {
       visibility: visible;
+      animation: rooms-roomslistitem-activity 1s ease-in 0s infinite alternate;
     }
   }
 }
 
 @keyframes rooms-roomslistitem-activity {
   0% {
-    background-color: $warning-color;
+    color: $warning-color;
   }
   100% {
-    background-color: $white;
+    color: lighten($warning-color, 25%);
   }
 }

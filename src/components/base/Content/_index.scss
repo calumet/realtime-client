@@ -1,0 +1,34 @@
+@import 'settings';
+
+.base-content {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+
+  .base-content__row {
+    display: table;
+    width: 100%;
+    height: 100%;
+  }
+  .base-content__col {
+    display: table-cell;
+    padding: 0;
+    text-align: center;
+    vertical-align: bottom;
+  }
+
+  // Component: .base-header
+  .base-header {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    padding: $global-padding;
+  }
+
+  // Component: .rooms-room
+  .rooms-room {
+    height: 100%;
+  }
+}

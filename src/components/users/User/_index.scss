@@ -1,9 +1,9 @@
 @import 'settings';
 @import 'design/mixins/images';
 
-$users-user-photo-size: 2.5rem;
+$users-user-photo-size: 2.4rem;
 $users-user-status-width: 0.25rem;
-$users-user-status-color: #66BB6A;
+$users-user-status-color: #03A9F4;
 
 .users-user {
   display: block;
@@ -57,6 +57,16 @@ $users-user-status-color: #66BB6A;
   &.users-user--online {
     .users-user__status {
       display: block;
+    }
+  }
+
+  //
+  // Themes
+  //
+  &[data-theme="inverse"] {
+    .users-user__name,
+    .users-user__cat {
+      color: $white;
     }
   }
 }

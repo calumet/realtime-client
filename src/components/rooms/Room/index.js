@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import classNames from 'classnames';
 
 /**
- * Una sala con todos los componentes que se necesitan para comunicarse.
+ * Layout de una sala con todos los componentes que se necesitan para comunicarse.
  */
 export default class Room extends Component {
 

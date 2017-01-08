@@ -55,6 +55,19 @@ describe('Components', function () {
         expect(actual).to.be.true;
       });
 
+      it('Theme by default', function () {
+        const el = setup({ name: 'Pepe' });
+        const actual = el.prop('data-theme');
+        expect(actual).to.be.falsy;
+      });
+
+      it('Theme set properly', function () {
+        const el = setup({ name: 'Pepe', theme: 'inverse' });
+        const actual = el.prop('data-theme');
+        const expected = 'inverse';
+        expect(actual).to.equal(expected);
+      });
+
     });
   });
 });
