@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import Dotdotdot from 'react-dotdotdot';
 import classNames from 'classnames';
+import i18n from 'core/i18n';
 
 /**
  * Componente de usuario de la comunicación.
@@ -9,10 +10,9 @@ export default function User (props) {
 
   const { moderator, theme, name, category, photo, online, className, ...rest } = props;
   const cls = classNames('users-user', {
-    'users-user--online': online
+    'users-user--online': online,
+    'users-user--moderator': moderator,
   }, className);
-
-  // TODO: Use `moderator`
 
   if (theme) {
     rest['data-theme'] = theme;
@@ -23,11 +23,15 @@ export default function User (props) {
     photoStyle.backgroundImage = `url(${photo})`;
   }
 
+  const moderatorTitle = i18n.t('moderator.title');
+
   return (
     <div {...rest} className={cls}>
       <div className='users-user__row'>
         <div className='users-user__col users-user__col1'>
-          <div className='users-user__photo' style={photoStyle} />
+          <div className='users-user__photo' style={photoStyle}>
+            <div className='users-user__moderator mdi mdi-star' title={moderatorTitle} />
+          </div>
         </div>
         <div className='users-user__col users-user__col2'>
           <Dotdotdot clamp={1}>
@@ -50,6 +54,7 @@ User.propTypes = {
   category: PropTypes.string,
   photo: PropTypes.string,
   online: PropTypes.bool,
+  moderator: PropTypes.bool,
   theme: PropTypes.oneOf(['inverse']),
 };
 
@@ -58,5 +63,6 @@ User.defaultProps = {
   category: '',
   photo: '',
   online: false,
-  theme: null
+  moderator: false,
+  theme: null,
 };

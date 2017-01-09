@@ -11,21 +11,13 @@ export default class Room extends Component {
     this.state = {};
   }
 
-  componentDidMount () {
-    this.updateScroll();
-  }
-
-  componentDidUpdate () {
-    this.updateScroll();
-  }
-
   render () {
 
     const { className, children, ...rest } = this.props;
     const cls = classNames('rooms-room', className);
 
     return (
-      <div ref={r => (this.container = r)} className={cls} {...rest}>
+      <div className={cls} {...rest}>
         <div className='rooms-room__container'>
           <div className='rooms-room__content'>
             {children}
@@ -33,12 +25,6 @@ export default class Room extends Component {
         </div>
       </div>
     );
-  }
-
-  updateScroll (scroll) {
-    this.container.scrollTop = typeof scroll === 'number' ?
-      scroll :
-      this.container.scrollHeight;
   }
 }
 

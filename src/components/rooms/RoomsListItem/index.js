@@ -9,26 +9,28 @@ export default function RoomsListItem (props) {
 
   const { activity, active, children, className, ...rest } = props;
   const cls = classNames('rooms-roomslistitem', {
-    'rooms-roomslistitem--activity': !!activity,
-    'rooms-roomslistitem--active': active
+    'rooms-roomslistitem--activity': activity,
+    'rooms-roomslistitem--active': active,
   }, className);
 
-  let text;
+  let htmlTitle;
   if (children) {
     const temp = document.createElement('div');
     temp.innerHTML = children;
-    text = temp.textContent;
+    htmlTitle = temp.textContent;
   }
 
   return (
-    <div className={cls} {...rest}>
-      <div className='rooms-roomslistitem__name' title={text}>
-        {/*<Dotdotdot clamp={1}>*/}
-          <i className='mdi mdi-collage' /> {children}
-        {/*</Dotdotdot>*/}
-      </div>
-      <div className='rooms-roomslistitem__activity'>
-        <i className='mdi mdi-alert-box' />
+    <div className={cls} title={htmlTitle} {...rest}>
+      <div className='rooms-roomslistitem__container'>
+        <div className='rooms-roomslistitem__icon'>
+          <i className=' mdi mdi-collage' />
+        </div>
+        <div className='rooms-roomslistitem__name'>
+          <Dotdotdot clamp={2}>
+            {children}
+          </Dotdotdot>
+        </div>
       </div>
     </div>
   );

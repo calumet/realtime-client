@@ -3,27 +3,26 @@
 .rooms-roomslistitem {
   display: block;
   overflow: hidden;
-  cursor: pointer;
-  font-size: 1rem;
   transition: all 250ms ease-out;
+  cursor: pointer;
+  line-height: 1.3;
 
-  .mdi {
-    display: inline-block;
-    margin-top: -0.15rem;
-    line-height: 1rem;
-    font-size: 130%;
+  .rooms-roomslistitem__container {
+    display: table;
+    width: 100%;
+  }
+  .rooms-roomslistitem__icon {
+    display: table-cell;
+    width: 2rem;
     vertical-align: middle;
+    font-size: 1.75rem;
+    transition: all 250ms ease-out;
   }
   .rooms-roomslistitem__name {
-    display: block;
-    float: left;
-    width: calc(100% - 1.5rem);
-  }
-  .rooms-roomslistitem__activity {
-    visibility: hidden;
-    display: block;
-    float: right;
-    width: 1.5rem;
+    display: table-cell;
+    text-align: left;
+    vertical-align: middle;
+    font-size: 0.875rem;
   }
 
   //
@@ -37,8 +36,7 @@
     background-color: $medium-gray;
   }
   &.rooms-roomslistitem--activity {
-    .rooms-roomslistitem__activity {
-      visibility: visible;
+    .rooms-roomslistitem__icon {
       animation: rooms-roomslistitem-activity 1s ease-in 0s infinite alternate;
     }
   }

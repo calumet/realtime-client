@@ -13,10 +13,12 @@ export default class Content extends Component {
 
   componentDidMount () {
     this.updateSizes();
+    this.updateScroll();
   }
 
   componentDidUpdate () {
     this.updateSizes();
+    this.updateScroll();
   }
 
   render () {
@@ -46,6 +48,20 @@ export default class Content extends Component {
       height = Math.round(height);
       const content = this.container.querySelector('.base-content__col');
       content.style.paddingTop = `${height}px`;
+    }
+  }
+
+  /**
+   * Actualizar el scroll a una posición específica o al final del contenido.
+   * Esto es para el componente de sala Room.
+   * @param  {Number} [scroll]
+   */
+  updateScroll (scroll) {
+    const content = this.container.querySelector('.rooms-room');
+    if (content) {
+      content.scrollTop = typeof scroll === 'number' ?
+        scroll :
+        content.scrollHeight;
     }
   }
 }

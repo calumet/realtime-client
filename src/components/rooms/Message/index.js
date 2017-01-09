@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import classNames from 'classnames';
 import moment from 'moment';
+import i18n from 'core/i18n';
 
 /**
  * Mensaje que será incluido en una sala.
@@ -16,6 +17,7 @@ export default function Message (props = {}) {
   };
 
   const time = moment(timestamp).format('h:mm A');
+  const moderatorTitle = i18n.t('moderator.title');
 
   return (
     <div className={cls} {...rest}>
@@ -28,7 +30,10 @@ export default function Message (props = {}) {
           {' '}
           <span className='rooms-message__time'>{time}</span>
           {' '}
-          { moderator ? <i className='rooms-message__moderator mdi mdi-star' /> : null }
+          { moderator ?
+            <i className='rooms-message__moderator mdi mdi-star' title={moderatorTitle} /> :
+            null
+          }
         </div>
         <div className='rooms-message__content'>
           <div className='rooms-message__fragment'>{children}</div>

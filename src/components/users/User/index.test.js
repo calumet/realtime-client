@@ -55,6 +55,12 @@ describe('Components', function () {
         expect(actual).to.be.true;
       });
 
+      it('Moderator is set properly', function () {
+        const el = setup({ name: 'Pepe', moderator: true });
+        const actual = el.hasClass('users-user--moderator');
+        expect(actual).to.be.true;
+      });
+
       it('Theme by default', function () {
         const el = setup({ name: 'Pepe' });
         const actual = el.prop('data-theme');
