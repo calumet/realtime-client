@@ -18,7 +18,8 @@
     "chai": true,
     "assert": true,
     "expect": true,
-    "io": true
+    "io": true,
+    "sinon": true
   },
 
   "plugins": [
