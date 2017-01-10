@@ -10,15 +10,17 @@ $global-font-size: 100%;
 $global-width: rem-calc(1000);
 $global-lineheight: 1.5;
 $foundation-palette: (
-  primary: #6A1B9A,
+  primary: #68b83f,
   secondary: #666,
   success: #3adb76,
   warning: #ffae00,
   alert: #cc4b37,
+  connected: #03A9F4,
+  moderator: yellow,
 );
-$light-gray: #e6e6e6;
-$medium-gray: #cacaca;
-$dark-gray: #8a8a8a;
+$light-gray: #f5f5f5;
+$medium-gray: #e6e6e6;
+$dark-gray: #cacaca;
 $black: #333;
 $white: #fff;
 $body-background: $white;
@@ -34,8 +36,11 @@ $global-radius: 2px;
 $global-text-direction: ltr;
 $global-flexbox: false;
 $print-transparent-backgrounds: true;
+$app-aside-width: 280px;
 
 @include add-foundation-colors;
+$connected-color: map-get($foundation-palette, "connected");
+$moderator-color: map-get($foundation-palette, "moderator");
 
 // 2. Breakpoints
 // --------------
