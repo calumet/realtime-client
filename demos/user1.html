@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Calumet Real-Time - Basic</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700,700i|Roboto:400,400i,700,700i">
+    <link rel="stylesheet" href="/demos/css/mdi.css">
+    <link rel="stylesheet" href="/demos/css/demos.css">
+    <link rel="stylesheet" href="/dist/css/realtime.css">
+  </head>
+  <body>
+    <div id="realtime"></div>
+
+    <script src="http://192.168.1.10:9700/socket.io/socket.io.js"></script>
+    <script src="/dist/js/realtime.js"></script>
+    <script>
+      realtime.start({
+        server: 'http://192.168.1.10:9700',
+        userId: 'U1298',
+        spaceCode: 'aulavirtual'
+      });
+    </script>
+  </body>
+</html>
