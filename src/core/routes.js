@@ -1,10 +1,11 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 import App from 'containers/App';
-import Main from 'containers/Main';
 
 export default (
-  <Route path='/' component={App}>
-    <IndexRoute component={Main} />
-  </Route>
+  <Route path='/' component={App}></Route>
 );
+
+// TODO: Use routes.
+// <IndexRoute component={App} />
+// <Route path='/sala/:roomId' component={App} />
