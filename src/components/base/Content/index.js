@@ -1,6 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import classNames from 'classnames';
 
+const headerClass = '.base-header';
+const roomClass = '.rooms-room';
+
 /**
  * Layout de contenido de aplicación.
  */
@@ -28,11 +31,7 @@ export default class Content extends Component {
 
     return (
       <div ref={r => (this.container = r)} className={cls} {...rest}>
-        <div className='base-content__row'>
-          <div className='base-content__col'>
-            {children}
-          </div>
-        </div>
+        {children}
       </div>
     );
   }
@@ -42,12 +41,11 @@ export default class Content extends Component {
    * del header contenido. Esto lo asegura.
    */
   updateSizes () {
-    const header = this.container.querySelector('.base-header');
+    const header = this.container.querySelector(headerClass);
     if (header) {
       let { height } = header.getBoundingClientRect();
       height = Math.round(height);
-      const content = this.container.querySelector('.base-content__col');
-      content.style.paddingTop = `${height}px`;
+      this.container.style.paddingTop = `${height}px`;
     }
   }
 
@@ -57,7 +55,7 @@ export default class Content extends Component {
    * @param  {Number} [scroll]
    */
   updateScroll (scroll) {
-    const content = this.container.querySelector('.rooms-room');
+    const content = this.container.querySelector(roomClass);
     if (content) {
       content.scrollTop = typeof scroll === 'number' ?
         scroll :

@@ -6,18 +6,6 @@
   width: 100%;
   height: 100%;
 
-  .base-content__row {
-    display: table;
-    width: 100%;
-    height: 100%;
-  }
-  .base-content__col {
-    display: table-cell;
-    padding: 0;
-    text-align: center;
-    vertical-align: bottom;
-  }
-
   // Component: .base-header
   .base-header {
     position: absolute;
