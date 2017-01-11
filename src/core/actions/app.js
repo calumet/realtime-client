@@ -16,6 +16,7 @@ export default {
 
         const { users, space, rooms, roomsUsers, roomsMessages, connections } = realtimeRes.data;
         const userCategories = userCategoriesRes.data;
+        const currentRoomId = rooms && rooms.length ? rooms[0].id : null;
 
         store.dispatch({
           type: ACTIONS.USERS_RESET,
@@ -50,6 +51,11 @@ export default {
         store.dispatch({
           type: ACTIONS.CON_MERGE,
           payload: connections
+        });
+
+        store.dispatch({
+          type: ACTIONS.APP_CHANGEROOM,
+          payload: currentRoomId
         });
 
         store.dispatch({

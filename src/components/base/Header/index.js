@@ -30,8 +30,14 @@ export default function Header (props) {
 }
 
 Header.propTypes = {
-  title: PropTypes.string,
-  subtitle: PropTypes.string,
+  title: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.element
+  ]),
+  subtitle: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.element
+  ]),
 
   /**
    * Cuando se trate de dar click en el menú, sólo visible en versión mobile.

@@ -17,6 +17,7 @@ export default function Message (props = {}) {
   };
 
   const time = moment(timestamp).format('h:mm A');
+  const timeTitle = moment(timestamp).format('YYYY-MM-DD HH:mm:ss');
   const moderatorTitle = i18n.t('moderator.title');
 
   return (
@@ -28,7 +29,7 @@ export default function Message (props = {}) {
         <div>
           <span className='rooms-message__name'>{name}</span>
           {' '}
-          <span className='rooms-message__time'>{time}</span>
+          <span className='rooms-message__time' title={timeTitle}>{time}</span>
           {' '}
           { moderator ?
             <i className='rooms-message__moderator mdi mdi-star' title={moderatorTitle} /> :

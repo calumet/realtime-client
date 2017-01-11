@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import orderBy from 'lodash/orderBy';
 import settings from 'settings';
 import mapProps from './map-props';
 import mapDispatches from './map-dispatches';
@@ -85,7 +86,7 @@ class AsideContainer extends Component {
     const { app, users, usersCategories, roomsUsers, connections } = this.props;
     const currentRoom = app.room;
 
-    const usersList = roomsUsers.
+    let usersList = roomsUsers.
       filter(roomUser => roomUser.room === currentRoom).
       filter(roomUser => roomUser.user !== userId).
       map(roomUser => {
@@ -106,16 +107,11 @@ class AsideContainer extends Component {
         return { id, name, category, photo, moderator, online };
       });
 
-    const moderators = usersList.filter(usr => usr.moderator);
-    const onlines = usersList.filter(usr => usr.online);
-    const rest = usersList.filter(usr => !usr.moderator && !usr.online);
+    usersList = orderBy(usersList, ['moderator', 'online'], ['desc', 'desc']);
 
-    const usersEls = moderators.
-      concat(onlines).
-      concat(rest).
-      map(user => {
-        return <User key={user.id} {...user} />;
-      });
+    const usersEls = usersList.map(user => {
+      return <User key={user.id} {...user} />;
+    });
 
     return usersEls.length ?
       <UsersList>
