@@ -1,5 +1,3 @@
-import 'babel-polyfill';
-
-import realtime from 'core';
+import realtime from './realtime';
 
 window.realtime = realtime;

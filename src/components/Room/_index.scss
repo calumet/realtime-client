@@ -1,0 +1,28 @@
+@import 'src/settings';
+
+.rooms-room {
+  display: block;
+  overflow-y: auto;
+
+  .rooms-room__container {
+    display: table;
+    width: 100%;
+    height: 100%;
+  }
+  .rooms-room__content {
+    display: table-cell;
+    text-align: center;
+    vertical-align: bottom;
+  }
+
+  // Component: rooms-roomgroup
+  .rooms-roomgroup {
+    padding-left: $global-padding;
+    padding-right: $global-padding;
+  }
+
+  // Component: rooms-roomtype
+  .rooms-roomtype {
+    margin-top: $global-margin;
+  }
+}

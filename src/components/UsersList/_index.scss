@@ -1,0 +1,17 @@
+@import 'src/settings';
+
+.users-userslist {
+  display: block;
+
+  .users-userslist__list {
+    padding: 0 $global-padding;
+  }
+
+  // Component: users-user
+  .users-user {
+    padding: $global-padding 0;
+  }
+  .users-user + .users-user {
+    border-top: 1px solid $medium-gray;
+  }
+}

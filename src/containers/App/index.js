@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import mapProps from './map-props';
-import mapDispaches from './map-dispaches';
-
-import Main from 'components/base/Main';
-import Aside from 'containers/Aside';
-import Content from 'containers/Content';
+import Main from 'src/components/Main';
+import Aside from 'src/containers/Aside';
+import Content from 'src/containers/Content';
 
 class App extends Component {
 
@@ -16,7 +14,6 @@ class App extends Component {
 
   render () {
 
-    const { handleMessage } = this.props;
     const { started } = this.props.app;
 
     // TODO: Use roomId
@@ -30,13 +27,8 @@ class App extends Component {
 
     return (
       <Main>
-        <Aside
-          handleMenuToggle={this.handleMenuToggle}
-        />
-        <Content
-          handleMenuToggle={this.handleMenuToggle}
-          handleMessage={handleMessage}
-        />
+        <Aside />
+        <Content />
       </Main>
     );
   }
@@ -48,4 +40,4 @@ class App extends Component {
   }
 }
 
-export default connect(mapProps, mapDispaches)(App);
+export default connect(mapProps)(App);

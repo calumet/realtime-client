@@ -1,18 +1,15 @@
-// TODO: Structure with different containers.
-
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import orderBy from 'lodash/orderBy';
-import settings from 'settings';
+import settings from 'src/settings';
+import roomActions from 'src/actions/rooms';
+import Aside from 'src/components/Aside';
+import User from 'src/components/User';
+import UserCurrent from 'src/components/UserCurrent';
+import UsersList from 'src/components/UsersList';
+import RoomsList from 'src/components/RoomsList';
+import RoomsListItem from 'src/components/RoomsListItem';
 import mapProps from './map-props';
-import mapDispatches from './map-dispatches';
-
-import Aside          from 'components/base/Aside';
-import User           from 'components/users/User';
-import UserCurrent    from 'components/users/UserCurrent';
-import UsersList      from 'components/users/UsersList';
-import RoomsList      from 'components/rooms/RoomsList';
-import RoomsListItem  from 'components/rooms/RoomsListItem';
 
 class AsideContainer extends Component {
 
@@ -59,12 +56,11 @@ class AsideContainer extends Component {
 
   createRoomsList () {
 
-    const { handleChangeRoom } = this.props;
     const currentRoom = this.props.app.room;
     const rooms = this.props.spaceRooms;
 
     const list = rooms.map(room => {
-      const onClick = () => handleChangeRoom(room.id);
+      const onClick = () => roomActions.change(room.id);
       const active = room.id === currentRoom;
       return (
         <RoomsListItem
@@ -121,4 +117,4 @@ class AsideContainer extends Component {
   }
 }
 
-export default connect(mapProps, mapDispatches)(AsideContainer);
+export default connect(mapProps)(AsideContainer);

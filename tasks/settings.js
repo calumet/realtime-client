@@ -11,7 +11,7 @@ const settings = {
       './src/**/*.scss'
     ],
     includePaths: [
-      './src',
+      './',
       './node_modules/foundation-sites/scss'
     ],
     output: './dist/css',

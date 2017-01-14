@@ -1,21 +1,20 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import moment from 'moment';
 import sortBy from 'lodash/sortBy';
 import groupBy from 'lodash/groupBy';
 import map from 'lodash/map';
-
-import consts         from 'consts';
-import i18n           from 'core/i18n';
-import mapProps       from './map-props';
-import mapDispatches  from './map-dispatches';
-import Content        from 'components/base/Content';
-import Header         from 'components/base/Header';
-import Room           from 'components/rooms/Room';
-import RoomGroup      from 'components/rooms/RoomGroup';
-import RoomMessages   from 'components/rooms/RoomMessages';
-import Message        from 'components/rooms/Message';
-import RoomType       from 'components/rooms/RoomType';
+import consts from 'src/consts';
+import roomsActions from 'src/actions/rooms';
+import i18n from 'src/i18n';
+import Content from 'src/components/Content';
+import Header from 'src/components/Header';
+import Room from 'src/components/Room';
+import RoomGroup from 'src/components/RoomGroup';
+import RoomMessages from 'src/components/RoomMessages';
+import Message from 'src/components/Message';
+import RoomType from 'src/components/RoomType';
+import mapProps from './map-props';
 
 class ContentContainer extends Component {
 
@@ -39,31 +38,30 @@ class ContentContainer extends Component {
 
   createHeader () {
 
-    const { handleMenuToggle } = this.props;
-
     const title = this.props.space.name;
-
     const roomId = this.props.app.room;
     const spaceRooms = this.props.spaceRooms;
     const room = spaceRooms.find(sroom => sroom.id === roomId);
     const subtitle = room ? room.name : <i>{i18n.t('room.select')}</i>;
 
+    // TODO: set proper onMenuToggle.
+
     return (
       <Header
         title={title}
         subtitle={subtitle}
-        onMenuToggle={handleMenuToggle}
+        onMenuToggle={null}
       />
     );
   }
 
   createRoom () {
 
-    const { handleMessage, roomsMessages } = this.props;
+    const { roomsMessages } = this.props;
     const roomId = this.props.app.room;
 
     const onSend = (params) => {
-      handleMessage({
+      roomsActions.message({
         room: roomId,
         content: params.message
       });
@@ -141,4 +139,4 @@ class ContentContainer extends Component {
   }
 }
 
-export default connect(mapProps, mapDispatches)(ContentContainer);
+export default connect(mapProps)(ContentContainer);

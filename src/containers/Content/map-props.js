@@ -1,10 +1,10 @@
 export default function (state) {
   return {
-    app: state.app.toObject(),
-    space: state.space.toObject(),
-    users: state.users.toArray(),
-    spaceRooms: state.spaceRooms.toArray(),
-    roomsMessages: state.roomsMessages.toArray(),
-    roomsUsers: state.roomsUsers.toArray(),
+    app: state.app.toJS(),
+    space: state.space.toJS(),
+    users: state.users.toJS(),
+    spaceRooms: state.spaceRooms.toJS(),
+    roomsMessages: state.roomsMessages.toJS(),
+    roomsUsers: state.roomsUsers.toJS(),
   };
 }

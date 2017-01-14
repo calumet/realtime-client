@@ -1,0 +1,17 @@
+@import 'src/settings';
+
+.rooms-roomslist {
+  display: block;
+
+  .rooms-roomslist__items {
+    //
+  }
+
+  // Component: rooms-roomslistitem
+  .rooms-roomslistitem {
+    padding: $global-padding;
+  }
+  .rooms-roomslistitem + .rooms-roomslistitem {
+    //
+  }
+}

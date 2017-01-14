@@ -1,0 +1,13 @@
+@import 'src/settings';
+
+.rooms-roommessages {
+  display: block;
+
+  // Component: Message
+  .rooms-message {
+    //
+  }
+  .rooms-message + .rooms-message {
+    margin-top: $global-margin;
+  }
+}

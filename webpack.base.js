@@ -1,6 +1,6 @@
 const path = require('path');
 
-const srcPath = path.join(process.cwd(), '/src');
+const srcPath = path.join(process.cwd(), '/');
 
 module.exports = {
   resolve: {

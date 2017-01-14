@@ -5,7 +5,7 @@
  * Licensed under MIT Open Source
  */
 
-@import 'settings';
+@import 'src/settings';
 @import 'foundation';
 @import 'util/util';
 @import 'global';
@@ -63,21 +63,21 @@
 //
 
 // Base
-@import './components/base/Main/index';
-@import './components/base/Aside/index';
-@import './components/base/Header/index';
-@import './components/base/Content/index';
+@import './components/Main/index';
+@import './components/Aside/index';
+@import './components/Header/index';
+@import './components/Content/index';
 
 // Rooms
-@import './components/rooms/RoomsList/index';
-@import './components/rooms/RoomsListItem/index';
-@import './components/rooms/Message/index';
-@import './components/rooms/RoomMessages/index';
-@import './components/rooms/RoomGroup/index';
-@import './components/rooms/RoomType/index';
-@import './components/rooms/Room/index';
+@import './components/RoomsList/index';
+@import './components/RoomsListItem/index';
+@import './components/Message/index';
+@import './components/RoomMessages/index';
+@import './components/RoomGroup/index';
+@import './components/RoomType/index';
+@import './components/Room/index';
 
 // Users
-@import './components/users/User/index';
-@import './components/users/UserCurrent/index';
-@import './components/users/UsersList/index';
+@import './components/User/index';
+@import './components/UserCurrent/index';
+@import './components/UsersList/index';
