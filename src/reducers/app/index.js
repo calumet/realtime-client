@@ -1,21 +1,15 @@
 import { Map } from 'immutable';
 import { ACTIONS } from 'src/consts';
 
-const getInitialState = function () {
-  return Map({
-    starting: false,
-    started: false,
-    error: null,
-    fatal: null,
-    room: null,
-  });
-};
+const initial = Map({
+  starting: false,
+  started: false,
+  error: null,
+  fatal: null,
+  room: null,
+});
 
-const reducer = function (state, action) {
-
-  if (!state) {
-    return getInitialState();
-  }
+const reducer = function (state = initial, action) {
 
   switch (action.type) {
 

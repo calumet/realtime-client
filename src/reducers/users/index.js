@@ -1,15 +1,9 @@
 import { List } from 'immutable';
 import { ACTIONS } from 'src/consts';
 
-const getInitialState = function () {
-  return List();
-};
+const initial = List();
 
-const reducer = function (state, action) {
-
-  if (!state) {
-    return getInitialState();
-  }
+const reducer = function (state = initial, action) {
 
   switch (action.type) {
 
