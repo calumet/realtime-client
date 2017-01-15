@@ -8,13 +8,13 @@ import classNames from 'classnames';
 export default function RoomGroup (props = {}) {
 
   const { header, className, children, ...rest } = props;
-  const cls = classNames('rooms-roomgroup', className);
+  const cls = classNames('room-group', className);
 
   return (
     <section className={cls} {...rest}>
-      <h2 className='rooms-roomgroup__header'>{header}</h2>
-      <div className='rooms-roomgroup__separation'></div>
-      <div className='rooms-roomgroup__content'>
+      <h2 className='room-group__header'>{header}</h2>
+      <div className='room-group__separation'></div>
+      <div className='room-group__content'>
         {children}
       </div>
     </section>

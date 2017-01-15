@@ -1,10 +1,10 @@
 @import 'src/settings';
 
-.rooms-roomgroup {
+.room-group {
   display: block;
   margin: calc(#{$global-margin} * 2) 0 0;
 
-  .rooms-roomgroup__header {
+  .room-group__header {
     display: block;
     margin: 0;
     line-height: 1.2;
@@ -14,13 +14,13 @@
     text-align: center;
     color: $secondary-color;
   }
-  .rooms-roomgroup__separation {
+  .room-group__separation {
     display: block;
     margin: $global-separation auto;
     border-top: 1px solid $medium-gray;
     width: 50%;
   }
-  .rooms-roomgroup__content {
+  .room-group__content {
     //
   }
 }

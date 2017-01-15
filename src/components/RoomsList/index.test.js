@@ -11,7 +11,7 @@ describe('Components', function () {
 
     it('Default class', function () {
       const el = setup();
-      const actual = el.hasClass('rooms-roomslist');
+      const actual = el.hasClass('rooms-list');
       expect(actual).to.be.true;
     });
 
@@ -20,8 +20,8 @@ describe('Components', function () {
         <b key={0}>Room1</b>,
         <b key={1}>Room2</b>
       ]);
-      const actual = el.find('.rooms-roomslist__items').equals(
-        <div className='rooms-roomslist__items'>
+      const actual = el.find('.rooms-list__items').equals(
+        <div className='rooms-list__items'>
           <b>Room1</b>
           <b>Room2</b>
         </div>

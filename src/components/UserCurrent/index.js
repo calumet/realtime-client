@@ -8,11 +8,11 @@ import classNames from 'classnames';
 export default function UserCurrent (props) {
 
   const { children, className, ...rest } = props;
-  const cls = classNames('users-usercurrent', className);
+  const cls = classNames('user-current', className);
 
   return (
     <div {...rest} className={cls}>
-      <div className='users-usercurrent__user'>
+      <div className='user-current__user'>
         {children}
       </div>
     </div>

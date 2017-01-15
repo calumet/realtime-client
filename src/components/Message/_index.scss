@@ -1,43 +1,43 @@
 @import 'src/settings';
 @import 'src/design/mixins/images';
 
-$rooms-message-photo-size: 2.4rem;
+$message-photo-size: 2.4rem;
 
-.rooms-message {
+.message {
   display: block;
   overflow: hidden;
   text-align: left;
 
-  .rooms-message__col {
+  .message__col {
     display: block;
     float: left;
 
     &:first-child {
-      width: $rooms-message-photo-size;
+      width: $message-photo-size;
     }
     &:last-child {
       padding-left: $global-separation;
-      width: calc(100% - #{$rooms-message-photo-size});
+      width: calc(100% - #{$message-photo-size});
     }
   }
-  .rooms-message__photo {
+  .message__photo {
     display: block;
     margin-top: $global-separation;
-    width: $rooms-message-photo-size;
-    height: $rooms-message-photo-size;
+    width: $message-photo-size;
+    height: $message-photo-size;
     @include images-user;
   }
-  .rooms-message__name {
+  .message__name {
     display: inline-block;
     font-family: $header-font-family;
     font-weight: bold;
   }
-  .rooms-message__time {
+  .message__time {
     display: inline-block;
     font-size: 90%;
     color: $secondary-color;
   }
-  .rooms-message__moderator {
+  .message__moderator {
     display: inline-block;
     margin-top: -0.15px;
     line-height: 1;
@@ -45,10 +45,10 @@ $rooms-message-photo-size: 2.4rem;
     color: $moderator-color;
     vertical-align: middle;
   }
-  .rooms-message__content {
+  .message__content {
     //
   }
-  .rooms-message__fragment {
+  .message__fragment {
     //
   }
 }

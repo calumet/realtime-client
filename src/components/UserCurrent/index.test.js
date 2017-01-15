@@ -11,13 +11,13 @@ describe('Components', function () {
 
     it('Default className', function () {
       const el = setup(null, <div />);
-      const actual = el.hasClass('users-usercurrent');
+      const actual = el.hasClass('user-current');
       expect(actual).to.be.true;
     });
 
     it('User element is set properly', function () {
       const el = setup(null, <b>UserName</b>);
-      const actual = el.find('.users-usercurrent__user').contains(<b>UserName</b>);
+      const actual = el.find('.user-current__user').contains(<b>UserName</b>);
       expect(actual).to.be.true;
     });
 

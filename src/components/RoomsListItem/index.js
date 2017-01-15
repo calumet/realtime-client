@@ -8,9 +8,9 @@ import classNames from 'classnames';
 export default function RoomsListItem (props) {
 
   const { activity, active, children, className, ...rest } = props;
-  const cls = classNames('rooms-roomslistitem', {
-    'rooms-roomslistitem--activity': activity,
-    'rooms-roomslistitem--active': active,
+  const cls = classNames('rooms-list-item', {
+    'rooms-list-item--activity': activity,
+    'rooms-list-item--active': active,
   }, className);
 
   let htmlTitle;
@@ -22,11 +22,11 @@ export default function RoomsListItem (props) {
 
   return (
     <div className={cls} title={htmlTitle} {...rest}>
-      <div className='rooms-roomslistitem__container'>
-        <div className='rooms-roomslistitem__icon'>
+      <div className='rooms-list-item__container'>
+        <div className='rooms-list-item__icon'>
           <i className=' mdi mdi-collage' />
         </div>
-        <div className='rooms-roomslistitem__name'>
+        <div className='rooms-list-item__name'>
           <Dotdotdot clamp={2}>
             {children}
           </Dotdotdot>

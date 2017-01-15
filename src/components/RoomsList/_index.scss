@@ -1,17 +1,14 @@
 @import 'src/settings';
 
-.rooms-roomslist {
+.rooms-list {
   display: block;
 
-  .rooms-roomslist__items {
+  .rooms-list__items {
     //
   }
 
-  // Component: rooms-roomslistitem
-  .rooms-roomslistitem {
+  // Component: rooms-list-item
+  .rooms-list-item {
     padding: $global-padding;
-  }
-  .rooms-roomslistitem + .rooms-roomslistitem {
-    //
   }
 }

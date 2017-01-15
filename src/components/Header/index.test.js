@@ -15,12 +15,12 @@ describe('Components', function () {
 
     it('Default class', function () {
       const el = setup();
-      expect(el.hasClass('base-header')).to.be.true;
+      expect(el.hasClass('header')).to.be.true;
     });
 
     it('Title is set properly', function () {
       const el = setup({ title: 'Comunidad Académica' });
-      const actual = el.find('.base-header__title');
+      const actual = el.find('.header__title');
       expect(actual.isEmpty()).to.be.false;
       expect(actual.is('h1')).to.be.true;
       expect(actual.text()).to.equal('Comunidad Académica');
@@ -28,7 +28,7 @@ describe('Components', function () {
 
     it('Subtitle is set properly', function () {
       const el = setup({ subtitle: 'Ingeniería de Software II' });
-      const actual = el.find('.base-header__subtitle');
+      const actual = el.find('.header__subtitle');
       expect(actual.isEmpty()).to.be.false;
       expect(actual.is('h2')).to.be.true;
       expect(actual.text()).to.equal('Ingeniería de Software II');
@@ -39,10 +39,10 @@ describe('Components', function () {
       const el = mountEl({ onMenuToggle });
       expect(onMenuToggle.called).to.be.false;
 
-      el.find('.base-header__menu').simulate('click');
+      el.find('.header__menu').simulate('click');
       expect(onMenuToggle.calledOnce).to.be.true;
 
-      el.find('.base-header__menu').simulate('click');
+      el.find('.header__menu').simulate('click');
       expect(onMenuToggle.calledTwice).to.be.true;
     });
 

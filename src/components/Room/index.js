@@ -14,12 +14,12 @@ export default class Room extends Component {
   render () {
 
     const { className, children, ...rest } = this.props;
-    const cls = classNames('rooms-room', className);
+    const cls = classNames('room', className);
 
     return (
       <div className={cls} {...rest}>
-        <div className='rooms-room__container'>
-          <div className='rooms-room__content'>
+        <div className='room__container'>
+          <div className='room__content'>
             {children}
           </div>
         </div>

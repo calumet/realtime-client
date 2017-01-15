@@ -23,21 +23,21 @@ export default class Aside extends Component {
 
     const props = this.props || {};
     const { header, onMenuToggle, hidden, className, children, ...rest } = props;
-    const cls = classNames('base-aside', {
-      'base-aside--hidden': hidden,
+    const cls = classNames('aside', {
+      'aside--hidden': hidden,
     }, className);
 
     return (
       <div ref={r => (this.container = r)} className={cls} {...rest}>
-        <div className='base-aside__container'>
-          <div className='base-aside__header'>
+        <div className='aside__container'>
+          <div className='aside__header'>
             {header}
           </div>
-          <div className='base-aside__content'>
+          <div className='aside__content'>
             {children}
           </div>
         </div>
-        <div className='base-aside__left' onClick={onMenuToggle} />
+        <div className='aside__left' onClick={onMenuToggle} />
       </div>
     );
   }
@@ -47,11 +47,11 @@ export default class Aside extends Component {
    * del header contenido. Esto lo asegura.
    */
   updateSizes () {
-    const header = this.container.querySelector('.base-aside__header');
+    const header = this.container.querySelector('.aside__header');
     if (header) {
       let { height } = header.getBoundingClientRect();
       height = Math.round(height);
-      const content = this.container.querySelector('.base-aside__container');
+      const content = this.container.querySelector('.aside__container');
       content.style.paddingTop = `${height}px`;
     }
   }

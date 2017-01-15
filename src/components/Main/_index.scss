@@ -1,6 +1,6 @@
 @import 'src/settings';
 
-.base-main {
+.main {
   position: fixed;
   z-index: 1;
   left: 0;
@@ -10,8 +10,8 @@
   display: block;
   overflow: hidden;
 
-  // Component: .base-aside
-  .base-aside {
+  // Component: .aside
+  .aside {
     position: absolute;
     z-index: 10;
     left: 0;
@@ -19,8 +19,8 @@
     bottom: 0;
   }
 
-  // Component: .base-content
-  .base-content {
+  // Component: .content
+  .content {
     z-index: 5;
   }
 
@@ -29,13 +29,13 @@
   //
   @include breakpoint(large) {
 
-    // Component: .base-aside
-    .base-aside {
+    // Component: .aside
+    .aside {
       width: $app-aside-width;
     }
 
-    // Component: .base-content
-    .base-content {
+    // Component: .content
+    .content {
       position: absolute;
       right: 0;
       top: 0;

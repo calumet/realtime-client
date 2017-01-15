@@ -29,19 +29,19 @@ export default class RoomType extends Component {
   render () {
 
     const { message, onSend, className, ...rest } = this.props;
-    const cls = classNames('rooms-roomtype', className);
+    const cls = classNames('room-type', className);
 
     return (
       <div className={cls} {...rest}>
         <Textarea
-          className='rooms-roomtype__textarea'
+          className='room-type__textarea'
           ref={r => (this.textarea = r)}
           value={this.state.message}
           onChange={this.onChange}
           onKeyPress={this.onKeyPress}
           placeholder='Escribe un mensaje...'
         />
-        <button className='rooms-roomtype__button' onClick={this.onClick}>
+        <button className='room-type__button' onClick={this.onClick}>
           <i className='mdi mdi-send' />
         </button>
       </div>

@@ -7,7 +7,7 @@ import classNames from 'classnames';
 export default function RoomMessages (props = {}) {
 
   const { className, children, ...rest } = props;
-  const cls = classNames('rooms-roommessages', className);
+  const cls = classNames('room-messages', className);
 
   return (
     <div className={cls} {...rest}>

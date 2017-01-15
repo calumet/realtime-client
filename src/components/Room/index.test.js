@@ -11,7 +11,7 @@ describe('Components', function () {
 
     it('Default class', function () {
       const el = setup();
-      const actual = el.hasClass('rooms-room');
+      const actual = el.hasClass('room');
       expect(actual).to.be.true;
     });
 

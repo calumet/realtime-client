@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import classNames from 'classnames';
 
-const headerClass = '.base-header';
-const roomClass = '.rooms-room';
+const headerClass = '.header';
+const roomClass = '.room';
 
 /**
  * Layout de contenido de aplicación.
@@ -27,7 +27,7 @@ export default class Content extends Component {
   render () {
 
     const { className, children, ...rest } = this.props;
-    const cls = classNames('base-content', className);
+    const cls = classNames('content', className);
 
     return (
       <div ref={r => (this.container = r)} className={cls} {...rest}>

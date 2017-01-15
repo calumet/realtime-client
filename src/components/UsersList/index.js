@@ -7,11 +7,11 @@ import classNames from 'classnames';
 export default function UsersList (props) {
 
   const { children, className, ...rest } = props;
-  const cls = classNames('users-userslist', className);
+  const cls = classNames('users-list', className);
 
   return (
     <div className={cls} {...rest}>
-      <div className='users-userslist__list'>
+      <div className='users-list__list'>
         {children}
       </div>
     </div>

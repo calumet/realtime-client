@@ -1,17 +1,17 @@
 @import 'src/settings';
 
-.users-userslist {
+.users-list {
   display: block;
 
-  .users-userslist__list {
+  .users-list__list {
     padding: 0 $global-padding;
   }
 
-  // Component: users-user
-  .users-user {
+  // Component: user
+  .user {
     padding: $global-padding 0;
   }
-  .users-user + .users-user {
+  .user + .user {
     border-top: 1px solid $medium-gray;
   }
 }

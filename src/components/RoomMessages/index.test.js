@@ -15,7 +15,7 @@ describe('Components', function () {
         <b key={1}>Msg1</b>
       ];
       const el = setup(null, children);
-      const actual = el.hasClass('rooms-roommessages');
+      const actual = el.hasClass('room-messages');
       expect(actual).to.be.true;
     });
 

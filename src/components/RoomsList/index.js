@@ -7,11 +7,11 @@ import classNames from 'classnames';
 export default function RoomsList (props) {
 
   const { children, className, ...rest } = props;
-  const cls = classNames('rooms-roomslist', className);
+  const cls = classNames('rooms-list', className);
 
   return (
     <div className={cls} {...rest}>
-      <div className='rooms-roomslist__items'>
+      <div className='rooms-list__items'>
         {children}
       </div>
     </div>

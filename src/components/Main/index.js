@@ -7,7 +7,7 @@ import classNames from 'classnames';
 export default function Main (props) {
 
   const { className, children, ...rest } = props;
-  const cls = classNames('base-main', className);
+  const cls = classNames('main', className);
 
   return (
     <div className={cls} {...rest}>

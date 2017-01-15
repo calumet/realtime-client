@@ -1,13 +1,13 @@
 @import 'src/settings';
 
-.base-content {
+.content {
   position: relative;
   display: block;
   width: 100%;
   height: 100%;
 
-  // Component: .base-header
-  .base-header {
+  // Component: .header
+  .header {
     position: absolute;
     left: 0;
     right: 0;
@@ -15,8 +15,8 @@
     padding: $global-padding;
   }
 
-  // Component: .rooms-room
-  .rooms-room {
+  // Component: .room
+  .room {
     height: 100%;
   }
 }

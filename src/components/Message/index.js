@@ -9,8 +9,8 @@ import i18n from 'src/i18n';
 export default function Message (props = {}) {
 
   const { name, timestamp, photo, moderator, children, className, ...rest } = props;
-  const cls = classNames('rooms-message', {
-    'rooms-message--moderator': !!moderator
+  const cls = classNames('message', {
+    'message--moderator': !!moderator
   }, className);
   const photoStyle = {
     backgroundImage: photo ? `url(${photo})` : null
@@ -22,22 +22,22 @@ export default function Message (props = {}) {
 
   return (
     <div className={cls} {...rest}>
-      <div className='rooms-message__col'>
-        <div className='rooms-message__photo' style={photoStyle}></div>
+      <div className='message__col'>
+        <div className='message__photo' style={photoStyle}></div>
       </div>
-      <div className='rooms-message__col'>
+      <div className='message__col'>
         <div>
-          <span className='rooms-message__name'>{name}</span>
+          <span className='message__name'>{name}</span>
           {' '}
-          <span className='rooms-message__time' title={timeTitle}>{time}</span>
+          <span className='message__time' title={timeTitle}>{time}</span>
           {' '}
           { moderator ?
-            <i className='rooms-message__moderator mdi mdi-star' title={moderatorTitle} /> :
+            <i className='message__moderator mdi mdi-star' title={moderatorTitle} /> :
             null
           }
         </div>
-        <div className='rooms-message__content'>
-          <div className='rooms-message__fragment'>{children}</div>
+        <div className='message__content'>
+          <div className='message__fragment'>{children}</div>
         </div>
       </div>
     </div>

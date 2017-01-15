@@ -8,20 +8,20 @@ import Dotdotdot from 'react-dotdotdot';
 export default function Header (props) {
 
   const { onMenuToggle, title, subtitle, className, ...rest } = props;
-  const cls = classNames('base-header', className);
+  const cls = classNames('header', className);
 
   return (
     <div className={cls} {...rest}>
       <div className='row collapse align-justify align-middle'>
-        <div className='column base-header__content'>
+        <div className='column header__content'>
           <Dotdotdot clamp={1}>
-            <h1 className='base-header__title'>{title}</h1>
+            <h1 className='header__title'>{title}</h1>
           </Dotdotdot>
           <Dotdotdot clamp={1}>
-            <h2 className='base-header__subtitle'>{subtitle}</h2>
+            <h2 className='header__subtitle'>{subtitle}</h2>
           </Dotdotdot>
         </div>
-        <div className='column shrink base-header__menu' onClick={onMenuToggle}>
+        <div className='column shrink header__menu' onClick={onMenuToggle}>
           <div className='mdi mdi-menu' />
         </div>
       </div>

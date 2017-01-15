@@ -1,24 +1,24 @@
 @import 'src/settings';
 
-.rooms-roomslistitem {
+.rooms-list-item {
   display: block;
   overflow: hidden;
   transition: all 250ms ease-out;
   cursor: pointer;
   line-height: 1.3;
 
-  .rooms-roomslistitem__container {
+  .rooms-list-item__container {
     display: table;
     width: 100%;
   }
-  .rooms-roomslistitem__icon {
+  .rooms-list-item__icon {
     display: table-cell;
     width: 2rem;
     vertical-align: middle;
     font-size: 1.75rem;
     transition: all 250ms ease-out;
   }
-  .rooms-roomslistitem__name {
+  .rooms-list-item__name {
     display: table-cell;
     text-align: left;
     vertical-align: middle;
@@ -32,17 +32,17 @@
   &:hover {
     background-color: $light-gray;
   }
-  &.rooms-roomslistitem--active {
+  &.rooms-list-item--active {
     background-color: $medium-gray;
   }
-  &.rooms-roomslistitem--activity {
-    .rooms-roomslistitem__icon {
-      animation: rooms-roomslistitem-activity 1s ease-in 0s infinite alternate;
+  &.rooms-list-item--activity {
+    .rooms-list-item__icon {
+      animation: rooms-list-item-activity 1s ease-in 0s infinite alternate;
     }
   }
 }
 
-@keyframes rooms-roomslistitem-activity {
+@keyframes rooms-list-item-activity {
   0% {
     color: $warning-color;
   }

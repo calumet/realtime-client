@@ -11,7 +11,7 @@ describe('Components', function () {
 
     it('Default className', function () {
       const el = setup();
-      const actual = el.hasClass('users-userslist');
+      const actual = el.hasClass('users-list');
       expect(actual).to.be.true;
     });
 
@@ -20,8 +20,8 @@ describe('Components', function () {
         <b key={0}>User1</b>,
         <b key={1}>User2</b>
       ]);
-      const actual = el.find('.users-userslist__list').equals(
-        <div className='users-userslist__list'>
+      const actual = el.find('.users-list__list').equals(
+        <div className='users-list__list'>
           <b>User1</b>
           <b>User2</b>
         </div>

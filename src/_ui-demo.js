@@ -22,8 +22,8 @@ import RoomType from 'src/components/RoomType';
 const App = function () {
 
   const onMenuToggle = () => {
-    const a = document.querySelector('.base-aside');
-    a.classList.toggle('base-aside--hidden');
+    const a = document.querySelector('.aside');
+    a.classList.toggle('aside--hidden');
   };
 
   const user0 = { name: 'Romel Pérez', category: 'Especialización', photo: 'https://avatars3.githubusercontent.com/u/1393135?v=3&s=460' };

@@ -9,9 +9,9 @@ import i18n from 'src/i18n';
 export default function User (props) {
 
   const { moderator, theme, name, category, photo, online, className, ...rest } = props;
-  const cls = classNames('users-user', {
-    'users-user--online': online,
-    'users-user--moderator': moderator,
+  const cls = classNames('user', {
+    'user--online': online,
+    'user--moderator': moderator,
   }, className);
 
   if (theme) {
@@ -27,22 +27,22 @@ export default function User (props) {
 
   return (
     <div {...rest} className={cls}>
-      <div className='users-user__row'>
-        <div className='users-user__col users-user__col1'>
-          <div className='users-user__photo' style={photoStyle}>
-            <div className='users-user__moderator mdi mdi-star' title={moderatorTitle} />
+      <div className='user__row'>
+        <div className='user__col user__col1'>
+          <div className='user__photo' style={photoStyle}>
+            <div className='user__moderator mdi mdi-star' title={moderatorTitle} />
           </div>
         </div>
-        <div className='users-user__col users-user__col2'>
+        <div className='user__col user__col2'>
           <Dotdotdot clamp={1}>
-            <div className='users-user__name'>{name}</div>
+            <div className='user__name'>{name}</div>
           </Dotdotdot>
           <Dotdotdot clamp={1}>
-            <div className='users-user__cat'>{category}</div>
+            <div className='user__cat'>{category}</div>
           </Dotdotdot>
         </div>
-        <div className='users-user__col users-user__col3'>
-          <div className='users-user__status'></div>
+        <div className='user__col user__col3'>
+          <div className='user__status'></div>
         </div>
       </div>
     </div>

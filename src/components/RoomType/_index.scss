@@ -1,11 +1,11 @@
 @import 'src/settings';
 
-.rooms-roomtype {
+.room-type {
   position: relative;
   width: 100%;
   border-top: 1px solid $dark-gray;
 
-  .rooms-roomtype__textarea {
+  .room-type__textarea {
     display: block;
     margin: 0;
     border: none;
@@ -20,7 +20,7 @@
     resize: none;
     transition: all 250ms ease-out;
   }
-  .rooms-roomtype__button {
+  .room-type__button {
     position: absolute;
     right: $global-padding;
     bottom: calc(#{$global-padding} / 2);

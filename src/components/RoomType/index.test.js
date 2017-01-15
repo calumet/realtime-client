@@ -15,7 +15,7 @@ describe('Components', function () {
 
     it('Default class', function () {
       const el = shallowEl();
-      const actual = el.at(0).hasClass('rooms-roomtype');
+      const actual = el.at(0).hasClass('room-type');
       expect(actual).to.be.true;
     });
 

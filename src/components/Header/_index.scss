@@ -1,6 +1,6 @@
 @import 'src/settings';
 
-.base-header {
+.header {
   overflow: hidden;
   display: block;
   width: 100%;
@@ -11,24 +11,24 @@
   .row {
     max-width: none;
 
-    .base-header__content {
+    .header__content {
       padding-right: $global-separation;
       font-family: $header-font-family;
       font-weight: bold;
     }
-    .base-header__title,
-    .base-header__subtitle {
+    .header__title,
+    .header__subtitle {
       margin: 0;
       line-height: 1.3;
     }
-    .base-header__title {
+    .header__title {
       font-size: 1rem;
     }
-    .base-header__subtitle {
+    .header__subtitle {
       font-size: 0.875rem;
     }
 
-    .base-header__menu {
+    .header__menu {
       cursor: pointer;
 
       .mdi {
@@ -42,11 +42,11 @@
   //
   @include breakpoint(large) {
     .row {
-      .base-header__menu {
+      .header__menu {
         display: none;
       }
 
-      .base-header__content {
+      .header__content {
         padding: 0;
       }
     }

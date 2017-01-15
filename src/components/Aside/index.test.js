@@ -11,12 +11,12 @@ describe('Components', function () {
 
     it('Default class', function () {
       const el = setup();
-      expect(el.hasClass('base-aside')).to.be.true;
+      expect(el.hasClass('aside')).to.be.true;
     });
 
     it('Header set properly', function () {
       const el = setup({ header: <b>Custom Header</b> });
-      const actual = el.find('.base-aside__header').contains(<b>Custom Header</b>);
+      const actual = el.find('.aside__header').contains(<b>Custom Header</b>);
       expect(actual).to.be.true;
     });
 
