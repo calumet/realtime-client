@@ -1,28 +1,31 @@
+// TODO: Use roomId
+//const { roomId } = this.props.params;
+
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import mapProps from './map-props';
 import Main from 'src/components/Main';
 import Aside from 'src/containers/Aside';
 import Content from 'src/containers/Content';
+
+const mapStateToProps = function (state) {
+  return {
+    app: state.app,
+  };
+};
 
 class App extends Component {
 
   constructor () {
     super(...arguments);
-    this.state = {};
   }
 
   render () {
 
-    const { started } = this.props.app;
-
-    // TODO: Use roomId
-    //const { roomId } = this.props.params;
+    const { app } = this.props;
+    const started = app.get('started');
 
     if (!started) {
-      return (
-        <h1>Loading application...</h1>
-      );
+      return null;
     }
 
     return (
@@ -32,12 +35,6 @@ class App extends Component {
       </Main>
     );
   }
-
-  handleMenuToggle () {
-    // TODO:
-    // DEBUG:
-    console.log('App handleMenuToggle');
-  }
 }
 
-export default connect(mapProps)(App);
+export default connect(mapStateToProps)(App);

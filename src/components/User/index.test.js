@@ -60,6 +60,12 @@ describe('Components', function () {
       expect(actual).to.be.true;
     });
 
+    it('Inactive is set properly', function () {
+      const el = setup({ name: 'Pepe', inactive: true });
+      const actual = el.hasClass('user--inactive');
+      expect(actual).to.be.true;
+    });
+
     it('Theme by default', function () {
       const el = setup({ name: 'Pepe' });
       const actual = el.prop('data-theme');

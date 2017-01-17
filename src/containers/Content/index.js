@@ -14,7 +14,17 @@ import RoomGroup from 'src/components/RoomGroup';
 import RoomMessages from 'src/components/RoomMessages';
 import Message from 'src/components/Message';
 import RoomType from 'src/components/RoomType';
-import mapProps from './map-props';
+
+const mapStateToProps = function (state) {
+  return {
+    app: state.app.toJS(),
+    space: state.space.toJS(),
+    users: state.users.toJS(),
+    spaceRooms: state.spaceRooms.toJS(),
+    roomsMessages: state.roomsMessages.toJS(),
+    roomsUsers: state.roomsUsers.toJS(),
+  };
+};
 
 class ContentContainer extends Component {
 
@@ -39,7 +49,7 @@ class ContentContainer extends Component {
   createHeader () {
 
     const title = this.props.space.name;
-    const roomId = this.props.app.room;
+    const roomId = this.props.app.roomId;
     const spaceRooms = this.props.spaceRooms;
     const room = spaceRooms.find(sroom => sroom.id === roomId);
     const subtitle = room ? room.name : <i>{i18n.t('room.select')}</i>;
@@ -58,7 +68,7 @@ class ContentContainer extends Component {
   createRoom () {
 
     const { roomsMessages } = this.props;
-    const roomId = this.props.app.room;
+    const roomId = this.props.app.roomId;
 
     const onSend = (params) => {
       roomsActions.message({
@@ -122,7 +132,7 @@ class ContentContainer extends Component {
   getUserData (userId) {
 
     const { users, roomsUsers } = this.props;
-    const roomId = this.props.app.room;
+    const roomId = this.props.app.roomId;
 
     const user = users.find(u => u.id === userId) || {};
     const roomUser = roomsUsers.
@@ -139,4 +149,4 @@ class ContentContainer extends Component {
   }
 }
 
-export default connect(mapProps)(ContentContainer);
+export default connect(mapStateToProps)(ContentContainer);

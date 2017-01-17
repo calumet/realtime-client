@@ -75,6 +75,13 @@ $user-status-width: 0.25rem;
     }
   }
 
+  &.user--inactive {
+    .user__name,
+    .user__cat {
+      color: $dark-gray;
+    }
+  }
+
   //
   // Themes
   //

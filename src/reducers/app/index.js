@@ -6,7 +6,7 @@ const initial = Map({
   started: false,
   error: null,
   fatal: null,
-  room: null,
+  roomId: null,
 });
 
 const reducer = function (state = initial, action) {
@@ -35,8 +35,8 @@ const reducer = function (state = initial, action) {
     }
 
     case ACTIONS.APP_CHANGEROOM: {
-      const room = action.payload;
-      return state.merge({ room });
+      const roomId = action.payload;
+      return state.merge({ roomId });
     }
 
     default:

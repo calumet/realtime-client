@@ -10,7 +10,7 @@ immutable.Map (
     Boolean starting,  // Se está inicializando la app
     Boolean started,   // La app y sus recursos se han initializado correctamente
     Object fatal,      // Ha ocurrido un error fatal y la app no puede continuar
-    String room,       // Sala actualmente observada
+    String roomId,     // Sala actualmente observada
   }
 )
 ```

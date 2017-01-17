@@ -8,10 +8,11 @@ import i18n from 'src/i18n';
  */
 export default function User (props) {
 
-  const { moderator, theme, name, category, photo, online, className, ...rest } = props;
+  const { inactive, moderator, theme, name, category, photo, online, className, ...rest } = props;
   const cls = classNames('user', {
     'user--online': online,
     'user--moderator': moderator,
+    'user--inactive': inactive,
   }, className);
 
   if (theme) {
@@ -55,6 +56,7 @@ User.propTypes = {
   photo: PropTypes.string,
   online: PropTypes.bool,
   moderator: PropTypes.bool,
+  inactive: PropTypes.bool,
   theme: PropTypes.oneOf(['inverse']),
 };
 
@@ -64,5 +66,6 @@ User.defaultProps = {
   photo: '',
   online: false,
   moderator: false,
+  inactive: false,
   theme: null,
 };
