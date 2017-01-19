@@ -9,7 +9,14 @@ import ws from 'src/ws';
 
 const realtime = {
 
-  _validate (newSettings) {
+  start (newSettings) {
+    realtime._configure(newSettings);
+    render();
+    ws.connect();
+    actions.app.start();
+  },
+
+  _configure (newSettings) {
 
     if (typeof newSettings !== 'object') {
       throw new Error('Settings must be an object.');
@@ -30,13 +37,6 @@ const realtime = {
     const server = String(newSettings.server).replace(/\/$/, '');
 
     Object.assign(settings, newSettings, { server });
-  },
-
-  start (newSettings) {
-    realtime._validate(newSettings);
-    render();
-    ws.connect();
-    actions.app.start();
   },
 };
 

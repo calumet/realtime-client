@@ -4,8 +4,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Main from 'src/components/Main';
-import Aside from 'src/containers/Aside';
-import Content from 'src/containers/Content';
+import AsideContainer from 'src/containers/Aside';
+import ContentContainer from 'src/containers/Content';
 
 const mapStateToProps = function (state) {
   return {
@@ -13,7 +13,7 @@ const mapStateToProps = function (state) {
   };
 };
 
-class App extends Component {
+class AppContainer extends Component {
 
   constructor () {
     super(...arguments);
@@ -25,16 +25,16 @@ class App extends Component {
     const started = app.get('started');
 
     if (!started) {
-      return null;
+      return <h1>Loading..</h1>;
     }
 
     return (
       <Main>
-        <Aside />
-        <Content />
+        <AsideContainer />
+        <ContentContainer />
       </Main>
     );
   }
 }
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps)(AppContainer);
