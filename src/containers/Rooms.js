@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import roomActions from 'src/actions/rooms';
+import actions from 'src/actions';
 import RoomsList from 'src/components/RoomsList';
 import RoomsListItem from 'src/components/RoomsListItem';
 
@@ -8,6 +8,12 @@ const mapStateToProps = function (state) {
   return {
     app: state.app,
     spaceRooms: state.spaceRooms,
+  };
+};
+
+const mapDispatchToProps = function (dispatch) {
+  return {
+    handleChangeRoom: (roomId) => dispatch(actions.rooms.change(roomId))
   };
 };
 
@@ -19,12 +25,12 @@ class RoomsContainer extends Component {
 
   render () {
 
+    const { spaceRooms, handleChangeRoom } = this.props;
     const { roomId } = this.props.app;
-    const { spaceRooms } = this.props;
 
     const list = spaceRooms.toArray().map(room => {
 
-      const onClick = () => roomActions.change(room.id);
+      const onClick = () => handleChangeRoom(room.id);
       const active = room.id === roomId;
 
       return (
@@ -42,4 +48,4 @@ class RoomsContainer extends Component {
   }
 }
 
-export default connect(mapStateToProps)(RoomsContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(RoomsContainer);

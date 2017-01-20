@@ -3,8 +3,8 @@
 import 'babel-polyfill';
 import settings from 'src/settings';
 import render from 'src/render';
-import store from 'src/store';
 import actions from 'src/actions';
+import store from 'src/store';
 import ws from 'src/ws';
 
 const realtime = {
@@ -13,7 +13,6 @@ const realtime = {
     realtime._configure(newSettings);
     render();
     ws.connect();
-    actions.app.start();
   },
 
   _configure (newSettings) {
