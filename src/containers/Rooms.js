@@ -1,19 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import actions from 'src/actions';
+import { withRouter, Link } from 'react-router';
 import RoomsList from 'src/components/RoomsList';
 import RoomsListItem from 'src/components/RoomsListItem';
 
 const mapStateToProps = function (state) {
   return {
-    app: state.app,
     spaceRooms: state.spaceRooms,
-  };
-};
-
-const mapDispatchToProps = function (dispatch) {
-  return {
-    handleChangeRoom: (roomId) => dispatch(actions.rooms.change(roomId))
   };
 };
 
@@ -25,27 +18,24 @@ class RoomsContainer extends Component {
 
   render () {
 
-    const { spaceRooms, handleChangeRoom } = this.props;
-    const { roomId } = this.props.app;
+    const { spaceRooms } = this.props;
+    const { roomId } = this.props.params;
 
     const list = spaceRooms.toArray().map(room => {
-
-      const onClick = () => handleChangeRoom(room.id);
       const active = room.id === roomId;
-
       return (
-        <RoomsListItem
-          key={room.id}
-          onClick={onClick}
-          active={active}
-        >
-          {room.name}
-        </RoomsListItem>
+        <Link key={room.id} to={`/sala/${room.id}`}>
+          <RoomsListItem active={active}>
+            {room.name}
+          </RoomsListItem>
+        </Link>
       );
     });
 
-    return <RoomsList>{list}</RoomsList>;
+    return (
+      <RoomsList>{list}</RoomsList>
+    );
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(RoomsContainer);
+export default withRouter(connect(mapStateToProps)(RoomsContainer));

@@ -1,8 +1,7 @@
-import { createSelector } from 'reselect';
 import orderBy from 'lodash/orderBy';
 import settings from 'src/settings';
 
-function mapUser ({ users, usersCategories, userId }) {
+export function selectUser ({ users, usersCategories }, userId) {
 
   const user = (users || []).find(usr => usr.id === userId) || {};
   const { id, photo } = user;
@@ -21,7 +20,7 @@ function mapUser ({ users, usersCategories, userId }) {
   };
 }
 
-function mapUserRoom ({ roomsUsers, connections, userId, roomId }) {
+export function selectUserRoom ({ roomsUsers, connections }, userId, roomId) {
 
   const roomUser = (roomsUsers || []).find(ru => ru.room === roomId && ru.user === userId) || {};
   const { moderator, inactive } = roomUser;
@@ -35,50 +34,25 @@ function mapUserRoom ({ roomsUsers, connections, userId, roomId }) {
   };
 }
 
-export const selectCurrentUser = createSelector(
-  () => settings.userId,
-  (state) => state.users,
-  (state) => state.usersCategories,
-  (userId, users, usersCategories) => mapUser({ userId, users, usersCategories })
-);
+export function selectRoomUsers ({ users, usersCategories, roomsUsers, connections }, roomId) {
 
-export const selectCurrentRoomUsers = createSelector(
-  (state) => state.app,
-  (state) => state.users,
-  (state) => state.usersCategories,
-  (state) => state.roomsUsers,
-  (state) => state.connections,
-  (app, users, usersCategories, roomsUsers, connections) => {
+  users = users.toJS();
+  usersCategories = usersCategories.toJS();
+  roomsUsers = roomsUsers.toJS();
+  connections = connections.toJS();
 
-    app = app.toJS();
-    users = users.toJS();
-    usersCategories = usersCategories.toJS();
-    roomsUsers = roomsUsers.toJS();
-    connections = connections.toJS();
+  const { userId } = settings;
 
-    const { userId } = settings;
-    const { roomId } = app;
+  let usersList = roomsUsers.
+    filter(roomUser => roomUser.room === roomId).
+    filter(roomUser => roomUser.user !== userId).
+    map(roomUser => {
+      const user = selectUser({ users, usersCategories }, roomUser.user);
+      const userRoom = selectUserRoom({ roomsUsers, connections }, roomUser.user, roomId);
+      return { ...user, ...userRoom };
+    });
 
-    let usersList = roomsUsers.
-      filter(roomUser => roomUser.room === roomId).
-      filter(roomUser => roomUser.user !== userId).
-      map(roomUser => {
-        const user = mapUser({
-          users,
-          usersCategories,
-          userId: roomUser.user
-        });
-        const userRoom = mapUserRoom({
-          roomsUsers,
-          connections,
-          roomId,
-          userId: roomUser.user
-        });
-        return { ...user, ...userRoom };
-      });
+  usersList = orderBy(usersList, ['inactive', 'moderator', 'online'], ['asc', 'desc', 'desc']);
 
-    usersList = orderBy(usersList, ['inactive', 'moderator', 'online'], ['asc', 'desc', 'desc']);
-
-    return usersList;
-  }
-);
+  return usersList;
+}

@@ -1,6 +1,3 @@
-// TODO: Use roomId
-//const { roomId } = this.props.params;
-
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import actions from 'src/actions';
@@ -33,8 +30,8 @@ class AppContainer extends Component {
   render () {
 
     const { app } = this.props;
-    const started = app.get('started');
     const fatal = app.get('fatal');
+    const started = app.get('started');
 
     if (fatal) {
       return (

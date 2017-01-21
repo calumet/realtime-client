@@ -1,5 +1,6 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 import moment from 'moment';
 import sortBy from 'lodash/sortBy';
 import groupBy from 'lodash/groupBy';
@@ -19,7 +20,6 @@ import RoomType from 'src/components/RoomType';
 
 const mapStateToProps = function (state) {
   return {
-    app: state.app.toJS(),
     space: state.space.toJS(),
     users: state.users.toJS(),
     spaceRooms: state.spaceRooms.toJS(),
@@ -50,8 +50,8 @@ class ContentContainer extends Component {
 
   createHeader () {
 
+    const { roomId } = this.props.params;
     const title = this.props.space.name;
-    const roomId = this.props.app.roomId;
     const spaceRooms = this.props.spaceRooms;
     const room = spaceRooms.find(sroom => sroom.id === roomId);
     const subtitle = room ? room.name : <i>{i18n.t('room.select')}</i>;
@@ -70,7 +70,7 @@ class ContentContainer extends Component {
   createRoom () {
 
     const { roomsMessages } = this.props;
-    const roomId = this.props.app.roomId;
+    const { roomId } = this.props.params;
 
     const onSend = (params) => {
       roomsActions.message({
@@ -134,7 +134,7 @@ class ContentContainer extends Component {
   getUserData (userId) {
 
     const { users, roomsUsers } = this.props;
-    const roomId = this.props.app.roomId;
+    const { roomId } = this.props.params;
 
     const user = users.find(u => u.id === userId) || {};
     const roomUser = roomsUsers.
@@ -151,4 +151,4 @@ class ContentContainer extends Component {
   }
 }
 
-export default connect(mapStateToProps)(ContentContainer);
+export default withRouter(connect(mapStateToProps)(ContentContainer));
