@@ -9,8 +9,8 @@ immutable.Map (
   {
     Boolean starting,  // Se está inicializando la app
     Boolean started,   // La app y sus recursos se han initializado correctamente
+    Object error,      // Ha ocurrido un error no fatal
     Object fatal,      // Ha ocurrido un error fatal y la app no puede continuar
-    String roomId,     // Sala actualmente observada
   }
 )
 ```
@@ -38,9 +38,3 @@ Un error no fatal ha ocurrido. La aplicación puede continuar.
 Un error fatal ha ocurrido y la aplicación no puede continuar.
 
 **Payload:** `{ String message, ... }`
-
-## Change Room
-
-Cambiar la sala actual que el usuario está actualmente observando.
-
-**Payload:** `String roomId`

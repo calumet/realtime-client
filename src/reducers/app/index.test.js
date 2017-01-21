@@ -13,7 +13,6 @@ describe('Reducers', function () {
         started: false,
         error: null,
         fatal: null,
-        roomId: null
       });
     });
 
@@ -71,18 +70,6 @@ describe('Reducers', function () {
 
       expect(Map.isMap(actual)).to.be.true;
       expect(actual.toObject()).to.eql(expected);
-    });
-
-    it('Change current roomId', function () {
-      const state = Map();
-      const action = {
-        type: ACTIONS.APP_CHANGEROOM,
-        payload: 10,
-      };
-      const actual = reducer(state, action);
-
-      expect(Map.isMap(actual)).to.be.true;
-      expect(actual.toObject()).to.have.property('roomId', 10);
     });
 
     it('Unknown type', function () {
