@@ -1,9 +1,4 @@
-export default {
-
-  // TODO: Use the user browser GMT.
-  // GMT del cliente.
-  GMT: '-05:00',
-};
+export default {};
 
 export const ACTIONS = {
 

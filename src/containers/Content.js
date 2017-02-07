@@ -32,7 +32,6 @@ class ContentContainer extends Component {
 
   constructor () {
     super(...arguments);
-    this.state = {};
   }
 
   render () {
@@ -82,12 +81,11 @@ class ContentContainer extends Component {
     let groupsEls;
     if (roomId) {
 
-      const gmt = this.getGMT();
       const roomMsgs = roomsMessages.
         filter(rmsg => rmsg.room === roomId).
         map(rmsg => {
           return Object.assign(rmsg, {
-            createdAt: moment(rmsg.createdAt).utcOffset(gmt).format()
+            createdAt: moment(rmsg.createdAt).local().format()
           });
         });
 
@@ -144,10 +142,6 @@ class ContentContainer extends Component {
     const { id, photo } = user;
 
     return { id, name, photo, moderator };
-  }
-
-  getGMT () {
-    return consts.GMT;
   }
 }
 
