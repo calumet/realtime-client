@@ -57,12 +57,16 @@ class RoomContainer extends Component {
             find(ru => ru.id === roomId).
             users.
             find(usr => usr.id === msg.user);
-          const userData = users.find(usr => usr.id === msg.user);
-          const user = { ...roomUser, ...userData };
+          const { moderator } = roomUser;
+
+          const user = users.find(usr => usr.id === msg.user);
+          const { name, photo } = user;
+
+          const messageData = { name, photo, moderator };
           const timestamp = msg.createdAt;
 
           return (
-            <Message key={msg.id} {...user} timestamp={timestamp}>
+            <Message key={msg.id} {...messageData} timestamp={timestamp}>
               {msg.content}
             </Message>
           );
