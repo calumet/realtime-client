@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+import actions from 'src/actions';
 import i18n from 'src/i18n';
 import Header from 'src/components/Header';
 
@@ -24,12 +25,13 @@ class HeaderContainer extends Component {
     const title = space.get('name');
     const room = spaceRooms.find(sroom => sroom.id === roomId);
     const subtitle = room ? room.name : <i>{i18n.t('room.select')}</i>;
+    const { onMenuToggle } = actions.app;
 
     return (
       <Header
         title={title}
         subtitle={subtitle}
-        onMenuToggle={null}
+        onMenuToggle={onMenuToggle}
       />
     );
   }

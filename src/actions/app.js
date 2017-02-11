@@ -71,4 +71,9 @@ export default {
         });
     };
   },
+
+  onMenuToggle () {
+    const aside = document.querySelector('.aside');
+    aside.classList.toggle('aside--hidden');
+  },
 };

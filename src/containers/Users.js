@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+import settings from 'src/settings';
 import selectUsers from 'src/selectors/users';
 import selectRoomsUsers from 'src/selectors/rooms-users';
 import User from 'src/components/User';
@@ -24,10 +25,12 @@ class UsersContainer extends Component {
     const { users, roomsUsers, params } = this.props;
     const { roomId } = params;
     const roomUsers = roomsUsers.find(ru => ru.id === roomId);
+    const { userId } = settings;
 
     if (!roomUsers) return null;
 
     const usersEls = roomUsers.users.
+      filter(ru => ru.id !== userId).
       map(ru => {
         const user = users.find(usr => usr.id === ru.id);
         return { ...user, ...ru };
