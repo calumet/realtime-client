@@ -1,0 +1,13 @@
+.loader {
+  display: block;
+  margin: 6rem auto;
+  text-align: center;
+
+  .loader__component {
+    display: inline-block;
+  }
+  .loader__text {
+    display: inline-block;
+    margin: 2rem 0 0;
+  }
+}

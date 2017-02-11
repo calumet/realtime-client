@@ -33,3 +33,7 @@ export const ACTIONS = {
   CON_REMOVE: 'CON_REMOVE',
   CON_MERGE: 'CON_MERGE',
 };
+
+export const DESIGN = {
+  PRIMARY_COLOR: '#68b83f'
+};

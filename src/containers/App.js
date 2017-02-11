@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import actions from 'src/actions';
-import Main from 'src/components/Main';
 import AsideContainer from 'src/containers/Aside';
 import ContentContainer from 'src/containers/Content';
+import Main from 'src/components/Main';
+import Loader from 'src/components/Loader';
 
 const mapStateToProps = function (state) {
   return {
@@ -40,9 +41,7 @@ class AppContainer extends Component {
     }
 
     if (!started) {
-      return (
-        <h1>Loading...</h1>
-      );
+      return <Loader />;
     }
 
     return (
