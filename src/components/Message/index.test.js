@@ -53,9 +53,9 @@ describe('Components', function () {
     it('Moderator set properly', function () {
       const el = setup({ name: 'Romel', timestamp: Date.now(), moderator: true }, 'Content');
       const hasClass = el.hasClass('message--moderator');
-      const hasNotEl = el.find('.message__moderator').isEmpty();
+      const hasEl = el.find('.message__moderator').exists();
       expect(hasClass).to.be.true;
-      expect(hasNotEl).to.be.false;
+      expect(hasEl).to.be.true;
     });
 
   });

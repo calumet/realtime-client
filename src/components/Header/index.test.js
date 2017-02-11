@@ -21,7 +21,7 @@ describe('Components', function () {
     it('Title is set properly', function () {
       const el = setup({ title: 'Comunidad Académica' });
       const actual = el.find('.header__title');
-      expect(actual.isEmpty()).to.be.false;
+      expect(actual.exists()).to.be.true;
       expect(actual.is('h1')).to.be.true;
       expect(actual.text()).to.equal('Comunidad Académica');
     });
@@ -29,7 +29,7 @@ describe('Components', function () {
     it('Subtitle is set properly', function () {
       const el = setup({ subtitle: 'Ingeniería de Software II' });
       const actual = el.find('.header__subtitle');
-      expect(actual.isEmpty()).to.be.false;
+      expect(actual.exists()).to.be.true;
       expect(actual.is('h2')).to.be.true;
       expect(actual.text()).to.equal('Ingeniería de Software II');
     });

@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import settings from 'src/settings';
-import { selectUser } from 'src/selectors';
+import selectUsers from 'src/selectors/users';
 import User from 'src/components/User';
 import UserCurrent from 'src/components/UserCurrent';
 
 const mapStateToProps = function (state) {
   return {
-    users: state.users,
-    usersCategories: state.usersCategories,
+    users: selectUsers(state)
   };
 };
 
@@ -20,9 +19,9 @@ class UserContainer extends Component {
 
   render () {
 
-    const { users, usersCategories } = this.props;
+    const { users } = this.props;
     const { userId } = settings;
-    const user = selectUser({ users, usersCategories }, userId);
+    const user = users.find(usr => usr.id === userId);
     const userProps = { ...user, theme: 'inverse' };
 
     return (

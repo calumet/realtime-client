@@ -6,4 +6,4 @@ Framework client-side de comunicación en tiempo real para el proyecto COMA del 
 
 [The MIT License](http://opensource.org/licenses/MIT) (MIT)
 
-Copyright (c) 2013-2016 [Grupo Calumet](http://cormoran.uis.edu.co/calumet)
+Copyright (c) 2013-2017 [Grupo Calumet](http://cormoran.uis.edu.co/calumet)

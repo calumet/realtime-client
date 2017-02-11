@@ -47,7 +47,8 @@
     "react-router-redux": "^4.0.7",
     "react-textarea-autosize": "^4.0.5",
     "redux": "^3.6.0",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "reselect": "^2.5.4"
   },
   "devDependencies": {
     "autoprefixer": "^6.6.1",
