@@ -19,13 +19,17 @@ const postcssList = [
 ];
 
 if (!dev) {
-  postcssList.push(cssnano());
+  postcssList.push(cssnano({
+     safe: true
+  }));
 }
 
 gulp.task('sass', function () {
   return gulp.
     src(settings.sass.files).
-    pipe(sourcemaps.init()).
+    pipe(
+      gif(dev, sourcemaps.init())
+    ).
     pipe(
       sass({
         includePaths: settings.sass.includePaths,
@@ -36,7 +40,9 @@ gulp.task('sass', function () {
       }).
       on('error', sass.logError)
     ).
-    pipe(sourcemaps.write(undefined, { sourceRoot: null })).
+    pipe(
+      gif(dev, sourcemaps.write(undefined, { sourceRoot: null }))
+    ).
     pipe(
       postcss(postcssList)
     ).
