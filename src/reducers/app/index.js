@@ -4,6 +4,7 @@ import { ACTIONS } from 'src/consts';
 const initial = Map({
   starting: false,
   started: false,
+  connected: false,
   error: null,
   fatal: null,
 });
@@ -18,6 +19,11 @@ const reducer = function (state = initial, action) {
 
     case ACTIONS.APP_STARTED: {
       return state.merge({ starting: false, started: true, fatal: null });
+    }
+
+    case ACTIONS.APP_CONNECT: {
+      const connected = !!action.payload;
+      return state.merge({ connected });
     }
 
     case ACTIONS.APP_ERROR: {

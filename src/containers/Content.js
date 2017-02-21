@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
+import i18n from 'src/i18n';
 import selectUsers from 'src/selectors/users';
 import selectRoomsUsers from 'src/selectors/rooms-users';
 import selectRoomsMessages from 'src/selectors/rooms-messages';
@@ -17,6 +18,7 @@ import RoomType from 'src/components/RoomType';
 
 const mapStateToProps = function (state) {
   return {
+    app: state.app,
     users: selectUsers(state),
     roomsUsers: selectRoomsUsers(state),
     roomsMessages: selectRoomsMessages(state),
@@ -31,8 +33,9 @@ class ContentContainer extends Component {
 
   render () {
 
-    const { params, users, roomsUsers, roomsMessages } = this.props;
+    const { params, app, users, roomsUsers, roomsMessages } = this.props;
     const { roomId } = params;
+    const connected = app.get('connected');
 
     const onSend = (details) => {
       roomsActions.message({
@@ -83,12 +86,17 @@ class ContentContainer extends Component {
       });
     }
 
+    const disabled = connected ? false : i18n.t('room.noType');
+    const roomType = (
+      <RoomType disabled={disabled} onSend={onSend} />
+    );
+
     return (
       <Content>
         <HeaderContainer />
         <Room>
           {groupsEls}
-          { roomId && <RoomType onSend={onSend} /> }
+          { roomId && roomType }
         </Room>
       </Content>
     );

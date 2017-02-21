@@ -20,6 +20,8 @@ const ws = {
   setEvents () {
 
     // User
+    settings.socket.on('connect', userEvents.onConnect.bind(settings.socket));
+    settings.socket.on('disconnect', userEvents.onDisconnect.bind(settings.socket));
     settings.socket.on('error', userEvents.onError.bind(settings.socket));
 
     // Users

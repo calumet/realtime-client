@@ -11,6 +11,7 @@ describe('Reducers', function () {
       expect(actual.toObject()).to.eql({
         starting: false,
         started: false,
+        connected: false,
         error: null,
         fatal: null,
       });
@@ -35,6 +36,19 @@ describe('Reducers', function () {
       };
       const actual = reducer(state, action);
       const expected = { starting: false, started: true, fatal: null };
+
+      expect(Map.isMap(actual)).to.be.true;
+      expect(actual.toObject()).to.eql(expected);
+    });
+
+    it('Connect app', function () {
+      const state = Map();
+      const action = {
+        type: ACTIONS.APP_CONNECT,
+        payload: true
+      };
+      const actual = reducer(state, action);
+      const expected = { connected: true };
 
       expect(Map.isMap(actual)).to.be.true;
       expect(actual.toObject()).to.eql(expected);

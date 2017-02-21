@@ -41,6 +41,8 @@
   }
 
   &.room-type--disabled {
+    user-select: none;
+
     .room-type__textarea {
       color: $dark-gray;
     }
