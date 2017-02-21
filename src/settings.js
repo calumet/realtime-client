@@ -6,3 +6,7 @@ export default {
   roomTag: undefined,
   socket: null,
 };
+
+export const DESIGN = {
+  PRIMARY_COLOR: '#68b83f'
+};

@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import Halogen from 'halogen';
-import { DESIGN } from 'src/consts';
+import { DESIGN } from 'src/settings';
 
 export default function Loader (props) {
 

@@ -1,4 +1,6 @@
-export default {};
+export default {
+  //
+};
 
 export const ACTIONS = {
 
@@ -32,8 +34,4 @@ export const ACTIONS = {
   CON_ADD: 'CON_ADD',
   CON_REMOVE: 'CON_REMOVE',
   CON_MERGE: 'CON_MERGE',
-};
-
-export const DESIGN = {
-  PRIMARY_COLOR: '#68b83f'
 };
