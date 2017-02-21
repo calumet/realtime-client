@@ -5,6 +5,7 @@ export default {
     },
     room: {
       select: 'Selecciona una sala',
+      type: 'Escribe un mensaje...',
     },
     moderator: {
       title: 'Moderador/a de sala',

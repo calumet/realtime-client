@@ -33,7 +33,7 @@ export default createSelector(
 
       groups = map(groups, (group, datetime) => ({
         datetime,
-        title: S(moment(datetime).format('MMMM D')).capitalize().s,
+        title: S(moment(datetime).format('dddd, MMMM D')).titleCase().s,
         messages: sortBy(group, item => item.createdAt)
       }));
 

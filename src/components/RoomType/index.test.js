@@ -2,6 +2,8 @@ import React from 'react';
 import { shallow, mount } from 'enzyme';
 import RoomType from './index';
 
+const ENTER = 13;
+
 const shallowEl = function (props, children) {
   return shallow(<RoomType {...props}>{children}</RoomType>);
 };
@@ -56,7 +58,6 @@ describe('Components', function () {
     });
 
     it('On ENTER key, call the onSend callback only if there is content', function () {
-      const ENTER = 13;
       const message = 'A random message...';
       const onSend = sinon.spy();
       const el = mountEl({ onSend });
@@ -70,6 +71,28 @@ describe('Components', function () {
       expect(onSend.calledOnce).to.be.true;
       expect(onSend.calledWith({ message })).to.be.true;
       expect(el.find('textarea').text()).to.equal('');
+    });
+
+    it('If disabled, disable textarea and button', function () {
+      const el = mountEl({ disabled: true });
+      expect(el.find('textarea').prop('disabled')).to.be.true;
+      expect(el.find('button').prop('disabled')).to.be.true;
+    });
+
+    it('If disabled is string, show it as textarea content', function () {
+      const el = mountEl({ disabled: 'This is disabled.' });
+      expect(el.find('textarea').prop('value')).to.equal('This is disabled.');
+    });
+
+    it('If disabled, onSend should never be called', function () {
+      const onSend = sinon.spy();
+      const el = mountEl({ disabled: true, onSend });
+
+      el.find('textarea').simulate('change', { target: { value: 'Something' } });
+      el.find('textarea').simulate('keypress', { which: ENTER });
+      el.find('button').simulate('click');
+
+      expect(onSend.called).to.be.false;
     });
 
   });

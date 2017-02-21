@@ -16,8 +16,10 @@ export default function Message (props = {}) {
     backgroundImage: photo ? `url(${photo})` : null
   };
 
-  const time = moment(timestamp).format('h:mm A');
-  const timeTitle = moment(timestamp).format('YYYY-MM-DD HH:mm:ss');
+  const ts = timestamp || Date.now();
+
+  const time = moment(ts).format('h:mm A');
+  const timeTitle = moment(ts).format('YYYY MMM D, h:mm A');
   const moderatorTitle = i18n.t('moderator.title');
 
   return (
@@ -56,6 +58,5 @@ Message.propTypes = {
 };
 
 Message.defaultProps = {
-  timestamp: Date.now(),
   moderator: false
 };

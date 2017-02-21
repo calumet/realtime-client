@@ -34,14 +34,28 @@
     background-color: $medium-gray;
     border-radius: 50%;
     box-shadow: 0 0 2px rgba($medium-gray, 0.5);
-    cursor: pointer;
-    user-select: none;
     outline: none;
+    user-select: none;
+    cursor: pointer;
     transition: all 250ms ease-out;
+  }
 
-    &:hover {
-      background-color: $primary-color;
-      color: $white;
+  &.room-type--disabled {
+    .room-type__textarea {
+      color: $dark-gray;
+    }
+    .room-type__button {
+      cursor: not-allowed;
+      color: $dark-gray;
+    }
+  }
+
+  &:not(.room-type--disabled) {
+    .room-type__button {
+      &:hover {
+        background-color: $primary-color;
+        color: $white;
+      }
     }
   }
 }
