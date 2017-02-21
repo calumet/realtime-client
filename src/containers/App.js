@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import i18n from 'src/i18n';
 import actions from 'src/actions';
 import AsideContainer from 'src/containers/Aside';
 import ContentContainer from 'src/containers/Content';
 import Main from 'src/components/Main';
 import Loader from 'src/components/Loader';
+import ScreenMessage from 'src/components/ScreenMessage';
 
 const mapStateToProps = function (state) {
   return {
@@ -35,8 +37,9 @@ class AppContainer extends Component {
     const started = app.get('started');
 
     if (fatal) {
+      const fatalError = i18n.t('fatal.server');
       return (
-        <h1 style={{color: 'red'}}>Fatal error</h1>
+        <ScreenMessage type='error'>{fatalError}</ScreenMessage>
       );
     }
 

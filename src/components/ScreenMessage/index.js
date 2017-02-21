@@ -14,7 +14,7 @@ export default function ScreenMessage (props = {}) {
   return (
     <div className={cls} {...rest}>
       <div className="row align-center">
-        <div className="column small-6 medium-5">
+        <div className="column small-8 medium-6 large-5">
           <i className={`screen-message__icon mdi mdi-${icon}`}></i>
           <p className='screen-message__text'>{children}</p>
         </div>
