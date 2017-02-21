@@ -61,10 +61,10 @@ class ContentContainer extends Component {
             find(ru => ru.id === roomId).
             users.
             find(usr => usr.id === msg.user);
-          const { moderator } = roomUser;
+          const { moderator } = roomUser || {};
 
           const user = users.find(usr => usr.id === msg.user);
-          const { name, photo } = user;
+          const { name, photo } = user || {};
 
           const messageData = { name, photo, moderator };
           const timestamp = msg.createdAt;

@@ -3,6 +3,9 @@ export default {
     fatal: {
       server: 'No nos pudimos conectar. Intentalo de nuevo.'
     },
+    user: {
+      unknown: 'Desconocido'
+    },
     room: {
       select: 'Selecciona una sala',
       type: 'Escribe un mensaje...',

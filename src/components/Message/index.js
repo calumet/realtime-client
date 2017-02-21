@@ -51,12 +51,13 @@ Message.propTypes = {
     PropTypes.string,
     PropTypes.element
   ]).isRequired,
-  name: PropTypes.string.isRequired,
+  name: PropTypes.string,
   timestamp: PropTypes.any,
   photo: PropTypes.string,
   moderator: PropTypes.bool
 };
 
 Message.defaultProps = {
+  name: i18n.t('user.unknown'),
   moderator: false
 };

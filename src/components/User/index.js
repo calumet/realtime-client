@@ -51,7 +51,7 @@ export default function User (props) {
 }
 
 User.propTypes = {
-  name: PropTypes.string.isRequired,
+  name: PropTypes.string,
   category: PropTypes.string,
   photo: PropTypes.string,
   online: PropTypes.bool,
@@ -61,7 +61,7 @@ User.propTypes = {
 };
 
 User.defaultProps = {
-  name: '',
+  name: i18n.t('user.unknown'),
   category: '',
   photo: '',
   online: false,

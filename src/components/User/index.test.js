@@ -1,5 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import i18n from 'src/i18n';
 import User from './index';
 
 const setup = function (props) {
@@ -26,6 +27,13 @@ describe('Components', function () {
       const actual = el.find('.user__photo').prop('style');
       const expected = { backgroundImage: 'url(/img/photo.jpg)' };
       expect(actual).to.eql(expected);
+    });
+
+    it('Default name', function () {
+      const el = setup();
+      const actual = el.find('.user__name').text();
+      const expected = i18n.t('user.unknown');
+      expect(actual).to.equal(expected);
     });
 
     it('Name is set properly', function () {

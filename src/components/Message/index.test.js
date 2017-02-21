@@ -1,5 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import i18n from 'src/i18n';
 import Message from './index';
 
 const setup = function (props, children) {
@@ -13,6 +14,13 @@ describe('Components', function () {
       const el = setup({ name: 'Romel', timestamp: Date.now() }, 'Content');
       const actual = el.hasClass('message');
       expect(actual).to.be.true;
+    });
+
+    it('Default name', function () {
+      const el = setup();
+      const actual = el.find('.message__name').text();
+      const expected = i18n.t('user.unknown');
+      expect(actual).to.equal(expected);
     });
 
     it('Name set properly', function () {
