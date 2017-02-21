@@ -1,6 +1,6 @@
 .loader {
   display: block;
-  margin: 6rem auto;
+  margin: calc(#{$global-margin} * 5) auto;
   text-align: center;
 
   .loader__component {

@@ -1,0 +1,24 @@
+@import 'src/settings';
+
+.screen-message {
+  display: block;
+  margin: calc(#{$global-margin} * 5) auto;
+  text-align: center;
+
+  .screen-message__icon {
+    font-size: 3rem;
+    color: $primary-color;
+  }
+  .screen-message__text {
+    //
+  }
+
+  //
+  // Modifiers
+  //
+  &.screen-message--error {
+    .screen-message__icon {
+      color: $alert-color;
+    }
+  }
+}
