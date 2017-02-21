@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect';
 import { List } from 'immutable';
 import moment from 'moment';
+import S from 'string';
 import map from 'lodash/map';
 import groupBy from 'lodash/groupBy';
 import sortBy from 'lodash/sortBy';
@@ -32,7 +33,7 @@ export default createSelector(
 
       groups = map(groups, (group, datetime) => ({
         datetime,
-        title: moment(datetime).format('MMMM D'),
+        title: S(moment(datetime).format('MMMM D')).capitalize().s,
         messages: sortBy(group, item => item.createdAt)
       }));
 

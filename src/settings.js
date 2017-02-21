@@ -1,9 +1,10 @@
 export default {
+  lang: 'es',
   el: '#realtime',
   server: 'http://127.0.0.1:80',
   userId: 'EMPTY',
   spaceCode: 'EMPTY',
-  roomTag: undefined,
+  roomTag: null,
   socket: null,
 };
 

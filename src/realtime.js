@@ -1,5 +1,4 @@
-// TODO: Add language to settings and set the moment locale as it is.
-
+import moment from 'moment';
 import settings from 'src/settings';
 import render from 'src/render';
 import actions from 'src/actions';
@@ -46,6 +45,8 @@ const realtime = {
     const server = String(newSettings.server).replace(/\/$/, '');
 
     Object.assign(settings, newSettings, { server });
+
+    moment.locale(settings.lang);
   },
 };
 
