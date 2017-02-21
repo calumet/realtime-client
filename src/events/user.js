@@ -17,7 +17,11 @@ export default {
     });
   },
 
-  onError () {
-    console.log('socket event error', arguments);
+  onError (error) {
+    const message = error && error.message ? error.message : error;
+    store.dispatch({
+      type: ACTIONS.APP_ERROR,
+      payload: { message }
+    });
   },
 };
