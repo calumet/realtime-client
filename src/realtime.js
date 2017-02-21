@@ -8,10 +8,21 @@ import ws from 'src/ws';
 
 const realtime = {
 
+  _status: {
+    initialized: false
+  },
+
   start (newSettings) {
+
+    if (realtime._status.initialized) {
+      throw new Error('Realtime is already initialized.');
+    }
+
     realtime._configure(newSettings);
     render();
     ws.connect();
+
+    realtime._status.initialized = true;
   },
 
   _configure (newSettings) {
