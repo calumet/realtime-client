@@ -13,13 +13,13 @@
   <body>
     <div id="realtime"></div>
 
-    <script src="http://192.168.1.10:9700/socket.io/socket.io.js"></script>
+    <script src="http://127.0.0.1:9700/socket.io/socket.io.js"></script>
     <script src="/dist/js/realtime.js"></script>
     <script>
       realtime.start({
-        server: 'http://192.168.1.10:9700',
+        server: 'http://127.0.0.1:9700',
+        spaceCode: 'aulavirtual',
         userId: 'U1297',
-        spaceCode: 'aulavirtual'
       });
     </script>
   </body>

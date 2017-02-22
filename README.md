@@ -4,6 +4,11 @@
 
 Framework client-side de comunicación en tiempo real para el proyecto COMA del Grupo Calumet.
 
+Revisar la [documentación](./docs) para más detalles.
+
+El servidor de sockets se encuentra en [realtime](https://github.com/calumet/realtime) y
+el servidor de datos se encuentra en [realtime-data-public](https://github.com/calumet/realtime-data-public).
+
 ![Screenshot Desktop](./docs/screenshots/screenshot-desktop.png)
 
 ![Screenshot Mobile](./docs/screenshots/screenshot-mobile-1.png)
