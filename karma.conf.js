@@ -1,6 +1,7 @@
 // Karma configuration
 const webpackBase = require('./webpack.base.js');
 
+const isCI = process.env.TRAVIS || process.env.CI;
 const webpackConf = Object.assign({}, webpackBase, {
   devtool: 'inline-source-map',
   externals: {
@@ -69,7 +70,7 @@ module.exports = function (config) {
 
 
     // enable / disable watching file and executing tests whenever any file changes
-    autoWatch: true,
+    autoWatch: !isCI,
 
 
     // start these browsers
@@ -79,7 +80,7 @@ module.exports = function (config) {
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
-    singleRun: false,
+    singleRun: isCI,
 
 
     // Concurrency level
