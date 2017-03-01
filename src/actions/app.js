@@ -63,10 +63,13 @@ export default {
             type: ACTIONS.APP_STARTED
           });
         }),
-        res => {
+        err => {
+          const response = err.response;
+          const code = response ? response.data.code : '';
+          const message = response ? response.data.message : err.message;
           dispatch({
             type: ACTIONS.APP_FATAL,
-            payload: res && res.data ? res.data : res || 'Fatal error'
+            payload: { code, message }
           });
         });
     };

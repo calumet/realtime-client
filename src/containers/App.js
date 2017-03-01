@@ -37,14 +37,19 @@ class AppContainer extends Component {
     const started = app.get('started');
 
     if (fatal) {
-      const fatalError = i18n.t('fatal.server');
+      const { code } = fatal;
+      const message = i18n.t(code || 'ERR');
       return (
-        <ScreenMessage type='error'>{fatalError}</ScreenMessage>
+        <ScreenMessage type='error'>
+          {message}
+        </ScreenMessage>
       );
     }
 
     if (!started) {
-      return <Loader />;
+      return (
+        <Loader />
+      );
     }
 
     return (

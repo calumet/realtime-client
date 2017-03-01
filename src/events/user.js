@@ -17,11 +17,10 @@ export default {
     });
   },
 
-  onError (error) {
-    const message = error && error.message ? error.message : error;
+  onError ({ code = '', message = '' }) {
     store.dispatch({
       type: ACTIONS.APP_ERROR,
-      payload: { message }
+      payload: { code, message }
     });
   },
 };

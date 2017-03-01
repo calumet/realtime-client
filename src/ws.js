@@ -7,6 +7,7 @@ const ws = {
 
   connect () {
     const query = {
+      token: settings.token,
       userId: settings.userId,
       spaceCode: settings.spaceCode,
     };

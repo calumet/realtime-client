@@ -5,6 +5,7 @@ export default {
   userId: 'EMPTY',
   spaceCode: 'EMPTY',
   roomTag: null,
+  token: null,
   socket: null,
 };
 

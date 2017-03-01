@@ -1,8 +1,11 @@
 export default {
   translation: {
-    fatal: {
-      server: 'No nos pudimos conectar. Intentalo de nuevo.'
-    },
+
+    ERR: 'Ocurrió un error de conexión.',
+    ERR_AUTH: 'Tus datos de autentificación son incorrectos.',
+    ERR_NOUSR: 'No has proveido un usuario correcto.',
+    ERR_NOSPACE: 'No has proveido un espacio correcto.',
+
     user: {
       unknown: 'Desconocido'
     },
